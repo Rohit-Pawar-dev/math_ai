@@ -46,6 +46,10 @@ const ClassAdd = React.lazy(() => import('./views/pages/class/ClassAdd'))
 const ClassView = React.lazy(() => import('./views/pages/class/ClassView'))
 const ClassEdit = React.lazy(() => import('./views/pages/class/ClassEdit'))
 
+// Feedback pages
+const FeedbackList = React.lazy(() => import('./views/pages/feedback/FeedbackList'))
+const FeedbackView = React.lazy(() => import('./views/pages/feedback/FeedbackView'))
+
 const ReelsList = React.lazy(() => import('./views/pages/reels/ReelsList'))
 const ReelsAdd = React.lazy(() => import('./views/pages/reels/ReelsAdd'))
 const ReelsView = React.lazy(() => import('./views/pages/reels/ReelsView'))
@@ -228,6 +232,10 @@ const routes = [
   { path: '/class-view/:id', name: 'ClassView', element: ClassView },
   { path: '/class-add', name: 'ClassAdd', element: ClassAdd },
   { path: '/class-edit/:id', name: 'ClassEdit', element: ClassEdit },
+
+  // feedbacks
+  { path: '/feedback-list', name: 'FeedbackList', element: FeedbackList },
+  { path: '/feedback-view/:id', name: 'FeedbackView', element: FeedbackView },
 
   { path: '/reels-list', name: 'ReelsList', element: ReelsList },
   { path: '/reels-add', name: 'ReelsAdd', element: ReelsAdd },

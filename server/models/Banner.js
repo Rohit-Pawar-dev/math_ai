@@ -3,18 +3,20 @@ const { Schema } = mongoose;
 
 const bannerSchema = new Schema({
   title: {
-    type: Object,
-    required: true
+    type: String,
+    required: true,
+    trim: true
   },
   image: {
-    type: Object,
-    required: true
+    type: String,
+    required: true,
+    trim: true
   },
-  series: {
-    type: [Schema.Types.ObjectId],
+  series: [{
+    type: Schema.Types.ObjectId,
     ref: 'Content',
     default: []
-  },
+  }],
   status: {
     type: String,
     default: 'active',
