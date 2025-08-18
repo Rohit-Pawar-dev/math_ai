@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
 import {
   CCloseButton,
   CSidebar,
@@ -9,21 +8,37 @@ import {
   CSidebarHeader,
   CSidebarToggler,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-
 import { AppSidebarNav } from './AppSidebarNav'
-
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
-
-// sidebar nav config
 import navigation from '../_nav'
-import mainLogo from '../assets/images/shortcut1.png'
+import API from '../api'
+
+import MEDIA_URL from '../media'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const [logo, setLogo] = useState(null)
+
+  // Fetch logo from settings
+  useEffect(() => {
+    API.get('/settings')
+      .then((res) => {
+        if (res.status === 200 && res.data[0]?.app_logo) {
+          setLogo(res.data[0].app_logo)
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch settings logo', err)
+      })
+  }, [])
+
+  // Helper to fix double slashes
+  const getLogoUrl = (path) => {
+    return `${MEDIA_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`
+  }
+
 
   return (
    <>
@@ -41,7 +56,16 @@ const AppSidebar = () => {
 
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-         <img src={mainLogo} className='mainLogo'/>
+         {logo ? (
+          <img
+              src={getLogoUrl(logo)}
+              className="mainLogo"
+              alt="Business Logo"
+              style={{ maxHeight: '40px' }}
+            />
+          ) : (
+            <span className="text-white fw-bold">My App</span> // fallback if no logo
+          )}
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -61,3 +85,4 @@ const AppSidebar = () => {
 }
 
 export default React.memo(AppSidebar)
+

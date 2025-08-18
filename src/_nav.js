@@ -96,20 +96,20 @@ const _nav = [
 
   {
     component: CNavTitle,
-    name: 'Content',
+    name: 'Promotions',
   },
-  {
-    component: CNavItem,
-    name: 'Series',
-    to: '/series',
-    icon: <CIcon icon={cilListNumbered} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Genre',
-    to: '/genre-list',
-    icon: <CIcon icon={cil4k} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Series',
+  //   to: '/series',
+  //   icon: <CIcon icon={cilListNumbered} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Genre',
+  //   to: '/genre-list',
+  //   icon: <CIcon icon={cil4k} customClassName="nav-icon" />,
+  // },
   {
     component: CNavItem,
     name: 'Banner',
@@ -118,10 +118,16 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Reels',
-    to: '/reels-list',
-    icon: <CIcon icon={cil4k} customClassName="nav-icon" />,
+    name: 'Classes',
+    to: '/class-list',
+    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Reels',
+  //   to: '/reels-list',
+  //   icon: <CIcon icon={cil4k} customClassName="nav-icon" />,
+  // },
   // {
   //   component: CNavItem,
   //   name: 'Content Upload',
@@ -156,12 +162,12 @@ const _nav = [
     to: '/settings',
     icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'App Language',
-    to: '/languages',
-    icon: <CIcon icon={cilGlobeAlt} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'App Language',
+  //   to: '/languages',
+  //   icon: <CIcon icon={cilGlobeAlt} customClassName="nav-icon" />,
+  // },
   // {
   //   component: CNavItem,
   //   name: 'Content Language',

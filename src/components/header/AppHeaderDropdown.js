@@ -50,10 +50,14 @@ const AppHeaderDropdown = () => {
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilSettings} className="me-2" />
+        <CDropdownItem onClick={(e) => { e.preventDefault(); navigate('/Settings') }} href="#">
+          <CIcon icon={cilUser} className="me-2" />
           Settings
         </CDropdownItem>
+        {/* <CDropdownItem href="#">
+          <CIcon icon={cilSettings} className="me-2" />
+          Settings
+        </CDropdownItem> */}
 
         <CDropdownDivider />
         <CDropdownItem href="#" onClick={handleLogout}>

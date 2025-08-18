@@ -24,15 +24,20 @@ const GenreAdd = React.lazy(() => import('./views/pages/genre/GenreAdd'))
 const GenreView = React.lazy(() => import('./views/pages/genre/GenreView'))
 const GenreEdit = React.lazy(() => import('./views/pages/genre/GenreEdit'))
 
-const BannerList = React.lazy(() => import('./views/pages/banner/BannerList'));
-const BannerAdd = React.lazy(() => import('./views/pages/banner/BannerAdd'));
-const BannerView = React.lazy(() => import('./views/pages/banner/BannerView'));
-const BannerEdit = React.lazy(() => import('./views/pages/banner/BannerEdit'));
+const BannerList = React.lazy(() => import('./views/pages/banner/BannerList'))
+const BannerAdd = React.lazy(() => import('./views/pages/banner/BannerAdd'))
+const BannerView = React.lazy(() => import('./views/pages/banner/BannerView'))
+const BannerEdit = React.lazy(() => import('./views/pages/banner/BannerEdit'))
 
-const ReelsList = React.lazy(() => import('./views/pages/reels/ReelsList'));
-const ReelsAdd = React.lazy(() => import('./views/pages/reels/ReelsAdd'));
-const ReelsView = React.lazy(() => import('./views/pages/reels/ReelsView'));
-const ReelsEdit = React.lazy(() => import('./views/pages/reels/ReelsEdit'));
+const ClassList = React.lazy(() => import('./views/pages/class/ClassList'))
+const ClassAdd = React.lazy(() => import('./views/pages/class/ClassAdd'))
+const ClassView = React.lazy(() => import('./views/pages/class/ClassView'))
+const ClassEdit = React.lazy(() => import('./views/pages/class/ClassEdit'))
+
+const ReelsList = React.lazy(() => import('./views/pages/reels/ReelsList'))
+const ReelsAdd = React.lazy(() => import('./views/pages/reels/ReelsAdd'))
+const ReelsView = React.lazy(() => import('./views/pages/reels/ReelsView'))
+const ReelsEdit = React.lazy(() => import('./views/pages/reels/ReelsEdit'))
 
 const PushNotification = React.lazy(() => import('./views/pages/push-notification/Create'))
 
@@ -194,47 +199,56 @@ const routes = [
   { path: '/banner-add', name: 'BannerAdd', element: BannerAdd },
   { path: '/banner-edit/:id', name: 'BannerEdit', element: BannerEdit },
 
+  // Classes Routes
+  { path: '/class-list', name: 'ClassList', element: ClassList },
+  { path: '/class-view/:id', name: 'ClassView', element: ClassView },
+  { path: '/class-add', name: 'ClassAdd', element: ClassAdd },
+  { path: '/class-edit/:id', name: 'ClassEdit', element: ClassEdit },
+
   { path: '/reels-list', name: 'ReelsList', element: ReelsList },
   { path: '/reels-add', name: 'ReelsAdd', element: ReelsAdd },
   { path: '/reels-edit/:id', name: 'ReelsEdit', element: ReelsEdit },
   { path: '/reels-view/:id', name: 'ReelsView', element: ReelsView },
 
   { path: '/community', name: 'Community', element: Community },
-  
+
   { path: '/notification-view', name: 'Notification View', element: NotificationView },
   { path: '/payment-management', name: 'Payment Management ', element: PaymentManagement },
   { path: '/settings', name: 'Setting ', element: BusinessSetting },
-  
+
   { path: '/faq', name: 'FAQ ', element: Faq },
   { path: '/add-faq', name: 'Add FAQ ', element: AddFaq },
   { path: '/edit-faq/:id', name: 'Add FAQ ', element: EditFaq },
-  
+
   { path: '/languages', name: 'Language', element: LanguageList },
   { path: '/add-languages', name: 'Language', element: LanguageCreate },
   { path: '/edit-languages/:id', name: 'Language', element: LanguageEdit },
-  
+
   { path: '/content-languages', name: 'Content Language', element: ContentLanguageList },
   { path: '/add-content-languages', name: 'Content Language', element: ContentLanguageCreate },
   { path: '/edit-content-languages/:id', name: 'Content Language', element: ContentLanguageEdit },
 
   { path: '/pages', name: 'Static Pages', element: PageList },
   { path: '/page-edit/:id', name: 'Static Pages', element: PageEdit },
-  
+
   { path: '/push-notification', name: 'Push Notification', element: PushNotification },
 
   { path: '/series', name: 'Series', element: SeriesList },
   { path: '/add-series', name: 'Add Series', element: SeriesAdd },
   { path: '/edit-series/:id', name: 'Edit Series', element: SeriesEdit },
-  
+
   { path: '/series-episodes/:series_id', name: 'Series - Episodes', element: EpisodeList },
   { path: '/add-series-episodes/:series_id', name: 'Add Series - Episodes', element: EpisodeAdd },
-  { path: '/edit-series-episodes/:series_id/:id', name: 'Edit Series - Episodes', element: EpisodeEdit },
+  {
+    path: '/edit-series-episodes/:series_id/:id',
+    name: 'Edit Series - Episodes',
+    element: EpisodeEdit,
+  },
 
   { path: '/history', name: 'Watch History ', element: History },
   { path: '/content-upload', name: 'Content Upload ', element: ContentUpload },
   { path: '/profile', name: 'Profile ', element: Profile },
   { path: '/wishlist', name: 'Wishlist ', element: Wishlist },
-
 ]
 
 export default routes

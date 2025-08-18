@@ -99,7 +99,12 @@ const userSchema = new Schema({
   fcm_id: {
     type: String,
     default: ''
-  }
+  },
+  classStandard: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      required: [true, "Class standard is required"],
+    },
 }, {
   timestamps: {
     createdAt: 'created_at',

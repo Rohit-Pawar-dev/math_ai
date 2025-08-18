@@ -7,6 +7,7 @@ const path = require('path');
 // const logger = require('./logger');
 
 const User = require('./models/User');
+const adminRoutes = require("./routes/AdminRoutes");
 const userRoutes = require('./routes/UserRoutes');
 const authRoutes = require('./routes/AuthRoutes');
 const accountRoutes = require('./routes/AccountRoutes');
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 
 
 // CRUD OPERATION ROUTES
+app.use("/api", adminRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/plan', planRoutes);
 app.use('/api/page', pageRoutes);

@@ -291,7 +291,7 @@ const WidgetsDropdown = (props) => {
           }
         />
       </CCol>
-      <CCol sm={6} xl={4} xxl={3}>
+      <CCol sm={6} xl={4} xxl={3} className="d-none">
         <CWidgetStatsA
           color="danger"
           value={
@@ -479,7 +479,7 @@ const WidgetsDropdown = (props) => {
           }
         />
       </CCol>
-      <CCol sm={6} xl={4} xxl={3}>
+      <CCol sm={6} xl={4} xxl={3} className="d-none">
         <CWidgetStatsA
           color="warning"
           value={

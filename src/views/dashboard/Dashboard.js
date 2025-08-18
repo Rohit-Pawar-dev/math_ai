@@ -416,7 +416,7 @@ const Dashboard = () => {
       </CRow> */}
 
       <CRow>
-        <CCol sm={12} md={12} lg={6} xl={6} xxl={6}>
+        <CCol sm={12} md={12} lg={6} xl={6} xxl={6} className="d-none">
           <CCard>
             <CCardHeader>
               <CCardText>Trending Content</CCardText>
@@ -473,7 +473,7 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol sm={12} md={12} lg={6} xl={6} xxl={6}>
+        <CCol sm={12} md={12} lg={6} xl={6} xxl={6} className="d-none">
           <CCard>
             <CCardHeader>
               <CCardText>New Registered Users</CCardText>
