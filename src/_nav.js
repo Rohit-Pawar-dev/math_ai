@@ -87,12 +87,18 @@ const _nav = [
     to: '/transactions',
     icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'Transactions',
-  //   to: '/payment-management',
-  //   icon: <CIcon icon={cilEuro} customClassName="nav-icon" />,
-  // },
+  {
+    component: CNavItem,
+    name: 'Calculator',
+    to: '/calculator',
+    icon: <CIcon icon={cilEuro} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Cheat Sheet',
+    to: '/cheat-sheet',
+    icon: <CIcon icon={cilEuro} customClassName="nav-icon" />,
+  },
 
   {
     component: CNavTitle,

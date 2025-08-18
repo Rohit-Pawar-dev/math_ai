@@ -26,6 +26,9 @@ const viewRoutes = require('./routes/ViewRoutes');
 const cointransactionRoutes = require('./routes/CointransactionRoutes');
 const homeAppRoutes = require('./routes/HomeAppRoutes');
 const reelRoutes = require('./routes/ReelRoutes');
+const quizRoutes = require('./routes/QuizRoutes');
+const calculatorRoutes = require('./routes/CalculatorRoutes');
+const cheatsheetRoutes = require('./routes/CheatsheetRoutes');
 const nlogger = require('./logger');
 
 app.use(cors());
@@ -62,6 +65,9 @@ app.use('/api/series-view', viewRoutes);
 app.use('/api/coin-transactions', cointransactionRoutes);
 app.use('/api/app-home', homeAppRoutes);
 app.use('/api/reels', reelRoutes);
+app.use('/api/quizes', quizRoutes);
+app.use('/api/calculator', calculatorRoutes);
+app.use('/api/cheat-sheet', cheatsheetRoutes);
 
 // AUTHENTICATION  ROUTES
 app.use('/api', accountRoutes);

@@ -14,6 +14,18 @@ const SubscriptionList = React.lazy(() => import('./views/sidebarMenu/Subscripti
 const viewSubscriber = React.lazy(() => import('./views/pages/subscription/ViewSubscriber'))
 const TransactionsList = React.lazy(() => import('./views/sidebarMenu/Transactions'))
 
+const quizList = React.lazy(() => import('./views/quiz/quizList'))
+const quizCreate = React.lazy(() => import('./views/quiz/quizCreate'))
+const quizEdit = React.lazy(() => import('./views/quiz/quizEdit'))
+
+const calculatorList = React.lazy(() => import('./views/calculator/calculatorList'))
+const calculatorCreate = React.lazy(() => import('./views/calculator/calculatorCreate'))
+const calculatorEdit = React.lazy(() => import('./views/calculator/calculatorEdit'))
+
+const cheatsheetList = React.lazy(() => import('./views/cheat-sheet/cheatsheetList'))
+const cheatsheetCreate = React.lazy(() => import('./views/cheat-sheet/cheatsheetCreate'))
+const cheatsheetEdit = React.lazy(() => import('./views/cheat-sheet/cheatsheetEdit'))
+
 const PlanList = React.lazy(() => import('./views/pages/plan/PlanList'))
 const PlanAdd = React.lazy(() => import('./views/pages/plan/PlanAdd'))
 const PlanView = React.lazy(() => import('./views/pages/plan/PlanView'))
@@ -187,6 +199,18 @@ const routes = [
   { path: '/transactions', name: 'Transactions', element: TransactionsList },
 
   { path: '/notification', name: 'Notifications', element: Notifications },
+
+  { path: '/quizes', name: 'Quiz', element: quizList },
+  { path: '/quizes/create', name: 'Create', element: quizCreate },
+  { path: '/quizes/edit', name: 'Edit', element: quizEdit },
+  
+  { path: '/calculator', name: 'Calculator', element: calculatorList },
+  { path: '/calculator/create', name: 'Create', element: calculatorCreate },
+  { path: '/calculator/edit/:id', name: 'Edit', element: calculatorEdit },
+  
+  { path: '/cheat-sheet', name: 'Cheat Sheet', element: cheatsheetList },
+  { path: '/cheat-sheet/create', name: 'Create', element: cheatsheetCreate },
+  { path: '/cheat-sheet/edit/:id', name: 'Edit', element: cheatsheetEdit },
 
   { path: '/subscription', name: 'Subscription', element: PlanList },
   { path: '/plan-view/:id', name: 'PlanView', element: PlanView },
