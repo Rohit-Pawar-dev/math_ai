@@ -122,6 +122,12 @@ const _nav = [
     to: '/class-list',
     icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'FeedBacks',
+    to: '/feedback-list',
+    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
+  },
   // {
   //   component: CNavItem,
   //   name: 'Reels',
