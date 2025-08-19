@@ -43,7 +43,7 @@ exports.createUser = async (req, res) => {
       name,
       email,
       mobile,
-      password: hashedPassword, // store hashed
+      password: hashedPassword, 
       status,
       classStandard,
       profilePicture: req.file ? `/uploads/users/${req.file.filename}` : '',

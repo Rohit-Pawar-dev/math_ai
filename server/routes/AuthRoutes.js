@@ -4,21 +4,17 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Create
 // Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid email' });
 
-    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
 
-    // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
@@ -31,17 +27,35 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    var post = req.body;
-    const user = await User.create(post);
+    const { name, email, password, mobile, status, classStandard } = req.body;
 
-    // Generate token
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
+    if (existingUser) {
+      return res.status(409).json({ status: false, message: 'User already exists' });
+    }
+
+    let hashedPassword = '';
+    if (password && password.trim() !== '') {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(password, salt);
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      mobile,
+      password: hashedPassword,
+      status,
+      classStandard,
+    });
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
 
-    res.status(201).json({status:true, message:'User Registered succesfully', token});
+    res.status(201).json({ status: true, message: 'User registered successfully', token });
   } catch (err) {
-    res.status(400).json({status:false, message: err.message, token:'' });
+    res.status(400).json({ status: false, message: err.message, token: '' });
   }
 });
 
@@ -51,7 +65,7 @@ router.post('/send-otp', async (req, res) => {
     
     let otp = Math.floor(1000 + Math.random() * 9000);
     if(type == 'login') {
-      // Find user
+
       const user = await User.findOne({ mobile });
       if (!user) return res.status(400).json({ status: false, otp:'', message: 'Invalid mobile or user not registered' });
   
@@ -76,15 +90,12 @@ router.post('/verify-otp', async (req, res) => {
   try {
     const { mobile, otp } = req.body;
 
-    // Find user
     const user = await User.findOne({ mobile });
     if (!user) return res.status(400).json({ status: false, otp:'', message: 'Invalid mobile or user not registered' });
 
-    // Compare passwords
     const isMatch = otp == user.otp;
     if (!isMatch) return res.status(400).json({ status: false, message: 'Invalid OTP' });
 
-    // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
