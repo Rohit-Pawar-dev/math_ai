@@ -79,6 +79,36 @@ const _nav = [
     icon: <i className="fa fa-list"></i>,
   },
   {
+    component: CNavItem,
+    name: 'FeedBacks',
+    to: '/feedback-list',
+    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
+  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Reels',
+  //   to: '/reels-list',
+  //   icon: <CIcon icon={cil4k} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Content Upload',
+  //   to: '/content-upload',
+  //   icon: <CIcon icon={cilMovie} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Manage Genres',
+  //   to: '/',
+  //   icon: <CIcon icon={cilMovie} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Watchlist',
+  //   to: '/wishlist',
+  //   icon: <CIcon icon={cilHeart} customClassName="nav-icon" />,
+  // },
+  {
     component: CNavTitle,
     name: 'Settings',
   },

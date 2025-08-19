@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
-import { cilPencil, cilTrash } from '@coreui/icons'
+import { cilTrash } from '@coreui/icons'
 import API from '../../../api'
 import Swal from 'sweetalert2'
 import eyeIcon from '../../../assets/images/eyeIcon.svg'
-import defaultImage from '../../../assets/images/default.png'
 
-const BannerList = () => {
-  const [banners, setBanners] = useState([])
+const FeedbackList = () => {
+  const [feedbacks, setFeedbacks] = useState([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
   const limit = 10
 
-  const fetchBanners = async (pageNo = 1, searchText = '') => {
+  const fetchFeedbacks = async (pageNo = 1, searchText = '') => {
     try {
       const offset = (pageNo - 1) * limit
-      const res = await API.get(`/banners?limit=${limit}&offset=${offset}&search=${searchText}`)
+      const res = await API.get(`/feedbacks?limit=${limit}&offset=${offset}&search=${searchText}`)
+    //   console.log('response from feedbacks:', res.data.data);
+      
       if (res.data.status) {
-        setBanners(res.data.data)
+        setFeedbacks(res.data.data)
         setTotalPages(res.data.totalPages)
       }
     } catch (err) {
@@ -30,12 +31,12 @@ const BannerList = () => {
   }
 
   useEffect(() => {
-    fetchBanners(page, search)
+    fetchFeedbacks(page, search)
   }, [page])
 
   const handleSearch = () => {
     setPage(1)
-    fetchBanners(1, search)
+    fetchFeedbacks(1, search)
   }
 
   const handleDelete = (id) => {
@@ -49,45 +50,30 @@ const BannerList = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        API.delete(`/banners/${id}`)
+        API.delete(`/feedbacks/${id}`)
           .then((res) => {
             if (res.status === 200) {
-              Swal.fire('Deleted!', 'The banner has been deleted.', 'success').then(() => {
-                setBanners((prev) => prev.filter((b) => b._id !== id))
+              Swal.fire('Deleted!', 'The feedback has been deleted.', 'success').then(() => {
+                setFeedbacks((prev) => prev.filter((f) => f._id !== id))
               })
             }
           })
           .catch(() => {
-            Swal.fire('Error', 'Failed to delete the banner', 'error')
+            Swal.fire('Error', 'Failed to delete the feedback', 'error')
           })
       }
     })
-  }
-
-  const handleStatusToggle = async (banner) => {
-    const updatedStatus = banner.status === 'active' ? 'inactive' : 'active'
-    try {
-      const response = await API.put(`/banners/${banner._id}`, { status: updatedStatus })
-      if (response.status === 200) {
-        Swal.fire('Success', 'Banner status updated successfully!', 'success')
-        setBanners((prev) =>
-          prev.map((b) => (b._id === banner._id ? { ...b, status: updatedStatus } : b)),
-        )
-      }
-    } catch (err) {
-      Swal.fire('Error', err.response?.data?.error || err.message, 'error')
-    }
   }
 
   return (
     <section className="tableSection">
       <div className="card">
         <div className="card-body">
-          <div className="searchFeald">
+          {/* <div className="searchFeald">
             <div className="searchBox">
               <input
                 type="text"
-                placeholder="Search by title"
+                placeholder="Search by user/message"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -100,73 +86,43 @@ const BannerList = () => {
                 Search
               </button>
             </div>
-            <div className="searchBtn">
-              <NavLink to={'/banner-add'}>
-                <button className="btn btn-outline-warning active" type="button">
-                  Add Banner
-                </button>
-              </NavLink>
-            </div>
-          </div>
+          </div> */}
           <div className="container-fliud">
-            <h2>All Banners</h2>
+            <h2>All Feedbacks</h2>
             <div className="mainContent">
               <table>
                 <thead>
                   <tr>
                     <th>SL</th>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Status</th>
+                    <th>User</th>
+                    <th>Message</th>
+                    <th>Response</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.length === 0 ? (
+                  {feedbacks.length === 0 ? (
                     <tr>
                       <td colSpan={5} style={{ textAlign: 'center' }}>
-                        No banners found
+                        No feedbacks found
                       </td>
                     </tr>
                   ) : (
-                    banners.map((banner, index) => (
-                      <tr key={banner._id}>
+                    feedbacks.map((fb, index) => (
+                      <tr key={fb._id}>
                         <td>{(page - 1) * limit + (index + 1)}</td>
-                        <td>
-                          <img
-                            src={banner.image || defaultImage}
-                            alt="Banner"
-                            width="100px"
-                            onError={(e) => {
-                              e.target.onerror = null
-                              e.target.src = defaultImage
-                            }}
-                          />
-                        </td>
-
-                        <td>{banner.title}</td>
-                        <td>
-                          <label className="switch">
-                            <input
-                              type="checkbox"
-                              onChange={() => handleStatusToggle(banner)}
-                              checked={banner.status === 'active'}
-                            />
-                            <span className="slider"></span>
-                          </label>
-                        </td>
+                        <td>{fb.user_id?.name || 'N/A'}</td>
+                        <td>{fb.description}</td>
+                        <td>{fb.response ? fb.response : <span style={{ color: 'red' }}>Pending</span>}</td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/banner-view/${banner._id}`}>
+                            <NavLink to={`/feedback-view/${fb._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
-                            </NavLink>
-                            <NavLink to={`/banner-edit/${banner._id}`}>
-                              <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                             </NavLink>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDelete(banner._id)}
-                              title="Delete Banner"
+                              onClick={() => handleDelete(fb._id)}
+                              title="Delete Feedback"
                             >
                               <CIcon icon={cilTrash} custom="true" className="nav-icon" />
                             </button>
@@ -218,4 +174,4 @@ const BannerList = () => {
   )
 }
 
-export default BannerList
+export default FeedbackList

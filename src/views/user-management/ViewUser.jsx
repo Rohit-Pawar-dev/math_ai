@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import API from '../../api'
 import Swal from 'sweetalert2'
+import defaultImage from '../../assets/images/default.png'
 
 const ViewUser = () => {
   const { id } = useParams()
@@ -88,6 +89,19 @@ const ViewUser = () => {
                       </div>
                     </div>
                     <div className="col-md-6">
+                      {user.classStandard && (
+                        <div className="form-group mb-4">
+                          <label className="mb-2">Class / Standard</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={user.classStandard.name}
+                            readOnly
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="col-md-6">
                       <div className="form-group mb-4">
                         <label className="mb-2">Status</label>
                         <input
@@ -98,14 +112,32 @@ const ViewUser = () => {
                         />
                       </div>
                     </div>
-                    {user.profilePicture && (
+                    {user.profilePicture ? (
                       <div className="col-md-6">
                         <div className="form-group mb-4">
                           <label className="mb-2">User Image</label>
                           <div>
                             <img
-                              src={`../server/${user.profilePicture}`}
+                              src={user.profilePicture} // update this URL to your actual server URL path
                               alt="Profile"
+                              width="150px"
+                              className="img-thumbnail"
+                              onError={(e) => {
+                                e.target.onerror = null
+                                e.target.src = defaultImage
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-md-6">
+                        <div className="form-group mb-4">
+                          <label className="mb-2">User Image</label>
+                          <div>
+                            <img
+                              src={defaultImage}
+                              alt="Default Profile"
                               width="150px"
                               className="img-thumbnail"
                             />

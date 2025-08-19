@@ -100,11 +100,19 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
+<<<<<<< HEAD
   // classStandard: {
   //     type: mongoose.Schema.Types.ObjectId,
   //     ref: "Class",
   //     required: [true, "Class standard is required"],
   //   },
+=======
+  classStandard: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      default: null
+    },
+>>>>>>> 5b924e16dd7d094a7f724d6f930450d06e7a7942
 }, {
   timestamps: {
     createdAt: 'created_at',
@@ -112,32 +120,32 @@ const userSchema = new Schema({
   }
 });
 
-// 🔐 Hash password before saving (Create)
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next(); // only hash if changed
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
+// // 🔐 Hash password before saving (Create)
+// userSchema.pre('save', async function (next) {
+//   if (!this.isModified('password')) return next(); // only hash if changed
+//   try {
+//     const salt = await bcrypt.genSalt(10);
+//     this.password = await bcrypt.hash(this.password, salt);
+//     next();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
-// 🔐 Hash password before updating (Update)
-userSchema.pre('findOneAndUpdate', async function (next) {
-  const update = this.getUpdate();
-  if (update.password) {
-    const salt = await bcrypt.genSalt(10);
-    update.password = await bcrypt.hash(update.password, salt);
-  }
-  update.updated_at = new Date(); // just in case timestamps miss this
-  this.setUpdate(update);
-  next();
-});
+// // 🔐 Hash password before updating (Update)
+// userSchema.pre('findOneAndUpdate', async function (next) {
+//   const update = this.getUpdate();
+//   if (update.password) {
+//     const salt = await bcrypt.genSalt(10);
+//     update.password = await bcrypt.hash(update.password, salt);
+//   }
+//   update.updated_at = new Date(); // just in case timestamps miss this
+//   this.setUpdate(update);
+//   next();
+// });
 
-userSchema.methods.comparePassword = async function (plainPassword) {
-  return bcrypt.compare(plainPassword, this.password);
-};
+// userSchema.methods.comparePassword = async function (plainPassword) {
+//   return bcrypt.compare(plainPassword, this.password);
+// };
 
 module.exports = mongoose.model('User', userSchema);

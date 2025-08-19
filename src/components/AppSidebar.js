@@ -64,7 +64,7 @@ const AppSidebar = () => {
               style={{ maxHeight: '40px' }}
             />
           ) : (
-            <span className="text-white fw-bold">My App</span> // fallback if no logo
+            <span className="text-white fw-bold">My App</span> 
           )}
         </CSidebarBrand>
         <CCloseButton
