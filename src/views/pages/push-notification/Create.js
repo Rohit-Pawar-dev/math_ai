@@ -17,7 +17,6 @@ const PlanEdit = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       // setBase64Image(reader.result); // base64 string
-      console.log(reader.result);    // ⬅️ logs the base64 image
 
       setForm({...form, image:reader.result})
       setLoading(false)

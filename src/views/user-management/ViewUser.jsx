@@ -31,7 +31,6 @@ const ViewUser = () => {
         .then((res) => {
           if (res.status === 200) {
             setPlan(res.data)
-            // console.log('Plan data:', res.data);
           }
         })
         .catch((err) => {

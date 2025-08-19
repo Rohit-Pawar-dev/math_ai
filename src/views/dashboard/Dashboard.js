@@ -70,15 +70,12 @@ const Dashboard = () => {
   const [loader, setLoader] = useState(true)
   const { user } = useSelector(state => state.auth)
 
-  console.log(user)
 
   useEffect(() => {
     API.get('dashboard').then((res) => {
-      console.log('res --------- ', res)
       setStatistic(res.data.data[0])
       setLoader(false)
     }).catch((err) => {
-      console.log('err --------- ', err)
       setLoader(false)
     })
   }, [])

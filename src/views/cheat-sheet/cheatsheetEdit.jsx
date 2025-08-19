@@ -27,7 +27,6 @@ const cheatsheetEdit = () => {
         }
       })
       .catch((err) => {
-        console.log('err -------------- ', '')
         Swal.fire(err.code, err.response.data.error, 'error')
       })
   }
@@ -40,7 +39,6 @@ const cheatsheetEdit = () => {
         }
       })
       .catch((err) => {
-        console.log('err -------------- ', err.message)
         Swal.fire(err.code, err.message, 'error')
       })
   }, [])

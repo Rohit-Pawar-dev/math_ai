@@ -18,7 +18,6 @@ const FeedbackList = () => {
     try {
       const offset = (pageNo - 1) * limit
       const res = await API.get(`/feedbacks?limit=${limit}&offset=${offset}&search=${searchText}`)
-    //   console.log('response from feedbacks:', res.data.data);
       
       if (res.data.status) {
         setFeedbacks(res.data.data)

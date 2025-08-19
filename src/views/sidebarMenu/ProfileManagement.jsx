@@ -182,7 +182,6 @@ const ProfileManagement = () => {
                                 className="btn btn-sm btn-danger"
                                 onClick={() => handleDelete(user._id)}
                                 title="Delete User"
-                                style={{ marginLeft: '10px' }}
                               >
                                 <CIcon icon={cilTrash} className="nav-icon" />
                               </button>

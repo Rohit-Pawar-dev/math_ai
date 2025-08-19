@@ -29,7 +29,6 @@ const cheatsheetCreate = () => {
         }
       })
       .catch((err) => {
-        console.log('err -------------- ', '')
         Swal.fire(err.code, err.response.data.error, 'error')
       })
   }

@@ -8,7 +8,6 @@ router.post('/', auth, async (req, res) => {
   try {
     var post = req.body;
 
-    console.log('post --------------- ', post)
 
     // const user = await CoinTransaction.create(post);
     res.status(201).json(post);

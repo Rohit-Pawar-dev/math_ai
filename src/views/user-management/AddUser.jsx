@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import API from '../../api'
 import Swal from 'sweetalert2'
 import defaultImage from '../../assets/images/default.png' // ✅ fallback image
+import { useNavigate } from 'react-router-dom';
 
 const AddUser = () => {
   const [form, setForm] = useState({
@@ -14,6 +15,7 @@ const AddUser = () => {
     classStandard: '',
   })
 
+  const navigate = useNavigate();
   const [profilePicture, setProfilePicture] = useState(null)
   const [passwordError, setPasswordError] = useState('')
   const [classes, setClasses] = useState([])
@@ -50,7 +52,7 @@ const AddUser = () => {
       formData.append('mobile', form.mobile)
       formData.append('password', form.password)
       formData.append('status', form.status)
-      formData.append('classStandard', form.classStandard);
+      formData.append('classStandard', form.classStandard)
 
       if (profilePicture) {
         formData.append('profilePicture', profilePicture)
@@ -75,6 +77,9 @@ const AddUser = () => {
         })
 
         setProfilePicture(null)
+
+        // Navigate to /users
+        navigate('/users')
       }
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message

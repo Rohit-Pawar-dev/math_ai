@@ -10,7 +10,6 @@ const CKEditor4 = ({ value = '', onChange }) => {
     }
 
     const editor = window.CKEDITOR.replace(editorRef.current);
-    console.log('value in init ', value)
     editor.setData(value);
 
     editor.on('change', function () {

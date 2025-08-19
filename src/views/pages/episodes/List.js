@@ -32,7 +32,6 @@ const List = () => {
         if (res.status == 200) {
           setSeries(res.data)
 
-          console.log()
         }
       })
       .catch((err) => console.error(err))
@@ -40,7 +39,6 @@ const List = () => {
 
 
 
-  // console.log('lists -------- ', plans)
 
   const handleDelete = (id) => {
     Swal.fire({

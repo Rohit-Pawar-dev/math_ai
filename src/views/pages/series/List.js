@@ -12,14 +12,12 @@ const List = () => {
       .then((res) => {
         if (res.status == 200) {
           setSeries(res.data)
-          console.log('series data -------- ', res.data);
           
         }
       })
       .catch((err) => console.error(err))
   }, [])
 
-  // console.log('lists -------- ', plans)
 
   const handleDelete = (id) => {
     Swal.fire({

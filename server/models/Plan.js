@@ -26,11 +26,7 @@ const planSchema = new Schema({
     required: [true],
     default:'percent'
   },
-  coins: {
-    type: String,
-    required: [true],
-    default:'0'
-  },
+ 
   validity_time: {
     type: String,
     required: [true],

@@ -11,7 +11,6 @@ const PlanAdd = () => {
     amount: '0',
     discount: '0',
     discount_type: 'percent',
-    coins: '0',
     validity_time: '5',
     validity_type: 'day',
     status: 'active',
@@ -106,17 +105,6 @@ const PlanAdd = () => {
                   <option value="percent">Percent</option>
                   <option value="fixed">Flat</option>
                 </select>
-              </div>
-              <div className="my-2 col-md-6">
-                <label>Coins</label>
-                <input
-                  type="text"
-                  name="coins"
-                  className="form-control"
-                  value={formData.coins}
-                  onChange={handleChange}
-                  required
-                />
               </div>
               <div className="my-2 col-md-6">
                 <label>Validity Time</label>

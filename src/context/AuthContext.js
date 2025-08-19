@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
           await API.get('/users') // Replace with actual API route
             .then(res => {
               if(res.status == 200) {
-                // console.log('res.data ------------', res.data)
                 dispatch(updateUserLists(res.data))
               }
             })

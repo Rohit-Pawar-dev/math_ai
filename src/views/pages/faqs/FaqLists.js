@@ -13,7 +13,6 @@ const FaqList = () => {
   useEffect(function(){
     API.get('/page') // Replace with actual API route
       .then(res => {
-        console.log('res ---------------- ', res, res.status)
         if(res.status == 200) {            
           setPage(res.data)
         }

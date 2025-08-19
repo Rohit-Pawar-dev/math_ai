@@ -35,7 +35,6 @@ const sendNotification = async (title, description, tokens = [], image = '') => 
 
     try {
         const response = await messaging.sendMulticast(message);
-        console.log(`✅ Sent to ${response.successCount} users, failed for ${response.failureCount}`);
 
         if (response.failureCount > 0) {
             response.responses.forEach((resp, idx) => {
