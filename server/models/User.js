@@ -100,19 +100,11 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
-<<<<<<< HEAD
-  // classStandard: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Class",
-  //     required: [true, "Class standard is required"],
-  //   },
-=======
   classStandard: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
       default: null
     },
->>>>>>> 5b924e16dd7d094a7f724d6f930450d06e7a7942
 }, {
   timestamps: {
     createdAt: 'created_at',
