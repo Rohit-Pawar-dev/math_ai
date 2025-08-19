@@ -40,7 +40,7 @@ exports.getBanners = async (req, res) => {
     const banners = await Banner.find(query)
       .skip(offset)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort({ created_at: -1 });
 
     const data = banners.map((banner) => ({
       ...banner.toObject(),

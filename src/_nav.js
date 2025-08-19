@@ -15,6 +15,14 @@ const _nav = [
     component: CNavTitle,
     name: 'User Management',
   },
+
+  {
+    component: CNavItem,
+    name: 'Classes',
+    to: '/class-list',
+    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
+  },
+  
   {
     component: CNavItem,
     name: 'Users',
@@ -72,12 +80,16 @@ const _nav = [
     to: '/banner-list',
     icon: <i className="fa fa-image"></i>,
   },
+
   {
     component: CNavItem,
     name: 'Classes',
     to: '/class-list',
     icon: <i className="fa fa-list"></i>,
+    component: CNavTitle,
+    name: 'Feedback Management',
   },
+
   {
     component: CNavItem,
     name: 'FeedBacks',

@@ -120,32 +120,4 @@ const userSchema = new Schema({
   }
 });
 
-// // 🔐 Hash password before saving (Create)
-// userSchema.pre('save', async function (next) {
-//   if (!this.isModified('password')) return next(); // only hash if changed
-//   try {
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// // 🔐 Hash password before updating (Update)
-// userSchema.pre('findOneAndUpdate', async function (next) {
-//   const update = this.getUpdate();
-//   if (update.password) {
-//     const salt = await bcrypt.genSalt(10);
-//     update.password = await bcrypt.hash(update.password, salt);
-//   }
-//   update.updated_at = new Date(); // just in case timestamps miss this
-//   this.setUpdate(update);
-//   next();
-// });
-
-// userSchema.methods.comparePassword = async function (plainPassword) {
-//   return bcrypt.compare(plainPassword, this.password);
-// };
-
 module.exports = mongoose.model('User', userSchema);

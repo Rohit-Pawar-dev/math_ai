@@ -29,7 +29,6 @@ router.post('/:series_id', upload.single("zip_file"), async (req, res) => {
     if (!series_id || !mongoose.Types.ObjectId.isValid(series_id)) {
       return res.status(400).json({ success: false, message: "Invalid or missing series_id" });
     }
-    console.log('req ------------- ', req)
 
     const zipPath = req.file.path;
     // Extract ZIP
@@ -61,19 +60,15 @@ router.post('/:series_id', upload.single("zip_file"), async (req, res) => {
         })
       }
     });
-    console.log("Received:", req.file.originalname, req.file.path, episodeArr);
 
     // for (const episode of episodeArr) {
-    //   console.log("🔥 Checking episode:", episode);
     //   if (!episode.series || episode.series === '') {
     //     console.error("🔥 BAD EPISODE SERIES:", episode);
     //     continue;
     //   }
     // }
 
-    console.log("📦 Final episode array:");
     episodeArr.forEach(async (ep, idx) => {
-      console.log(`[${idx}] episode_number: ${ep.episode_number}, series: ${ep.series}`)
       await Episode.updateOne(
         { series: seriesId, episode_number: ep.episode_number },
         { $set: ep },
@@ -83,7 +78,6 @@ router.post('/:series_id', upload.single("zip_file"), async (req, res) => {
     res.json({ status: true, episodes: extractedFiles });
   } catch (err) {
 
-    console.log('err ------------- ', err)
 
     res.status(400).json({ error: err.message });
   }

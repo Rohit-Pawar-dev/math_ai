@@ -10,7 +10,6 @@ const List = () => {
   useEffect(function () {
     API.get('/content-languages') // Replace with actual API route
       .then((res) => {
-        // console.log('res ---------------- ', res, res.status)
         if (res.status == 200) {
           setLanguage(res.data)
         }
@@ -18,7 +17,6 @@ const List = () => {
       .catch((err) => console.error(err))
   }, [])
 
-  // console.log('lists -------- ', plans)
 
   const handleDelete = (id) => {
     Swal.fire({

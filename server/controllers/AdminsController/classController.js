@@ -60,13 +60,13 @@ exports.getAllClasses = async (req, res) => {
     const offset = parseInt(req.query.offset) || 0
 
     const filter = {
-      ...(status ? { status } : {}), // Only filter by status if provided
+      ...(status ? { status } : {}), 
       name: { $regex: search, $options: 'i' },
     }
 
     const total = await Class.countDocuments(filter)
 
-    const classes = await Class.find(filter).sort({ createdAt: -1 }).skip(offset).limit(limit)
+    const classes = await Class.find(filter).sort({ createdAt: -1 }).skip(offset).limit(limit).sort({ created_at: -1 });
 
     res.json({
       status: true,

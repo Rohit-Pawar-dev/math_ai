@@ -56,7 +56,6 @@ const Login = () => {
   };
 
   const handleRedirection = () => {
-    console.log('handleRedirection', 'handleRedirection')
     navigate('/forgot-password');
 
   }

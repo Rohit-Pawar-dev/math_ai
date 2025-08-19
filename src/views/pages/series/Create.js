@@ -11,7 +11,6 @@ const Create = () => {
   const [activeTab, setActiveTab] = useState('en')
   const [languages, setLanguages] = useState([])
   const [genreOptions, setGenreOptions] = useState([])
-console.log('genreOptions', genreOptions);
 
   const [form, setForm] = useState({
     title: {},
@@ -96,7 +95,6 @@ console.log('genreOptions', genreOptions);
     const reader = new FileReader();
     reader.onloadend = () => {
       // setBase64Image(reader.result); // base64 string
-      console.log(reader.result);    // ⬅️ logs the base64 image
 
       setForm({...form, thumbnailUrl:{...form.thumbnailUrl, [code]:reader.result}})
 

@@ -8,7 +8,6 @@ import eyeIcon from '../../../assets/images/eyeIcon.svg'
 
 const ReelsList = () => {
   const [reels, setReels] = useState([])
-//   console.log(reels)
 
   useEffect(() => {
     API.get('/reels')

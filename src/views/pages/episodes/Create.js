@@ -24,7 +24,6 @@ const Create = () => {
       }
     })
     .catch((err) => {
-      console.log('err --------------------', err)
     })
     API.get('/genre').then((res) => {
       if(res.status == 200) {
@@ -32,11 +31,9 @@ const Create = () => {
       }
     })
     .catch((err) => {
-      console.log('err --------------------', err)
     })
   }, [])
 
-  console.log('form ------------- ', form)
 
   const handleSubmit = async (e) => {
     e.preventDefault()

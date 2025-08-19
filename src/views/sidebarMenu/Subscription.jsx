@@ -8,46 +8,45 @@ import Swal from 'sweetalert2'
 
 const Subscription = () => {
   const [subscriptions, setSubscriptions] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const [filteredSubscriptions, setFilteredSubscriptions] = useState([])
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    API.get('/subscribers')
-      .then((res) => {
-        if (res.status === 200) {
-          const filtered = res.data.filter((item) => item.user_id[0]?.role !== 'admin')
-          setSubscriptions(filtered)
-          setFilteredSubscriptions(filtered)
-        }
-      })
-      .catch((err) => console.error(err))
-  }, [])
+  const limit = 10
 
-  // Automatically filter as searchQuery changes
+  const fetchSubscriptions = async (pageNo = 1, searchText = '') => {
+    try {
+      const offset = (pageNo - 1) * limit
+      const res = await API.get(`/subscribers?limit=${limit}&offset=${offset}&search=${searchText}`)
+      if (res.data.status) {
+        // filter out admin users here
+        const filtered = res.data.data.filter((item) => item.user_id?.role !== 'admin')
+        setSubscriptions(filtered)
+        setTotalPages(res.data.totalPages)
+      }
+    } catch (err) {
+      Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+    }
+  }
+
   useEffect(() => {
-    const query = searchQuery.toLowerCase()
-    const result = subscriptions.filter((item) => {
-      const title = item.plan_id?.[0]?.title?.toLowerCase() || ''
-      const userName = item.user_id?.[0]?.name?.toLowerCase() || ''
-      return title.includes(query) || userName.includes(query)
-    })
-    setFilteredSubscriptions(result)
-  }, [searchQuery, subscriptions])
+    fetchSubscriptions(page, search)
+  }, [page])
+
+  const handleSearch = () => {
+    setPage(1)
+    fetchSubscriptions(1, search)
+  }
 
   const handleStatusToggle = async (item) => {
-    const updatedStatus = item.status == 1 ? 0 : 1
-
+    const updatedStatus = item.status === 1 ? 0 : 1
     try {
-      const response = await API.put(`/subscribers/${item._id}`, {
-        status: updatedStatus,
-      })
-
+      const response = await API.put(`/subscribers/${item._id}`, { status: updatedStatus })
       if (response.status === 200) {
-        Swal.fire('Success', 'status updated successfully!', 'success')
-
+        Swal.fire('Success', 'Status updated successfully!', 'success')
         setSubscriptions((prev) =>
-          prev.map((b) => (b._id === item._id ? { ...b, status: updatedStatus } : b)),
+          prev.map((s) => (s._id === item._id ? { ...s, status: updatedStatus } : s)),
         )
       }
     } catch (err) {
@@ -64,16 +63,20 @@ const Subscription = () => {
               <input
                 type="text"
                 placeholder="Search by title or user name"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
-            </div>
-            <div className="searchBtn">
-              <button className="btn btn-outline-secondary" type="button">
-                Export
+              <button
+                className="btn btn-outline-warning active"
+                type="button"
+                onClick={handleSearch}
+              >
+                Search
               </button>
             </div>
           </div>
+
           <div className="container-fliud">
             <h2>All Subscriptions</h2>
             <div className="mainContent">
@@ -88,22 +91,24 @@ const Subscription = () => {
                     <th>Payment Method</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>Status</th>
+                    {/* <th>Status</th> */}
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredSubscriptions.length === 0 ? (
+                  {subscriptions.length === 0 ? (
                     <tr>
-                      <td colSpan="10">No subscriptions found...</td>
+                      <td colSpan="10" style={{ textAlign: 'center' }}>
+                        No subscriptions found...
+                      </td>
                     </tr>
                   ) : (
-                    filteredSubscriptions.map((item, index) => {
-                      const plan = item.plan_id?.[0]
-                      const user = item.user_id?.[0]
+                    subscriptions.map((item, index) => {
+                      const plan = item.plan
+                      const user = item.user
                       return (
                         <tr key={item._id}>
-                          <td>{index + 1}</td>
+                          <td>{(page - 1) * limit + (index + 1)}</td>
                           <td>{plan?.title || 'N/A'}</td>
                           <td>₹ {plan?.amount || 'N/A'}</td>
                           <td>{user?.name || 'N/A'}</td>
@@ -111,31 +116,28 @@ const Subscription = () => {
                           <td>{item.payment_method}</td>
                           <td>{new Date(item.start_date).toLocaleDateString()}</td>
                           <td>{new Date(item.end_date).toLocaleDateString()}</td>
-                          <td>
+                          {/* <td>
                             <label className="switch">
                               <input
                                 type="checkbox"
-                                id="toggleCheckbox"
                                 onChange={() => handleStatusToggle(item)}
-                                checked={item.status == 1}
+                                checked={item.status === 1}
                               />
-
                               <span className="slider"></span>
                             </label>
-                          </td>
+                          </td> */}
                           <td>
                             <div className="actionTable">
                               <img
                                 src={eyeIcon}
                                 style={{ cursor: 'pointer' }}
-                                custom="true"
                                 onClick={() =>
                                   navigate('/view-subscriber', {
                                     state: { subscription: item },
                                   })
                                 }
                                 className="eyeIconClass"
-                                alt=""
+                                alt="view"
                               />
                             </div>
                           </td>
@@ -145,6 +147,39 @@ const Subscription = () => {
                   )}
                 </tbody>
               </table>
+
+              {/* Pagination Controls */}
+              <div className="paginationControls">
+                <button
+                  className="btn btn-outline-secondary"
+                  disabled={page === 1}
+                  onClick={() => setPage(page - 1)}
+                >
+                  Prev
+                </button>
+
+                {[...Array(totalPages)].map((_, i) => {
+                  const pageNumber = i + 1
+                  return (
+                    <button
+                      key={pageNumber}
+                      className={`btn ${page === pageNumber ? 'btn-warning' : 'btn-outline-secondary'}`}
+                      onClick={() => setPage(pageNumber)}
+                      style={{ margin: '0 5px' }}
+                    >
+                      {pageNumber}
+                    </button>
+                  )
+                })}
+
+                <button
+                  className="btn btn-outline-secondary"
+                  disabled={page === totalPages}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>

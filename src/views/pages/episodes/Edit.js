@@ -22,7 +22,6 @@ const Edit = () => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
     const year = date.getFullYear();
-    console.log('date formate ------------------ ', `${day}-${month}-${year}`)
     return `${year}-${month}-${day}`;
   };
 
@@ -33,7 +32,6 @@ const Edit = () => {
       }
     })
     .catch((err) => {
-      console.log('err --------------------', err)
     })
     API.get('/languages').then((res) => {
       if(res.status == 200) {
@@ -41,7 +39,6 @@ const Edit = () => {
       }
     })
     .catch((err) => {
-      console.log('err --------------------', err)
     })
     API.get('/genre').then((res) => {
       if(res.status == 200) {
@@ -53,7 +50,6 @@ const Edit = () => {
     })
   }, [])
 
-  console.log('form ------------- ', form)
 
   const handleImageUpload = (e, code) => {
     const file = e.target.files[0];
@@ -62,7 +58,6 @@ const Edit = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       // setBase64Image(reader.result); // base64 string
-      console.log(reader.result);    // ⬅️ logs the base64 image
 
       setForm({...form, thumbnailUrl:{...form.thumbnailUrl, [code]:reader.result}})
 

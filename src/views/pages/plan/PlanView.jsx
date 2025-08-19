@@ -40,7 +40,6 @@ const PlanView = () => {
             <Detail label="Title" value={plan.title} />
             <Detail label="Amount" value={`₹ ${plan.amount}`} />
             {/* <Detail label="Discount" value={`${plan.discount} (${plan.discount_type})`} /> */}
-            <Detail label="Benifit" value={plan.coins} />
             <Detail label="Validity" value={`${plan.validity_time} ${plan.validity_type}`} />
             <Detail label="Status" value={plan.status} />
             <div className="col-md-12 mb-3">
