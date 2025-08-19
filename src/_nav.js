@@ -1,3 +1,4 @@
+import CIcon from '@coreui/icons-react'
 import { CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
@@ -14,13 +15,6 @@ const _nav = [
   {
     component: CNavTitle,
     name: 'User Management',
-  },
-
-  {
-    component: CNavItem,
-    name: 'Classes',
-    to: '/class-list',
-    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
   
   {
@@ -45,11 +39,22 @@ const _nav = [
     to: '/subscribers',
     icon: <i className="fa fa-user"></i>,
   },
+  
   {
     component: CNavItem,
     name: 'Transactions',
     to: '/transactions',
     icon: <i className="fa fa-rupee"></i>,
+  },
+  {
+    component: CNavTitle,
+    name: 'Content Management',
+  },
+  {
+    component: CNavItem,
+    name: 'Classes',
+    to: '/class-list',
+    icon: <i class="fa-solid fa-landmark"></i>,
   },
   {
     component: CNavItem,
@@ -82,10 +87,6 @@ const _nav = [
   },
 
   {
-    component: CNavItem,
-    name: 'Classes',
-    to: '/class-list',
-    icon: <i className="fa fa-list"></i>,
     component: CNavTitle,
     name: 'Feedback Management',
   },
@@ -94,7 +95,7 @@ const _nav = [
     component: CNavItem,
     name: 'FeedBacks',
     to: '/feedback-list',
-    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
+    icon: <i className="fa fa-list"></i>,
   },
   // {
   //   component: CNavItem,

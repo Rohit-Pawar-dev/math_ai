@@ -71,7 +71,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // nlogger.info('Hitting socket -------------------- ')
 
-<<<<<<< HEAD
 mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 })
 .then(() => {
   console.log('MongoDB connected'),
@@ -81,12 +80,6 @@ mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 })
   console.error(err),
   nlogger.info(err)
 });
-=======
-mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 }).then(() => {
-  console.log('MongoDB connected')
-  // nlogger.info('New client connected | ')    
-}).catch(err => {console.error(err), nlogger.info(err)});
->>>>>>> 5b924e16dd7d094a7f724d6f930450d06e7a7942
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));
