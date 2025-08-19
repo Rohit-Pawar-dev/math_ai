@@ -1,9 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
 import { CSpinner, useColorModes } from '@coreui/react'
-import { BrowserRouter } from 'react-router-dom';
 
 import './scss/style.scss'
 import './assets/Global.css'
@@ -15,6 +13,8 @@ import './scss/examples.scss'
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
 // Pages
+const TeacherLogin = React.lazy(() => import('./views/teacher/auth/TeacherLogin'))
+const TeacherRegister = React.lazy(() => import('./views/teacher/auth/TeacherRegister'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
 const ForgotPassword = React.lazy(() => import('./views/pages/forgot-password/ForgotPassword'))
@@ -53,6 +53,8 @@ const App = () => {
             }
           >
             <Routes>
+              <Route exact path="/teacher/login" name="Teacher Login" element={<TeacherLogin />} />
+              <Route exact path="/teacher/register" name="Teacher Register" element={<TeacherRegister />} />
               <Route exact path="/login" name="Login Page" element={<Login />} />
               <Route exact path="/forgot-password" name="Forgot Password" element={<ForgotPassword />} />
               <Route exact path="/register" name="Register Page" element={<Register />} />

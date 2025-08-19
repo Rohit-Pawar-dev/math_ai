@@ -14,6 +14,8 @@ const SubscriptionList = React.lazy(() => import('./views/sidebarMenu/Subscripti
 const viewSubscriber = React.lazy(() => import('./views/pages/subscription/ViewSubscriber'))
 const TransactionsList = React.lazy(() => import('./views/sidebarMenu/Transactions'))
 
+const notesList = React.lazy(() => import('./views/notes/notesList'))
+
 const quizList = React.lazy(() => import('./views/quiz/quizList'))
 const quizCreate = React.lazy(() => import('./views/quiz/quizCreate'))
 const quizEdit = React.lazy(() => import('./views/quiz/quizEdit'))
@@ -195,6 +197,8 @@ const routes = [
   { path: '/transactions', name: 'Transactions', element: TransactionsList },
 
   { path: '/notification', name: 'Notifications', element: Notifications },
+
+  { path: '/saved-notes', name: 'Saved Notes', element: notesList },
 
   { path: '/quizes', name: 'Quiz', element: quizList },
   { path: '/quizes/create', name: 'Create', element: quizCreate },

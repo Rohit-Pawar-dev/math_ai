@@ -30,7 +30,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     default: 'user',
-    enum: ['user', 'employee', 'admin']
+    enum: ['user', 'employee', 'admin', 'teacher']
   },
   otp: {
     type: String,
@@ -100,11 +100,11 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
-  classStandard: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Class",
-      required: [true, "Class standard is required"],
-    },
+  // classStandard: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Class",
+  //     required: [true, "Class standard is required"],
+  //   },
 }, {
   timestamps: {
     createdAt: 'created_at',

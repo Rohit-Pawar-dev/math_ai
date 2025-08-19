@@ -4,6 +4,8 @@
 /node_modules
 /server/node_modules
 /server/package-lock.json
+/server/new-app.log
+
 package-lock.json
 yarn.lock
 /server/.env

@@ -12,11 +12,11 @@ router.post('/login', async (req, res) => {
 
     // Find user
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid email or password' });
+    if (!user) return res.status(400).json({ message: 'Invalid email' });
 
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
+    if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
 
     // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {

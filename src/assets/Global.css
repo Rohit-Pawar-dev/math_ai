@@ -24,7 +24,7 @@ a {
   border: 1px solid #616161;
   padding: 10px;
   font-weight: 400;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   font-size: 14px;
   color: #c5c5c5;
 
@@ -55,7 +55,7 @@ a {
 }
 
 .actionTable a {
-  font-size: 20px;
+  /* font-size: 20px; */
   color: #fff;
   transition: .3s ease all;
   padding: 9px 9px;

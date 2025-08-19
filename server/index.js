@@ -30,6 +30,7 @@ const reelRoutes = require('./routes/ReelRoutes');
 const quizRoutes = require('./routes/QuizRoutes');
 const calculatorRoutes = require('./routes/CalculatorRoutes');
 const cheatsheetRoutes = require('./routes/CheatsheetRoutes');
+const noteRoutes = require('./routes/NoteRoutes');
 const nlogger = require('./logger');
 
 app.use(cors());
@@ -70,6 +71,7 @@ app.use('/api/reels', reelRoutes);
 app.use('/api/quizes', quizRoutes);
 app.use('/api/calculator', calculatorRoutes);
 app.use('/api/cheat-sheet', cheatsheetRoutes);
+app.use('/api/saved-notes', noteRoutes);
 
 // AUTHENTICATION  ROUTES
 app.use('/api', accountRoutes);
@@ -79,10 +81,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 nlogger.info('Hitting socket -------------------- ')
 
-mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 }).then(() => {
-  console.log('MongoDB connected')
+mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 })
+.then(() => {
+  console.log('MongoDB connected'),
   nlogger.info('New client connected | ')    
-}).catch(err => {console.error(err), nlogger.info(err)});
+})
+.catch(err => {
+  console.error(err),
+  nlogger.info(err)
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));

@@ -59,22 +59,19 @@ const ProfileManagement = () => {
                 </button>
               </div>
               <div className="searchBtn">
-                {/* <button className="btn btn-outline-secondary" type="button">
-                  Export
-                </button> */}
                 <NavLink to={'/user-add'}>
                   <button
                     className="btn btn-outline-warning active"
                     aria-current="page"
                     type="button"
                   >
-                    Add User
+                    Add
                   </button>
                 </NavLink>
               </div>
             </div>
             <div className="container-fliud">
-              <h2>All User list</h2>
+              <h2>All Users</h2>
               <div className="mainContent">
                 <table>
                   <thead>
@@ -102,9 +99,8 @@ const ProfileManagement = () => {
                                 type="checkbox"
                                 id="toggleCheckbox"
                                 onChange={() => handleStatusToggle(user)}
-                                checked={user.status == 1}
+                                checked={user.status == 'active'}
                               />
-
                               <span className="slider"></span>
                             </label>
                           </td>
@@ -116,10 +112,12 @@ const ProfileManagement = () => {
                                   navigate('/users/' + user._id)
                                 }}
                               >
-                                <CIcon icon={cilPencil} custom="true" className="nav-icon" />
+                                {/* <CIcon icon={cilPencil} custom="true" className="nav-icon" /> */}
+                                <i className="fa fa-pencil"></i>
                               </NavLink>
                               <NavLink to={'/view-user/' + user._id}>
-                               <img src={eyeIcon} className='eyeIconClass' alt=""/>
+                               {/* <img src={eyeIcon} className='eyeIconClass' alt=""/> */}
+                               <i className="fa fa-eye"></i>
                               </NavLink>
                             </div>
                           </td>
