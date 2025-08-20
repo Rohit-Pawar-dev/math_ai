@@ -43,7 +43,7 @@ exports.createUser = async (req, res) => {
       name,
       email,
       mobile,
-      password: hashedPassword, // store hashed
+      password: hashedPassword, 
       status,
       classStandard,
       profilePicture: req.file ? `/uploads/users/${req.file.filename}` : '',
@@ -66,7 +66,7 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const searchText = req.query.search ?? ''
-    const limit = parseInt(req.query.limit) || 10
+    const limit = parseInt(req.query.limit)
     const offset = parseInt(req.query.offset) || 0
 
     const query = {

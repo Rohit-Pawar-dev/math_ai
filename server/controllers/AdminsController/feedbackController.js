@@ -4,7 +4,7 @@ const Feedback = require("../../models/Feedback");
 exports.getAllFeedbacks = async (req, res) => {
   try {
     const searchText = req.query.search ?? '';
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit)
     const offset = parseInt(req.query.offset) || 0;
 
     const query = {};

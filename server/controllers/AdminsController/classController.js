@@ -56,7 +56,7 @@ exports.createOrUpdateClass = async (req, res) => {
 exports.getAllClasses = async (req, res) => {
   try {
     const { search = '', status } = req.query
-    const limit = parseInt(req.query.limit) || 10
+    const limit = parseInt(req.query.limit)
     const offset = parseInt(req.query.offset) || 0
 
     const filter = {
