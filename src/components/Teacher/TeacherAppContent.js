@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { CSpinner } from '@coreui/react'
 
 // teacher routes config
-import teacherRoutes from '../teacherRoutes'
+import teacherRoutes from '../../teacherRoutes'
 
 const TeacherAppContent = () => {
   return (
