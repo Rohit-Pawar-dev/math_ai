@@ -74,9 +74,16 @@ const PlanEdit = () => {
         formData.append('app_logo', logoFile)
       }
 
-      const res = await API.put(`/settings/${form._id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      if(form._id) {
+        var res = await API.put(`/settings/${form._id}`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+      } else {
+        var res = await API.post(`/settings`, form, {
+          // headers: { 'Content-Type': 'multipart/form-data' },
+        })
+      }
+
 
       if (res.status === 200) {
         Swal.fire({
@@ -118,7 +125,7 @@ const PlanEdit = () => {
                 <label htmlFor="">App Name</label>
                 <input
                   type="text"
-                  value={form.app_name}
+                  value={form?.app_name}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, app_name: e.target.value })
@@ -131,7 +138,7 @@ const PlanEdit = () => {
                 <label htmlFor="">App Detail</label>
                 <input
                   type="text"
-                  value={form.app_detail}
+                  value={form?.app_detail}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, app_detail: e.target.value })
@@ -144,7 +151,7 @@ const PlanEdit = () => {
                 <label htmlFor="">Support Mobile</label>
                 <input
                   type="text"
-                  value={form.app_mobile}
+                  value={form?.app_mobile}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, app_mobile: e.target.value })
@@ -157,7 +164,7 @@ const PlanEdit = () => {
                 <label htmlFor="">Support Email</label>
                 <input
                   type="text"
-                  value={form.app_email}
+                  value={form?.app_email}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, app_email: e.target.value })
@@ -170,7 +177,7 @@ const PlanEdit = () => {
                 <label htmlFor="">Free Episodes</label>
                 <input
                   type="text"
-                  value={form.free_episodes}
+                  value={form?.free_episodes}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, free_episodes: e.target.value })
@@ -183,7 +190,7 @@ const PlanEdit = () => {
                 <label htmlFor="">Coins/Episode Charges</label>
                 <input
                   type="text"
-                  value={form.coins_per_episode}
+                  value={form?.coins_per_episode}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, coins_per_episode: e.target.value })
@@ -196,7 +203,7 @@ const PlanEdit = () => {
                 <label htmlFor="">Refer n earn reward coins</label>
                 <input
                   type="text"
-                  value={form.refer_n_earn_coins}
+                  value={form?.refer_n_earn_coins}
                   className="form-control"
                   onChange={(e) => {
                     setForm({ ...form, refer_n_earn_coins: e.target.value })
