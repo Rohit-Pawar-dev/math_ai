@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import API from '../../api'
-import { updateProfile } from '../../features/auth/authSlice'
+import { updateTeacherProfile } from '../../features/auth/authSlice'
 import Swal from 'sweetalert2'
 import MEDIA_URL from '../../media'
 
-const Profile = () => {
+const TeacherProfile = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
+  const { teacher } = useSelector((state) => state.auth)
 
+  const user = teacher || {}
   const [form, setForm] = useState({
     name: user?.name || '',
     mobile: user?.mobile || '',
@@ -22,15 +23,15 @@ const Profile = () => {
 
   const handleProfileUpdate = async () => {
     try {
-      const res = await API.put(`/admins/${user._id}`, form)
+      const res = await API.put(`/teacher/${user._id}`, form)
       if (res.status === 200) {
         Swal.fire('Profile', 'Profile updated successfully', 'success').then(() => {
-          dispatch(updateProfile(res.data.data))
+          dispatch(updateTeacherProfile(res.data.data))
         })
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message || 'Something went wrong'
-      Swal.fire('Something went wrong', message, 'error')
+      Swal.fire('Profile Update Error', message, 'error')
     }
   }
 
@@ -46,18 +47,18 @@ const Profile = () => {
     }
 
     try {
-      const res = await API.put(`/admins/${user._id}`, {
+      const res = await API.put(`/teacher/${user._id}`, {
         ...form,
         password: passwordForm.password,
       })
       if (res.status === 200) {
         Swal.fire('Profile', 'Password updated successfully', 'success').then(() => {
-          dispatch(updateProfile(res.data.data))
+          dispatch(updateTeacherProfile(res.data.data))
         })
       }
     } catch (err) {
       const message = err.response?.data?.message || err.message || 'Something went wrong'
-      Swal.fire('Something went wrong', message, 'error')
+      Swal.fire('Password Update Error', message, 'error')
     }
   }
 
@@ -66,14 +67,14 @@ const Profile = () => {
     if (!file) return
 
     const formData = new FormData()
-    formData.append('adminId', user._id)
+    formData.append('teacherId', user._id)
     formData.append('profilePicture', file)
 
     try {
-      const res = await API.post('/admins/upload-profile', formData)
+      const res = await API.post('/teacher/upload-profile', formData)
       if (res.status === 200) {
         Swal.fire('Profile', 'Profile image updated successfully', 'success').then(() => {
-          dispatch(updateProfile(res.data.data))
+          dispatch(updateTeacherProfile(res.data.data))
         })
       }
     } catch (err) {
@@ -84,7 +85,7 @@ const Profile = () => {
   return (
     <section className="tableSection">
       <div className="container-fliud">
-        <h2>Profile Management</h2>
+        <h2>Teacher Profile Management</h2>
         <div className="mainContent">
           {/* General Info */}
           <div className="card">
@@ -131,7 +132,7 @@ const Profile = () => {
                   <div className="form-group mb-4">
                     <label className="mb-2">Email</label>
                     <input
-                      type="text"
+                      type="email"
                       className="form-control"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -153,18 +154,17 @@ const Profile = () => {
 
                 <div className="formSubmitDiv">
                   <button
-                    className="btn btn-outline-warning active"
+                    className="btn btn-outline-primary active"
                     type="button"
                     onClick={handleProfileUpdate}
                   >
-                    Update
+                    Update Profile
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Password Update */}
           <div className="card mt-4">
             <div className="card-body">
               <h6 className="mb-4">Update Password</h6>
@@ -198,11 +198,11 @@ const Profile = () => {
                 </div>
                 <div className="formSubmitDiv">
                   <button
-                    className="btn btn-outline-warning active"
+                    className="btn btn-outline-primary active"
                     type="button"
                     onClick={handleProfilePasswordUpdate}
                   >
-                    Update
+                    Update Password
                   </button>
                 </div>
               </div>
@@ -214,4 +214,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default TeacherProfile
