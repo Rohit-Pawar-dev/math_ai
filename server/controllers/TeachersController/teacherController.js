@@ -10,34 +10,44 @@ const MEDIA_URL = process.env.MEDIA_URL;
 // Get teacher dashboard data
 exports.getTeacherDashboard = async (req, res) => {
   try {
+    const teacherId = req.params.id
+
     const totalUsers = await User.countDocuments({ role: 'user' })
+
+    const totalStudents = await User.countDocuments({
+      role: 'user',
+      teacher_id: teacherId,
+    })
 
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
     const activeUsers = await User.countDocuments({
       role: 'user',
-      updated_at: { $gte: thirtyDaysAgo }
+      teacher_id: teacherId,
+      updated_at: { $gte: thirtyDaysAgo },
     })
 
-    const totalQuizzes = await Quiz.countDocuments({})
+    const totalQuizzes = await Quiz.countDocuments({ teacher_id: teacherId })
 
     const statistics = {
-      total_users: totalUsers,
-      active_users: activeUsers,
-      total_quizzes: totalQuizzes,
-      total_students: totalUsers  
+      total_users: totalUsers,      
+      total_students: totalStudents, 
+      active_users: activeUsers,    
+      total_quizzes: totalQuizzes,  
     }
 
     res.json({
       status: true,
       message: 'Teacher dashboard details',
-      data: statistics
+      data: statistics,
     })
   } catch (error) {
     console.error(error)
     res.status(500).json({ status: false, message: 'Server Error' })
   }
 }
+
 
 
 

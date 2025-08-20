@@ -23,7 +23,7 @@ const TeacherProfile = () => {
 
   const handleProfileUpdate = async () => {
     try {
-      const res = await API.put(`/teacher/${user._id}`, form)
+      const res = await API.put(`/teacher/profile/${user._id}`, form)
       if (res.status === 200) {
         Swal.fire('Profile', 'Profile updated successfully', 'success').then(() => {
           dispatch(updateTeacherProfile(res.data.data))
@@ -47,7 +47,7 @@ const TeacherProfile = () => {
     }
 
     try {
-      const res = await API.put(`/teacher/${user._id}`, {
+      const res = await API.put(`/teacher/profile/${user._id}`, {
         ...form,
         password: passwordForm.password,
       })
@@ -71,7 +71,7 @@ const TeacherProfile = () => {
     formData.append('profilePicture', file)
 
     try {
-      const res = await API.post('/teacher/upload-profile', formData)
+      const res = await API.post('/teacher/profile/upload-profile', formData)
       if (res.status === 200) {
         Swal.fire('Profile', 'Profile image updated successfully', 'success').then(() => {
           dispatch(updateTeacherProfile(res.data.data))

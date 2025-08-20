@@ -65,9 +65,9 @@ const TeacherDashboard = () => {
 
   const widgetsData = [
     { header: statistic.total_users || 0, text: 'Total Users', color: 'primary' },
-    { header: statistic.active_users || 0, text: 'Active Users', color: 'success' },
-    { header: statistic.total_quizzes || 0, text: 'Total Quizzes', color: 'warning' },
     { header: statistic.total_students || 0, text: 'Total Students', color: 'info' },
+    { header: statistic.active_users || 0, text: 'Total Active Students', color: 'success' },
+    { header: statistic.total_quizzes || 0, text: 'Total Quizzes', color: 'warning' },
   ]
 
   return <TeacherWidgetsDropdown data={widgetsData} />
