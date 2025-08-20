@@ -18,7 +18,7 @@ router.get("/admins/:id", adminController.getAdminById)
 router.put("/admins/:id", adminController.updateAdmin)
 router.post(
   "/admins/upload-profile",
-  adminController.uploadAdminImage,  
+  adminController.uploadAdminImage,
   adminController.uploadProfile      
 )
 
@@ -30,11 +30,13 @@ router.delete("/classes/:id", classController.deleteClass);
 
 // ----------------- User Routes -----------------
 router.post('/users', userController.uploadUserImage, userController.createUser);      
-router.get("/users", userController.getUsers);      
-router.get("/users/:id", userController.getUserById);  
-router.put("/users/:id", userController.uploadUserImage, userController.updateUser);    
-router.delete("/users/:id", userController.deleteUser); 
+router.get("/users", userController.getUsers);
+router.get("/users/:id", userController.getUserById);
+router.put("/users/:id", userController.uploadUserImage, userController.updateUser);
+router.delete("/users/:id", userController.deleteUser);
 
+router.get("/teachers", userController.getTeachers);
+router.get("/teachers/:id", userController.getUserById);
 
 // ----------------- Banner Routes -----------------
 router.post('/banners', bannerController.uploadBannerImage, bannerController.createBanner);

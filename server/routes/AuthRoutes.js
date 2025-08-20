@@ -25,9 +25,32 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post('/signup-otp', async (req, res) => {
+  try {
+    let { email, password, mobile } = req.body;
+
+    email = email?.trim();
+    mobile = mobile?.trim();
+
+    if (await User.findOne({ email })) {
+      return res.status(409).json({ status: false, message: 'Email already in use' });
+    }
+
+    if (await User.findOne({ mobile })) {
+      return res.status(409).json({ status: false, message: 'Mobile number already in use' });
+    }
+
+    let otp = Math.floor(1000 + Math.random() * 9000)
+
+    res.status(201).json({ status: true, message: 'OTP Sent Successfully', otp });
+  } catch (err) {
+    res.status(400).json({ status: false, message: err.message, token: '' });
+  }
+});
+
 router.post('/register', async (req, res) => {
   try {
-    let { name, email, password, mobile, status, classStandard } = req.body;
+    let { email, password, mobile } = req.body;
 
     email = email?.trim();
     mobile = mobile?.trim();
@@ -46,14 +69,7 @@ router.post('/register', async (req, res) => {
       hashedPassword = await bcrypt.hash(password, salt);
     }
 
-    const user = await User.create({
-      name,
-      email,
-      mobile,
-      password: hashedPassword,
-      status,
-      classStandard,
-    });
+    const user = await User.create(req.body);
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,

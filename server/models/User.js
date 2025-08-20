@@ -45,10 +45,6 @@ const userSchema = new Schema({
     type: String,
     default: 'english'
   },
-  interests: {
-    type: Array,
-    default: []
-  },
   referralCode: {
     type: String,
     default: ''
@@ -57,35 +53,11 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
-  watchlist: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Content',
-    default: []
-  },
-  history: [{
-    contentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Content'
-    },
-    watchedTill: {
-      type: Number,
-      default: 0
-    },
-    watchedOn: {
-      type: Date,
-      default: Date.now
-    }
-  }],
   subscription: {
     planId: { type: Schema.Types.ObjectId, ref: 'Plan', default: null },
     startDate: { type: Date, default: null },
     endDate: { type: Date, default: null },
     isAutoRenew: { type: Boolean, default: 0 }
-  },
-  downloads: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Content',
-    default: []
   },
   coins: {
     type: Number,
@@ -101,10 +73,23 @@ const userSchema = new Schema({
     default: ''
   },
   classStandard: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Class",
-      default: null
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Class",
+    default: null
+  },
+  gaurdian_type:{
+    type:String,
+    default:'father'
+  },
+  gaurdian_name:{
+    type:String
+  },
+  gaurdian_country_code:{
+    type:String
+  },
+  gaurdian_mobile:{
+    type:String
+  },
 }, {
   timestamps: {
     createdAt: 'created_at',

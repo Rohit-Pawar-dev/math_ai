@@ -148,7 +148,7 @@ const PlanList = () => {
                             <input
                               type="checkbox"
                               onChange={() => handleStatusToggle(item)}
-                              checked={item.status === 1}
+                              checked={item.status == 1}
                             />
                             <span className="slider"></span>
                           </label>

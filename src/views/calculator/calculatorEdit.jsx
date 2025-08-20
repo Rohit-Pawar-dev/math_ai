@@ -12,8 +12,10 @@ const calculatorEdit = () => {
   function submitForm() {
     API.put(`/calculator/${id}`, form)
       .then((res) => {
-        if (res.status === 201) {
-          navigate('/calculator')
+        if (res.status === 200) {
+          Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
+            navigate('/calculator')
+          })
         }
       })
       .catch((err) => {

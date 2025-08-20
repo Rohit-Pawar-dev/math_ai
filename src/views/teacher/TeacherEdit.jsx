@@ -3,17 +3,20 @@ import API from '../../api'
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const notesEdit = () => {
+const TeacherEdit = () => {
   const navigate = useNavigate()
   const { id } = useParams()
   const [form, setForm] = useState(null)
+  const [status, setStatus] = useState(null)
 
 
   function submitForm() {
-    API.put(`/saved-notes/${id}`, form)
+    API.put(`/teachers/${id}`, form)
       .then((res) => {
-        if (res.status === 201) {
-          navigate('/calculator')
+        if (res.status === 200) {
+          Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
+            navigate('/calculator')
+          })
         }
       })
       .catch((err) => {
@@ -23,10 +26,12 @@ const notesEdit = () => {
   }
 
   useEffect(() => {
-    API.get(`/saved-notes/${id}`)
+    API.get(`/teachers/${id}`)
       .then((res) => {
         if (res.status === 200) {
           setForm(res.data)
+          var stat = res.data.status?.split('')[0].toUpperCase() + res.data.status?.split('').slice(1).join('')
+          setStatus(stat)
         }
       })
       .catch((err) => {
@@ -39,28 +44,32 @@ const notesEdit = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-header d-flex justify-content-between">
-          <h5>Saved Note</h5>
+          <h5>Teacher Profile</h5>
         </div>
         <div className="card-body">
           <div className="row">
-            <div className="col-lg-12">
+            <div className="col-lg-4">
               <div className="form-group">
-                <p>Title: {form?.title}</p>
+                <label htmlFor="">Name</label>
+                <input type="text" name="name" className="form-control" value={form?.name} readOnly/>
               </div>
             </div>
-            <div className="col-lg-12">
+            <div className="col-lg-4">
               <div className="form-group">
-                <p>Status: {form?.status}</p>
+                <label htmlFor="">Email</label>
+                <input type="text" name="email" className="form-control" value={form?.email} readOnly/>
               </div>
             </div>
-             <div className="col-lg-12">
+            <div className="col-lg-4">
               <div className="form-group">
-                <p>Description: {form?.description}</p>
+                <label htmlFor="">Mobile</label>
+                <input type="text" name="mobile" className="form-control" value={form?.mobile} readOnly/>
               </div>
-            </div>
-             <div className="col-lg-12">
+            </div>            
+            <div className="col-lg-4">
               <div className="form-group">
-                <p>Saved By: {form?.user_id?.name}</p>
+                <label htmlFor="">Status</label>
+                <input type="text" name="mobile" className="form-control" value={status??''} readOnly/>
               </div>
             </div>
           </div>
@@ -70,4 +79,4 @@ const notesEdit = () => {
   )
 }
 
-export default notesEdit
+export default TeacherEdit
