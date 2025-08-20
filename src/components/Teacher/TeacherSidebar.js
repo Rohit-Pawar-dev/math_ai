@@ -8,10 +8,10 @@ import {
   CSidebarHeader,
   CSidebarToggler,
 } from '@coreui/react'
-import { AppSidebarNav } from './AppSidebarNav'
-import teacherNav from '../_teacherNav'
-import API from '../api'
-import MEDIA_URL from '../media'
+import { AppSidebarNav } from '../AppSidebarNav'
+import teacherNav from '../../_teacherNav'
+import API from '../../api'
+import MEDIA_URL from '../../media'
 
 const TeacherSidebar = () => {
   const dispatch = useDispatch()

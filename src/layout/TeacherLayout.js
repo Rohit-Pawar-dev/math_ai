@@ -1,5 +1,5 @@
 import React from 'react'
-import { TeacherAppContent, TeacherAppHeader, TeacherSidebar, TeacherAppFooter } from '../components/TeacherIndex'
+import { TeacherAppContent, TeacherAppHeader, TeacherSidebar, TeacherAppFooter } from '../components/Teacher/TeacherIndex'
 
 const TeacherLayout = () => {
   return (
