@@ -15,6 +15,11 @@ const quizSchema = new Schema({
     type: Boolean,
     default: false
   },
+  teacher_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
   amount: {
     type: String,
     required: [true],
