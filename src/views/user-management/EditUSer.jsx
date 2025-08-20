@@ -39,7 +39,7 @@ const EditUser = () => {
           password: '',
           confirmPassword: '',
           status: user.status || 'active',
-          classStandard: user.classStandard || '',
+          classStandard: user.classStandard?._id || '',
         })
 
         if (user.profilePicture) {

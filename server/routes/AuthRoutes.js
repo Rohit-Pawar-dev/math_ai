@@ -27,11 +27,17 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, mobile, status, classStandard } = req.body;
+    let { name, email, password, mobile, status, classStandard } = req.body;
 
-    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
-    if (existingUser) {
-      return res.status(409).json({ status: false, message: 'User already exists' });
+    email = email?.trim();
+    mobile = mobile?.trim();
+
+    if (await User.findOne({ email })) {
+      return res.status(409).json({ status: false, message: 'Email already in use' });
+    }
+
+    if (await User.findOne({ mobile })) {
+      return res.status(409).json({ status: false, message: 'Mobile number already in use' });
     }
 
     let hashedPassword = '';
@@ -50,7 +56,7 @@ router.post('/register', async (req, res) => {
     });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN
+      expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
     res.status(201).json({ status: true, message: 'User registered successfully', token });
@@ -58,6 +64,7 @@ router.post('/register', async (req, res) => {
     res.status(400).json({ status: false, message: err.message, token: '' });
   }
 });
+
 
 router.post('/send-otp', async (req, res) => {
   try {
