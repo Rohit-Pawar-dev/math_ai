@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
       });
 
 
-    return admin==null?false:true;
+    // return admin==null?false:true;
   };
 
   const logout = () => {
@@ -94,8 +94,15 @@ export const AuthProvider = ({ children }) => {
     setAdmin(null);
   };
 
+  const teacherLogout = () => {
+  localStorage.removeItem('teacher');
+  localStorage.removeItem('profile');
+  localStorage.removeItem('token');
+  setTeacher(null);
+};
+
   return (
-    <AuthContext.Provider value={{ admin, login, logout, teacherLogin, teacher }}>
+    <AuthContext.Provider value={{ admin, login, logout, teacherLogin, teacherLogout, teacher }}>
       {children}
     </AuthContext.Provider>
   );
