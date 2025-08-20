@@ -14,4 +14,7 @@ router.post(
   teacherController.uploadProfile        
 );
 
+// ----------------- Teacher Dashboard Routes -----------------
+router.get("/teacher/dashboard/:id", teacherController.getTeacherDashboard);
+
 module.exports = router;

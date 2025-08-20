@@ -1,9 +1,45 @@
 const User = require('../../models/User');
+const Quiz = require('../../models/Quiz');
 const nlogger = require('../../logger');
 const getCustomMulter = require('../../utils/customMulter');
 const upload = getCustomMulter('users');
 const bcrypt = require('bcrypt');
 const MEDIA_URL = process.env.MEDIA_URL;
+
+
+// Get teacher dashboard data
+exports.getTeacherDashboard = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments({ role: 'user' })
+
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    const activeUsers = await User.countDocuments({
+      role: 'user',
+      updated_at: { $gte: thirtyDaysAgo }
+    })
+
+    const totalQuizzes = await Quiz.countDocuments({})
+
+    const statistics = {
+      total_users: totalUsers,
+      active_users: activeUsers,
+      total_quizzes: totalQuizzes,
+      total_students: totalUsers  
+    }
+
+    res.json({
+      status: true,
+      message: 'Teacher dashboard details',
+      data: statistics
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ status: false, message: 'Server Error' })
+  }
+}
+
+
 
 // Get single teacher by ID
 exports.getTeacherById = async (req, res) => {

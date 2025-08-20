@@ -8,7 +8,7 @@ const path = require('path');
 
 const User = require('./models/User');
 const adminRoutes = require("./routes/AdminRoutes");
-const teacherRoutes = require("./routes/teacherRoutes");
+const teacherRoutes = require("./routes/TeacherRoutes");
 const userRoutes = require('./routes/UserRoutes');
 const authRoutes = require('./routes/AuthRoutes');
 const accountRoutes = require('./routes/AccountRoutes');
