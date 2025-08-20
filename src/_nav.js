@@ -60,7 +60,7 @@ const _nav = [
     component: CNavItem,
     name: 'Classes',
     to: '/class-list',
-    icon: <i className="fa-solid fa-landmark"></i>,
+    icon: <i className="fa-solid fa-landmark m-2"></i>,
   },
   {
     component: CNavItem,
