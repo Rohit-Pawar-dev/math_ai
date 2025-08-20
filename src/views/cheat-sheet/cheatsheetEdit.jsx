@@ -22,8 +22,11 @@ const cheatsheetEdit = () => {
   function submitForm() {
     API.put(`/cheat-sheet/${id}`, form)
       .then((res) => {
-        if (res.status === 201) {
-          navigate('/cheat-sheet')
+        if (res.status === 200) {
+
+          Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
+            navigate('/cheat-sheet')
+          })
         }
       })
       .catch((err) => {

@@ -102,6 +102,45 @@ exports.getUsers = async (req, res) => {
   }
 }
 
+exports.getTeachers = async (req, res) => {
+  try {
+    const searchText = req.query.search ?? ''
+    const limit = parseInt(req.query.limit)
+    const offset = parseInt(req.query.offset) || 0
+
+    const query = {
+      role: 'teacher',
+      $or: [
+        { name: { $regex: searchText, $options: 'i' } },
+        { mobile: { $regex: searchText, $options: 'i' } },
+        { email: { $regex: searchText, $options: 'i' } },
+      ],
+    }
+
+    const total = await User.countDocuments(query)
+    const users = await User.find(query).skip(offset).limit(limit).sort({ created_at: -1 })
+
+    // Add full URL to profile picture
+    const data = users.map((user) => ({
+      ...user.toObject(),
+      profilePicture: user.profilePicture ? `${MEDIA_URL}${user.profilePicture}` : null,
+    }))
+
+    res.json({
+      status: true,
+      message: 'Users fetched successfully',
+      data,
+      total,
+      limit,
+      offset,
+      totalPages: Math.ceil(total / limit),
+    })
+  } catch (err) {
+    nlogger.error('Error retrieving users', err)
+    res.status(500).json({ status: false, message: 'Internal server error' })
+  }
+}
+
 // Get single user
 exports.getUserById = async (req, res) => {
   try {

@@ -3,20 +3,20 @@ import API from '../../api'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 
-const notesList = () => {
+const TeacherList = () => {
   const navigate = useNavigate()
 
-  const [notesList, setNotesList] = useState([])
+  const [teacherList, setTeacherList] = useState([])
 
   function deleteQuiz(id) {
-    API.delete(`/saved-notes/${id}`)
+    API.delete(`/teachers/${id}`)
       .then((res) => {
         if (res.status === 200) {
-         var list = notesList.filter((elm, ind) => {
+         var list = teacherList.filter((elm, ind) => {
           return elm._id != id
          }) 
          console.log('---------- list --------------- ', list)
-         setNotesList(list)
+         setTeacherList(list)
         }
       })
       .catch((err) => {
@@ -26,10 +26,10 @@ const notesList = () => {
   }
 
   useEffect(() => {
-    API.get('/saved-notes')
+    API.get('/teachers')
       .then((res) => {
         if (res.status === 200) {
-          setNotesList(res.data)
+          setTeacherList(res.data.data)
         }
       })
       .catch((err) => {
@@ -50,26 +50,30 @@ const notesList = () => {
             <thead>
               <tr>
                 <th>S.No</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Saved by</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {
-                notesList.length > 0 ?
-                notesList.map((elm,ind) => {
-                  return <tr key={ind+1}>
-                    <td>{ ind+1 }</td>
-                    <td>{ elm.title }</td>
-                    <td>{ elm.description.substring(0, 150) }</td>
-                    <td>{ elm.user_id.name }</td>
-                    <td>
-                      <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => navigate('/saved-notes/view/' + elm._id)}><i className="fa fa-pencil"></i></button>
-                      <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => deleteQuiz(elm._id)}><i className="fa fa-trash"></i></button>
-                    </td>
-                  </tr>
+                teacherList.length > 0 ?
+                teacherList.map((elm,ind) => {
+                  if(elm.role == 'teacher') {
+                    return <tr key={ind+1}>
+                      <td>{ ind+1 }</td>
+                      <td>{ elm.name }</td>
+                      <td>{ elm.email }</td>
+                      <td>{ elm.mobile }</td>
+                      <td>{ elm.status == 'active' ? <span className="badge bg-success">Active</span> : <span className="badge bg-danger">Inactive</span> }</td>
+                      <td>
+                        <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => navigate('/teachers/view/' + elm._id)}><i className="fa fa-pencil"></i></button>
+                        <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => deleteQuiz(elm._id)}><i className="fa fa-trash"></i></button>
+                      </td>
+                    </tr>
+                  }
                 })
                 : (
                   <tr>
@@ -85,4 +89,4 @@ const notesList = () => {
   )
 }
 
-export default notesList
+export default TeacherList

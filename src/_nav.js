@@ -25,6 +25,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Teachers',
+    to: '/teachers',
+    icon: <i className="fa fa-users m-2"></i>,
+  },
+  {
+    component: CNavItem,
     name: 'Plan',
     to: '/subscription',
     icon: <i className="fa fa-rupee m-2"></i>,

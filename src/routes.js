@@ -14,7 +14,11 @@ const SubscriptionList = React.lazy(() => import('./views/sidebarMenu/Subscripti
 const viewSubscriber = React.lazy(() => import('./views/pages/subscription/ViewSubscriber'))
 const TransactionsList = React.lazy(() => import('./views/sidebarMenu/Transactions'))
 
+const TeacherList = React.lazy(() => import('./views/teacher/TeacherList'))
+const TeacherEdit = React.lazy(() => import('./views/teacher/TeacherEdit'))
+
 const notesList = React.lazy(() => import('./views/notes/notesList'))
+const notesEdit = React.lazy(() => import('./views/notes/notesEdit'))
 
 const quizList = React.lazy(() => import('./views/quiz/quizList'))
 const quizCreate = React.lazy(() => import('./views/quiz/quizCreate'))
@@ -190,6 +194,9 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
 
+  { path: '/teachers', name: 'Teachers', element: TeacherList },
+  { path: '/teachers/view/:id', name: 'Teachers', element: TeacherEdit },
+
   { path: '/users', name: 'ProfileManagement', element: ProfileManagement },
   { path: '/user-add', name: 'UserAdd', element: UserAdd },
   { path: '/view-user/:id', name: 'ViewUser', element: ViewUser },
@@ -203,6 +210,7 @@ const routes = [
   { path: '/notification', name: 'Notifications', element: Notifications },
 
   { path: '/saved-notes', name: 'Saved Notes', element: notesList },
+  { path: '/saved-notes/view/:id', name: 'View', element: notesEdit },
 
   { path: '/quizes', name: 'Quiz', element: quizList },
   { path: '/quizes/create', name: 'Create', element: quizCreate },
