@@ -43,7 +43,7 @@ const TeacherList = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-header d-flex justify-content-between">
-          <h5>Saved Notes</h5>
+          <h5>All TEACHER LIST</h5>
         </div>
         <div className="card-body">
           <table className="table">

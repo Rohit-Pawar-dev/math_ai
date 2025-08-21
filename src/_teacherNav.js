@@ -16,7 +16,7 @@ const _teacherNav = [
   {
     component: CNavItem,
     name: 'Students',
-    to: '/teacher/students',
+    to: '/teacher/user-list',
     icon: <i className="fa fa-users"></i>, 
   },
 ]

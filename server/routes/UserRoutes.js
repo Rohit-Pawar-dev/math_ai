@@ -11,7 +11,7 @@ router.get("/feedbacks/:id", auth, feedbackController.getUserFeedbackById);
 router.put("/feedbacks/:id", auth, feedbackController.updateUserFeedback);
 router.delete("/feedbacks/:id", auth, feedbackController.deleteUserFeedback);
 
-// ----------------- Plan Routes (User) -----------------
+// ----------------- Plan Routes  -----------------------
 router.get("/plans/subscribers", auth, planController.getSubscribers);
 router.post("/plans/purchase", auth, planController.purchasePlan);
 
