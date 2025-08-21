@@ -110,7 +110,8 @@ const Subscription = () => {
                         <tr key={item._id}>
                           <td>{(page - 1) * limit + (index + 1)}</td>
                           <td>{plan?.title || 'N/A'}</td>
-                          <td>₹ {plan?.amount || 'N/A'}</td>
+                          
+                          <td>₹ {item?.amount || 'N/A'}</td>
                           <td>{user?.name || 'N/A'}</td>
                           <td>{item.transaction_id}</td>
                           <td>{item.payment_method}</td>

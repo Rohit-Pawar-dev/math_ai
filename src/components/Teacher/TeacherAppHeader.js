@@ -83,7 +83,7 @@ import {
 } from '@coreui/react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../features/auth/authSlice'
+import { teacherLogout } from '../../features/auth/authSlice'
 import MEDIA_URL from '../../media'
 
 const TeacherAppHeader = () => {
@@ -110,7 +110,7 @@ const TeacherAppHeader = () => {
   }, [])
 
   const handleLogout = () => {
-    dispatch(logout())
+    dispatch(teacherLogout())
     navigate('/teacher/login')
   }
 

@@ -63,7 +63,7 @@ const PlanList = () => {
   }
 
   const handleStatusToggle = async (item) => {
-    const updatedStatus = item.status === 1 ? 0 : 1
+    const updatedStatus = item.status === 'active' ? 'inactive' : 'active'
     try {
       const response = await API.put(`/plan/${item._id}`, { status: updatedStatus })
       if (response.status === 200) {
@@ -148,7 +148,7 @@ const PlanList = () => {
                             <input
                               type="checkbox"
                               onChange={() => handleStatusToggle(item)}
-                              checked={item.status == 1}
+                              checked={item.status === 'active'}
                             />
                             <span className="slider"></span>
                           </label>
