@@ -5,6 +5,9 @@ const router = express.Router();
 const teacherController = require("../controllers/TeachersController/teacherController");
 const userController = require("../controllers/TeachersController/userController");
 
+// ------------------ Teacher Auth Routes -----------------
+router.post("/teacher/register", userController.uploadUserImage, userController.registerTeacher);
+
 // ----------------- Teacher Profile Routes -----------------
 router.get("/teacher/profile/:id", teacherController.getTeacherById);
 router.put("/teacher/profile/:id", teacherController.updateTeacher);
