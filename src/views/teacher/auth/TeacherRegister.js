@@ -1,140 +1,192 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-  CSpinner,
-  useColorModes,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
-import { useAuth } from '../../../context/AuthContext';
+import React, { useState } from 'react'
+import API from '../../../api'
+import Swal from 'sweetalert2'
+import defaultImage from '../../../assets/images/default.png'
+import { useNavigate } from 'react-router-dom'
 
 const TeacherRegister = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    password: '',
+    confirmPassword: '',
+    status: 'active',
+  })
 
-  const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')  
-  useEffect(() => {
-    // const urlParams = new URLSearchParams(window.location.href.split('?')[1])
-    // const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
-    // if (theme) {
-    //   setColorMode('dark')
-    // }
-
-    // if (isColorModeSet()) {
-    //   return
-    // }
-
-    setColorMode('dark')
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const [loader, setLoader] = useState(false);
-  const [form, setForm] = useState({ email: '', password: '' });
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [profilePicture, setProfilePicture] = useState(null)
+  const [passwordError, setPasswordError] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoader(true)
-    const success = await login(form);
-    if (success) {
-      setLoader(false)
-      navigate('/dashboard');
-      // alert('Login Success')
-    } else {
-      setLoader(false)
-      // alert('Invalid credentials')
+    e.preventDefault()
+
+    if (form.password !== form.confirmPassword) {
+      setPasswordError('Passwords do not match.')
+      return
     }
-  };
 
-  const handleRedirection = () => {
-    console.log('handleRedirection', 'handleRedirection')
-    navigate('/forgot-password');
+    setPasswordError('')
+    try {
+      const formData = new FormData()
+      formData.append('name', form.name)
+      formData.append('email', form.email)
+      formData.append('mobile', form.mobile)
+      formData.append('password', form.password)
+      formData.append('status', form.status)
+      formData.append('role', 'teacher') 
 
+      if (profilePicture) {
+        formData.append('profilePicture', profilePicture)
+      }
+
+      const response = await API.post('/teacher/users', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (response.status === 201) {
+        Swal.fire('Success', 'Teacher registered successfully!', 'success')
+        setForm({
+          name: '',
+          email: '',
+          mobile: '',
+          password: '',
+          confirmPassword: '',
+          status: 'active',
+        })
+        setProfilePicture(null)
+        navigate('/teacher/login')
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message
+      Swal.fire('Error', errorMsg, 'error')
+    }
   }
 
-  setTimeout(() => {
-    if(localStorage.getItem('admin') != null) {
-      var loginDetails = JSON.parse(localStorage.getItem('admin'))
-      navigate('/dashboard');
-    }
-  }, 2000);
-
-
-
   return (
-    <section className='loginSection'>
-    <div className="overlayBg min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={5}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm onSubmit={handleSubmit}>
-                    <h1>Teacher Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" onChange={(e) => setForm({ ...form, email: e.target.value })}/>
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+    <section className="teacher-section">
+      <div className="teacher-section__container">
+        <h2 className="teacher-section__title">Teacher Registration</h2>
+        <div className="teacher-section__content">
+          <div className="teacher-section__card">
+            <div className="teacher-section__card-body">
+              <form onSubmit={handleSubmit} className="teacher-section__form">
+                <div className="teacher-section__row">
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Name</label>
+                      <input
+                        type="text"
+                        className="teacher-section__input"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        required
                       />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton type='submit' color="primary" className="px-4">
-                          {loader ? <><CSpinner color="primary" size="sm" /></> : 'Login'}
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0 pull-right" onClick={handleRedirection}>
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              {/* <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
+                    </div>
                   </div>
-                </CCardBody>
-              </CCard> */}
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Email</label>
+                      <input
+                        type="email"
+                        className="teacher-section__input"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Phone</label>
+                      <input
+                        type="text"
+                        className="teacher-section__input"
+                        value={form.mobile}
+                        onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                        required
+                        maxLength={10}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Password</label>
+                      <input
+                        type="password"
+                        className="teacher-section__input"
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Confirm Password</label>
+                      <input
+                        type="password"
+                        className="teacher-section__input"
+                        value={form.confirmPassword}
+                        onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                        required
+                      />
+                      {passwordError && <small className="teacher-section__error">{passwordError}</small>}
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Profile Picture</label>
+                      <input
+                        type="file"
+                        className="teacher-section__input"
+                        accept="image/*"
+                        onChange={(e) => setProfilePicture(e.target.files[0])}
+                      />
+                      <div className="teacher-section__preview">
+                        <img
+                          src={profilePicture ? URL.createObjectURL(profilePicture) : defaultImage}
+                          alt="Preview"
+                          className="teacher-section__image"
+                          width={100}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__col">
+                    <div className="teacher-section__form-group">
+                      <label className="teacher-section__label">Status</label>
+                      <select
+                        className="teacher-section__input"
+                        value={form.status}
+                        onChange={(e) => setForm({ ...form, status: e.target.value })}
+                        required
+                      >
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="teacher-section__form-submit">
+                    <button className="teacher-section__button" type="submit">
+                      Register Teacher
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

@@ -401,3 +401,129 @@ select option{
   text-decoration: none; 
   color: #fff;
 }
+
+
+/* ========== TEACHER REGISTRATION (Dark Theme Friendly) ========== */
+
+.teacher-section {
+  padding: 2rem;
+  background-color: #121212; /* Dark background */
+  min-height: 100vh;
+  color: #e0e0e0; /* Light text for dark mode */
+}
+
+.teacher-section__container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #1e1e1e; /* Slightly lighter dark background */
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.teacher-section__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+}
+
+.teacher-section__subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #cccccc;
+}
+
+.teacher-section__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.teacher-section__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.teacher-section__col {
+  flex: 1 1 45%;
+  min-width: 250px;
+}
+
+.teacher-section__form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-section__label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #dddddd;
+}
+
+.teacher-section__input {
+  padding: 0.5rem;
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #f1f1f1;
+}
+
+.teacher-section__input:focus {
+  outline: none;
+  border-color: #28a745;
+  background-color: #333;
+}
+
+.teacher-section__input[type="file"] {
+  color: #bbb;
+}
+
+.teacher-section__error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.teacher-section__preview {
+  margin-top: 0.5rem;
+}
+
+.teacher-section__image {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #555;
+}
+
+.teacher-section__form-submit {
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.teacher-section__button {
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.teacher-section__button:hover {
+  background-color: #218838;
+}
+
+/* Responsive: Stack fields on small screens */
+@media (max-width: 600px) {
+  .teacher-section__col {
+    flex: 1 1 100%;
+  }
+}

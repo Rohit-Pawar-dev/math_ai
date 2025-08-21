@@ -85,7 +85,7 @@ const AddUser = () => {
 
         setProfilePicture(null)
 
-        navigate('/users') // still navigate to student listing (users page)
+        navigate('/teacher/user-list') // still navigate to student listing (users page)
       }
     } catch (err) {
       const errorMsg =

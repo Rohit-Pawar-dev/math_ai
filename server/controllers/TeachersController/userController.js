@@ -61,6 +61,63 @@ exports.createUser = async (req, res) => {
   }
 }
 
+
+exports.registerTeacher = async (req, res) => {
+  try {
+    const { name, email, mobile, password, status } = req.body
+
+    // Check if teacher (user with role teacher) already exists
+    const existingTeacher = await User.findOne({
+      $or: [{ email }, { mobile }],
+      role: 'teacher',
+    })
+
+    if (existingTeacher) {
+      let errorMessage = 'User already exists with '
+      if (existingTeacher.email === email && existingTeacher.mobile === mobile) {
+        errorMessage += 'this email and mobile number.'
+      } else if (existingTeacher.email === email) {
+        errorMessage += 'this email.'
+      } else {
+        errorMessage += 'this mobile number.'
+      }
+
+      return res.status(409).json({
+        status: false,
+        message: errorMessage,
+      })
+    }
+
+    // Hash password
+    let hashedPassword = ''
+    if (password && password.trim() !== '') {
+      const salt = await bcrypt.genSalt(10)
+      hashedPassword = await bcrypt.hash(password, salt)
+    }
+
+    // Create user with teacher role
+    const teacher = await User.create({
+      name,
+      email,
+      mobile,
+      password: hashedPassword,
+      status,
+      role: 'teacher',
+      profilePicture: req.file ? `/uploads/users/${req.file.filename}` : '',
+    })
+
+    res.status(201).json({
+      status: true,
+      message: 'Teacher registered successfully',
+      data: teacher,
+    })
+  } catch (err) {
+    nlogger.error('Register Teacher Error: ' + err.message)
+    res.status(500).json({ status: false, error: err.message })
+  }
+}
+
+
 // Get all users with pagination + search (restricted to teacher_id if passed)
 exports.getUsers = async (req, res) => {
   try {

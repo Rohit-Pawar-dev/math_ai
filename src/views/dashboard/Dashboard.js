@@ -210,7 +210,7 @@ const Dashboard = () => {
   (
     <>
       <WidgetsDropdown className="mb-4" data={statistic}/>
-      {/* <CCard className="mb-4">
+      <CCard className="mb-4">
         <CCardBody>
           <CRow>
             <CCol sm={5}>
@@ -263,7 +263,7 @@ const Dashboard = () => {
             ))}
           </CRow>
         </CCardFooter>
-      </CCard> */}
+      </CCard>
       {/* <WidgetsBrand className="mb-4" withCharts /> */}
       {/* <CRow>
         <CCol xs>

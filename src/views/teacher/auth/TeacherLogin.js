@@ -24,7 +24,7 @@ const TeacherLogin = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')  
   useEffect(() => {
     setColorMode('dark')
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   const [loader, setLoader] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
@@ -44,13 +44,11 @@ const TeacherLogin = () => {
   };
 
   const handleRedirection = () => {
-    console.log('handleRedirection', 'handleRedirection')
     navigate('/forgot-password');
   }
 
   setTimeout(() => {
     if(localStorage.getItem('teacher') != null) {
-      // var loginDetails = JSON.parse(localStorage.getItem('admin'))
       navigate('/teacher/dashboard');
     }
   }, 2000);
@@ -101,22 +99,21 @@ const TeacherLogin = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              {/* <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
+              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
+                      Register as a teacher to access exclusive features and resources.
                     </p>
-                    <Link to="/register">
+                    <Link to="/teacher/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
                         Register Now!
                       </CButton>
                     </Link>
                   </div>
                 </CCardBody>
-              </CCard> */}
+              </CCard>
             </CCardGroup>
           </CCol>
         </CRow>
