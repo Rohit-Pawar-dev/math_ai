@@ -9,12 +9,21 @@ const jwt = require('jsonwebtoken');
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
+    const clientType = req.headers['x-client-type']; 
 
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
         status: false,
         message: 'Invalid email',
+      });
+    }
+
+    // Role-based access control
+    if (clientType && user.role !== clientType) {
+      return res.status(403).json({
+        status: false,
+        message: `Access denied. Not a ${clientType} account.`,
       });
     }
 
@@ -33,8 +42,10 @@ router.post('/login', async (req, res) => {
     res.status(200).json({
       status: true,
       message: 'Login successful',
-      data: user,
-      token,
+      data: {
+        user,
+        token,
+      },
     });
   } catch (err) {
     res.status(500).json({
@@ -43,6 +54,7 @@ router.post('/login', async (req, res) => {
     });
   }
 });
+
 
 
 // router.post('/login', async (req, res) => {
@@ -132,8 +144,10 @@ router.post('/register', async (req, res) => {
     res.status(201).json({
       status: true,
       message: 'User registered successfully',
-      data: userObj,
-      token,
+      data: {
+        user: userObj,
+        token,
+      },
     });
   } catch (err) {
     res.status(500).json({ status: false, message: err.message });
@@ -209,8 +223,6 @@ router.post('/verify-otp', async (req, res) => {
     const user = await User.findOne({ mobile });
     if (!user) return res.status(400).json({ status: false, otp:'', message: 'Invalid mobile or user not registered' });
 
-    console.log(`User OTP: ${user.otp}, Provided OTP: ${otp}`);
-    
     const isMatch = otp == user.otp;
     if (!isMatch) return res.status(400).json({ status: false, message: 'Invalid OTP' });
 

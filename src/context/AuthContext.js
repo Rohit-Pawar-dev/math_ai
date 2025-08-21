@@ -26,7 +26,12 @@ export const AuthProvider = ({ children }) => {
     })
       .then(async (res) => {
         if (res.status == 200) {
-          const { user, token } = res.data.data 
+          const { user, token } = res.data.data
+
+          if (user.role !== 'admin') {
+            Swal.fire('', 'Access denied. Not an admin account.', 'error')
+            return
+          }
 
           localStorage.setItem('admin', JSON.stringify(res.data.data))
           localStorage.setItem('profile', JSON.stringify(user))
@@ -42,7 +47,7 @@ export const AuthProvider = ({ children }) => {
             timerProgressBar: true,
           })
 
-          dispatch(loginSuccess(res.data.data)) 
+          dispatch(loginSuccess(res.data.data))
 
           await API.get('/users')
             .then((res) => {
@@ -73,7 +78,12 @@ export const AuthProvider = ({ children }) => {
     })
       .then(async (res) => {
         if (res.status == 200) {
-          const { user, token } = res.data.data 
+          const { user, token } = res.data.data
+
+          if (user.role !== 'teacher') {
+            Swal.fire('', 'Access denied. Not a teacher account.', 'error')
+            return
+          }
 
           localStorage.setItem('teacher', JSON.stringify(res.data.data))
           localStorage.setItem('profile', JSON.stringify(user))
@@ -89,7 +99,7 @@ export const AuthProvider = ({ children }) => {
             timerProgressBar: true,
           })
 
-          dispatch(teacherLoginSuccess(res.data.data)) 
+          dispatch(teacherLoginSuccess(res.data.data))
 
           setTeacher(token)
         } else {
