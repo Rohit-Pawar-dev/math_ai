@@ -36,11 +36,11 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use((req, res, next) => {
-  // nlogger.info(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-  // nlogger.info('Query:' +  JSON.stringify(req.query));
-  // nlogger.info('Body:' + JSON.stringify(req.body));
-  // nlogger.info('Headers:' + JSON.stringify(req.headers));
-  // nlogger.info('-----------------------------------------------------------------------------------------------------------------');
+  nlogger.info(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  nlogger.info('Query:' +  JSON.stringify(req.query));
+  nlogger.info('Body:' + JSON.stringify(req.body));
+  nlogger.info('Headers:' + JSON.stringify(req.headers));
+  nlogger.info('-----------------------------------------------------------------------------------------------------------------');
   next();
 });
 
