@@ -5,6 +5,7 @@
 /server/node_modules
 /server/package-lock.json
 /server/new-app.log
+/server/backup
 
 package-lock.json
 yarn.lock
