@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
-import { cilPencil, cilTrash } from '@coreui/icons'
+import { cilTrash } from '@coreui/icons'
 import API from '../../../api'
 import Swal from 'sweetalert2'
-import eyeIcon from '../../../assets/images/eyeIcon.svg'
+import defaultImage from '../../../assets/images/default.png'
 
-const ClassList = () => {
-  const [classes, setClasses] = useState([])
+const NotificationList = () => {
+  const [notifications, setNotifications] = useState([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
   const limit = 10
 
-  const fetchClasses = async (pageNo = 1, searchText = '') => {
+  const fetchNotifications = async (pageNo = 1, searchText = '') => {
     try {
       const offset = (pageNo - 1) * limit
       const res = await API.get(
-        `/classes?search=${searchText}&limit=${limit}&offset=${offset}`,
+        `/notifications?limit=${limit}&offset=${offset}&search=${searchText}`,
       )
-      if (res.status === 200) {
-        setClasses(res.data.data || [])
-        setTotalPages(res.data.totalPages || 1)
+      if (res.data.status) {
+        setNotifications(res.data.data)
+        setTotalPages(res.data.totalPages)
       }
     } catch (err) {
       console.error(err)
@@ -31,13 +31,18 @@ const ClassList = () => {
   }
 
   useEffect(() => {
-    fetchClasses(page, search)
+    fetchNotifications(page, search)
   }, [page])
+
+  const handleSearch = () => {
+    setPage(1)
+    fetchNotifications(1, search)
+  }
 
   const handleDelete = (id) => {
     Swal.fire({
       title: 'Are you sure?',
-      text: 'This class will be deleted permanently!',
+      text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -45,47 +50,19 @@ const ClassList = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        API.delete(`/classes/${id}`)
+        API.delete(`/notifications/${id}`)
           .then((res) => {
             if (res.status === 200) {
-              Swal.fire('Deleted!', 'Class has been deleted.', 'success').then(() => {
-                fetchClasses(page, search)
+              Swal.fire('Deleted!', 'The notification has been deleted.', 'success').then(() => {
+                setNotifications((prev) => prev.filter((n) => n._id !== id))
               })
             }
           })
           .catch(() => {
-            Swal.fire('Error', 'Failed to delete the class', 'error')
+            Swal.fire('Error', 'Failed to delete the notification', 'error')
           })
       }
     })
-  }
-
-  const handleStatusToggle = async (classItem) => {
-    const updatedStatus = classItem.status === 'active' ? 'inactive' : 'active'
-    try {
-      const response = await API.post('/classes', {
-        _id: classItem._id, 
-        name: classItem.name,
-        description: classItem.description,
-        status: updatedStatus,
-      })
-
-      if (response.status === 200) {
-        Swal.fire('Success', 'Class status updated successfully!', 'success')
-        setClasses((prev) =>
-          prev.map((c) =>
-            c._id === classItem._id ? { ...c, status: updatedStatus } : c,
-          ),
-        )
-      }
-    } catch (err) {
-      Swal.fire('Error', err.response?.data?.message || err.message, 'error')
-    }
-  }
-
-  const handleSearch = () => {
-    setPage(1)
-    fetchClasses(1, search)
   }
 
   return (
@@ -96,7 +73,7 @@ const ClassList = () => {
             <div className="searchBox">
               <input
                 type="text"
-                placeholder="Search by name"
+                placeholder="Search by title"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -110,60 +87,58 @@ const ClassList = () => {
               </button>
             </div>
             <div className="searchBtn">
-              <NavLink to={'/class-add'}>
+              <NavLink to={'/push-notification'}>
                 <button className="btn btn-outline-warning active" type="button">
-                  Add Class
+                  Push Notification
                 </button>
               </NavLink>
             </div>
           </div>
-
           <div className="container-fliud">
-            <h2>All Classes</h2>
+            <h2>All Notifications</h2>
             <div className="mainContent">
               <table>
                 <thead>
                   <tr>
                     <th>SL</th>
-                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Title</th>
                     <th>Description</th>
-                    <th>Status</th>
+                    <th>Date</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {classes.length === 0 ? (
+                  {notifications.length === 0 ? (
                     <tr>
-                      <td colSpan={5}>No classes found...</td>
+                      <td colSpan={6} style={{ textAlign: 'center' }}>
+                        No notifications found
+                      </td>
                     </tr>
                   ) : (
-                    classes.map((classItem, index) => (
-                      <tr key={classItem._id}>
+                    notifications.map((notification, index) => (
+                      <tr key={notification._id}>
                         <td>{(page - 1) * limit + (index + 1)}</td>
-                        <td>{classItem.name}</td>
-                        <td>{classItem.description || '-'}</td>
                         <td>
-                          <label className="switch">
-                            <input
-                              type="checkbox"
-                              onChange={() => handleStatusToggle(classItem)}
-                              checked={classItem.status === 'active'}
-                            />
-                            <span className="slider"></span>
-                          </label>
+                          <img
+                            src={notification.image || defaultImage}
+                            alt="Notification"
+                            width="100px"
+                            onError={(e) => {
+                              e.target.onerror = null
+                              e.target.src = defaultImage
+                            }}
+                          />
                         </td>
+                        <td>{notification.title}</td>
+                        <td>{notification.description}</td>
+                        <td>{new Date(notification.createdAt).toLocaleDateString()}</td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/class-view/${classItem._id}`}>
-                              <img src={eyeIcon} className="eyeIconClass" alt="view" />
-                            </NavLink>
-                            <NavLink to={`/class-edit/${classItem._id}`}>
-                              <CIcon icon={cilPencil} custom="true" className="nav-icon" />
-                            </NavLink>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDelete(classItem._id)}
-                              title="Delete Class"
+                              onClick={() => handleDelete(notification._id)}
+                              title="Delete Notification"
                             >
                               <CIcon icon={cilTrash} custom="true" className="nav-icon" />
                             </button>
@@ -175,7 +150,7 @@ const ClassList = () => {
                 </tbody>
               </table>
 
-              {/* Pagination Numbers */}
+              {/* Pagination Controls */}
               <div className="paginationControls">
                 <button
                   className="btn btn-outline-secondary"
@@ -217,4 +192,4 @@ const ClassList = () => {
   )
 }
 
-export default ClassList
+export default NotificationList

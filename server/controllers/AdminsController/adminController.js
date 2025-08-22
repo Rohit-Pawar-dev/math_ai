@@ -1,9 +1,12 @@
 const User = require('../../models/User')
+const Notification = require('../../models/Notification');
 const nlogger = require('../../logger')
 const getCustomMulter = require('../../utils/customMulter')
 const upload = getCustomMulter('users')
+const notificationUpload = getCustomMulter('notifications');
 const bcrypt = require('bcrypt')
 const MEDIA_URL = process.env.MEDIA_URL
+const sendNotification = require('../../utils/notification');
 
 // Get single user
 exports.getAdminById = async (req, res) => {
@@ -118,4 +121,98 @@ exports.uploadProfile = async (req, res) => {
   }
 }
 
+
+// Send Notification
+exports.sendNotification = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const image = req.file ? `/uploads/notifications/${req.file.filename}` : '';
+
+    // 1. Save notification to DB
+    const notification = await Notification.create({
+      title,
+      description,
+      image,
+    });
+
+    // 2. Fetch all user FCM tokens
+    const tokens = await User.find({ fcm_id: { $ne: null } }).select('fcm_id -_id');
+    const fcmTokens = tokens.map((u) => u.fcm_id);
+
+    // 3. Send notification
+    await sendNotification(title, description, fcmTokens, image);
+
+    res.status(201).json({
+      status: true,
+      message: 'Notification sent successfully',
+      data: notification,
+    });
+  } catch (err) {
+    console.error('Error sending:', err);
+    res.status(500).json({ status: false, error: err.message });
+  }
+};
+
+// get notifications
+exports.getNotifications = async (req, res) => {
+  try {
+    const searchText = req.query.search ?? ''
+    const limit = parseInt(req.query.limit)
+    const offset = parseInt(req.query.offset) || 0
+
+    const query = {}
+    if (searchText) {
+      query.title = { $regex: searchText, $options: 'i' } // searching by title
+    }
+
+    const total = await Notification.countDocuments(query)
+    const notifications = await Notification.find(query)
+      .skip(offset)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+
+    const data = notifications.map((notification) => ({
+      ...notification.toObject(),
+      image: notification.image ? `${MEDIA_URL}${notification.image}` : null,
+    }))
+
+    res.status(200).json({
+      status: true,
+      message: 'Notifications fetched successfully',
+      data,
+      total,
+      limit,
+      offset,
+      totalPages: Math.ceil(total / limit),
+    })
+  } catch (err) {
+    res.status(500).json({ status: false, message: 'Internal server error' })
+  }
+}
+
+// delete notification
+exports.deleteNotification = async (req, res) => {
+  try {
+    const notificationId = req.params.id
+
+    const deletedNotification = await Notification.findByIdAndDelete(notificationId)
+
+    if (!deletedNotification) {
+      return res.status(404).json({ status: false, message: 'Notification not found' })
+    }
+
+    res.status(200).json({
+      status: true,
+      message: 'Notification deleted successfully',
+    })
+  } catch (err) {
+    res.status(500).json({ status: false, message: 'Internal server error' })
+  }
+}
+
+
+
 exports.uploadAdminImage = upload.single('profilePicture')
+exports.uploadNotificationImage = notificationUpload.single('image');
+
+

@@ -109,6 +109,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Notification List',
+    to: '/notification-list',
+    icon: <i className="fa fa-bell m-2"></i>,
+  },
+  {
+    component: CNavItem,
     name: 'Push Notification',
     to: '/push-notification',
     icon: <i className="fa fa-bell m-2"></i>,

@@ -177,26 +177,26 @@ router.post('/upload-media', upload.single('file'), async (req, res) => {
   }
 });
 
-router.post('/send-notification', async (req, res) => {
-  try {
+// router.post('/send-notification', async (req, res) => {
+//   try {
 
-    const tokens = await User.find({ fcm_id: { $ne: null } }).select('fcm_id -_id');
-    const fcmTokens = tokens.map(user => user.fcmToken);
+//     const tokens = await User.find({ fcm_id: { $ne: null } }).select('fcm_id -_id');
+//     const fcmTokens = tokens.map(user => user.fcmToken);
 
 
-    // const userId = req.body.userId;
-    // const filePath = req.file.path; // 'uploads/filename.png'
+//     // const userId = req.body.userId;
+//     // const filePath = req.file.path; // 'uploads/filename.png'
 
-    // await User.findByIdAndUpdate(userId, {
-    //   profilePicture: filePath
-    // });
+//     // await User.findByIdAndUpdate(userId, {
+//     //   profilePicture: filePath
+//     // });
 
-    // sendNotification(req.body.title, req.body.description, fcmTokens, req.body.image)
+//     // sendNotification(req.body.title, req.body.description, fcmTokens, req.body.image)
 
-    res.status(200).json({ message: 'Notification sent successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+//     res.status(200).json({ message: 'Notification sent successfully' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 module.exports = router;
