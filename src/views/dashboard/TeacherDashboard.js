@@ -175,7 +175,6 @@ const TeacherDashboard = () => {
   }, [teacher?._id, timeFilter])
 
   if (loader) return <div>Loading...</div>
-console.log(chartData);
 
   const widgetsData = [
     { header: statistic.total_users || 0, text: 'Total Users', color: 'primary' },

@@ -40,7 +40,7 @@ const TeacherRegister = () => {
         formData.append('profilePicture', profilePicture)
       }
 
-      const response = await API.post('/teacher/users', formData, {
+      const response = await API.post('/teacher/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -161,7 +161,7 @@ const TeacherRegister = () => {
                     </div>
                   </div>
 
-                  <div className="teacher-section__col">
+                  {/* <div className="teacher-section__col">
                     <div className="teacher-section__form-group">
                       <label className="teacher-section__label">Status</label>
                       <select
@@ -174,7 +174,7 @@ const TeacherRegister = () => {
                         <option value="inactive">Inactive</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="teacher-section__form-submit">
                     <button className="teacher-section__button" type="submit">

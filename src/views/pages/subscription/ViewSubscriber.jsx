@@ -11,7 +11,9 @@ const SubscriptionDetails = () => {
     return (
       <div className="container mt-5 text-center">
         <p className="text-danger">No subscription data found.</p>
-        <button className="btn btn-secondary" onClick={() => navigate(-1)}>Go Back</button>
+        <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+          Go Back
+        </button>
       </div>
     )
   }
@@ -46,21 +48,30 @@ const SubscriptionDetails = () => {
             <strong>Payment Method:</strong> <div>{subscription.payment_method}</div>
           </div>
           <div className="col-md-6 col-lg-4">
-            <strong>Start Date:</strong> <div>{new Date(subscription.start_date).toLocaleDateString()}</div>
+            <strong>Start Date:</strong>{' '}
+            <div>{new Date(subscription.start_date).toLocaleDateString()}</div>
           </div>
           <div className="col-md-6 col-lg-4">
-            <strong>End Date:</strong> <div>{new Date(subscription.end_date).toLocaleDateString()}</div>
+            <strong>End Date:</strong>{' '}
+            <div>{new Date(subscription.end_date).toLocaleDateString()}</div>
           </div>
+
           <div className="col-md-6 col-lg-4">
-            <strong>Status:</strong> <div>{subscription.status}</div>
+            <strong>Status:</strong>{' '}
+            <div>
+              {new Date(subscription.end_date) < new Date() ? 'Inactive' : subscription.status}
+            </div>
           </div>
-          <div className="col-md-6 col-lg-4">
+
+          {/* <div className="col-md-6 col-lg-4">
             <strong>Auto Renew:</strong> <div>{subscription.is_auto_renew ? 'Yes' : 'No'}</div>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-4">
-          <button className="btn btn-secondary" onClick={() => navigate(-1)}>Back to List</button>
+          <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+            Back to List
+          </button>
         </div>
       </div>
     </section>
