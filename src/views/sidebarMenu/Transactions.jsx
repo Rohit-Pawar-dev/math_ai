@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../api'
-import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const Transactions = () => {
@@ -8,7 +7,6 @@ const Transactions = () => {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [search, setSearch] = useState('')
-  const navigate = useNavigate()
 
   const limit = 10
 
@@ -88,8 +86,8 @@ const Transactions = () => {
                     transactions.map((txn, index) => (
                       <tr key={txn._id}>
                         <td>{(page - 1) * limit + (index + 1)}</td>
-                        <td>{txn.user_id?.name || 'N/A'}</td>
-                        <td>{txn.plan_id?.title || 'N/A'}</td>
+                        <td>{txn.user?.name || 'N/A'}</td>
+                        <td>{txn.plan?.title || 'N/A'}</td>
                         <td>{txn.transaction_id}</td>
                         <td>{txn.payment_method}</td>
                         <td>₹ {txn.amount}</td>

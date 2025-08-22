@@ -7,12 +7,12 @@ import MEDIA_URL from '../../media'
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
+  const { admin } = useSelector((state) => state.auth)
 
   const [form, setForm] = useState({
-    name: user?.name || '',
-    mobile: user?.mobile || '',
-    email: user?.email || '',
+    name: admin?.name || '',
+    mobile: admin?.mobile || '',
+    email: admin?.email || '',
   })
 
   const [passwordForm, setPasswordForm] = useState({
@@ -22,7 +22,7 @@ const Profile = () => {
 
   const handleProfileUpdate = async () => {
     try {
-      const res = await API.put(`/admins/${user._id}`, form)
+      const res = await API.put(`/admins/${admin._id}`, form)
       if (res.status === 200) {
         Swal.fire('Profile', 'Profile updated successfully', 'success').then(() => {
           dispatch(updateProfile(res.data.data))
@@ -46,7 +46,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await API.put(`/admins/${user._id}`, {
+      const res = await API.put(`/admins/${admin._id}`, {
         ...form,
         password: passwordForm.password,
       })
@@ -66,7 +66,7 @@ const Profile = () => {
     if (!file) return
 
     const formData = new FormData()
-    formData.append('adminId', user._id)
+    formData.append('adminId', admin._id)
     formData.append('profilePicture', file)
 
     try {
@@ -96,8 +96,8 @@ const Profile = () => {
                     <div className="profilePiv text-center">
                       <img
                         src={
-                          user?.profilePicture
-                            ? MEDIA_URL + user.profilePicture
+                          admin?.profilePicture
+                            ? MEDIA_URL + admin.profilePicture
                             : '/default-avatar.png'
                         }
                         alt="Profile"
