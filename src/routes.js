@@ -6,7 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 // Sidebar Menu List
 const UserAdd = React.lazy(() => import('./views/user-management/AddUser'))
-const UserEdit = React.lazy(() => import('./views/user-management/EditUser'))
+// const UserEdit = React.lazy(() => import('./views/user-management/EditUser'))
 const ProfileManagement = React.lazy(() => import('./views/sidebarMenu/ProfileManagement'))
 const Notifications = React.lazy(() => import('./views/sidebarMenu/Notification'))
 const BusinessSetting = React.lazy(() => import('./views/pages/setting/BusinessSetting'))
@@ -202,7 +202,7 @@ const routes = [
   { path: '/user-add', name: 'UserAdd', element: UserAdd },
   { path: '/view-user/:id', name: 'ViewUser', element: ViewUser },
   { path: '/edit-user', name: 'Edit User', element: EditUSer },
-  { path: '/users/:id', name: 'ProfileManagement', element: UserEdit },
+  { path: '/users/:id', name: 'ProfileManagement', element: EditUSer },
 
   { path: '/subscribers', name: 'Subscription', element: SubscriptionList },
   { path: '/view-subscriber', name: 'view-subscriber', element: viewSubscriber },
