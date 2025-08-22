@@ -13,7 +13,7 @@ router.get("/teacher/profile/:id", teacherController.getTeacherById);
 router.put("/teacher/profile/:id", teacherController.updateTeacher);
 
 router.post(
-  "/teacher/upload-profile",
+  "/teacher/profile/upload-profile",
   teacherController.uploadTeacherImage,  
   teacherController.uploadProfile        
 );

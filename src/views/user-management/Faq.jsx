@@ -71,9 +71,9 @@ const Faq = () => {
                 </button>
               </div>
               <div className="searchBtn">
-                <button className="btn btn-outline-secondary" type="button">
+                {/* <button className="btn btn-outline-secondary" type="button">
                   Export
-                </button>
+                </button> */}
                 <NavLink to="/add-faq">
                   <button className="btn btn-outline-warning active" type="button">
                     Add FAQ

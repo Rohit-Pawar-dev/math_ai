@@ -12,19 +12,20 @@ const PageEdit = () => {
   const [plan, setPlan] = useState({})
   const [content, setContent] = useState('')
   useEffect(function(){
-    API.get('/page/' + id) // Replace with actual API route
-      .then(res => {
-        if(res.status == 200) {            
-          setContent(res.data.content)
-          setPlan(res.data)
-        }
-      })
-      .catch(err => console.error(err));
-  }, [])
+  API.get('/page/' + id)
+    .then(res => {
+      if(res.status == 200) {            
+        setContent(res.data.data.content)                    
+        setPlan(res.data)
+      }
+    })
+    .catch(err => console.error(err));
+}, [])
+
 
   const handleFormSubmit = () => {
     plan.content = content
-    API.put('/page/' + id, plan) // Replace with actual API route
+    API.put('/page/' + id, plan) 
       .then(res => {
         if(res.status == 200) {
           Swal.fire(`Success`, 'Page updated success', 'success').then(() => {

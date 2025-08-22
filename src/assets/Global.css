@@ -162,21 +162,21 @@ a {
 
 button.btn.btn-outline-warning.active {
   color: #fff;
-  background: #DB0000;
-  border: 1px solid #DB0000;
+  background: #d740c9;
+  border: 1px solid #d740c9;
   font-size: 14px;
   font-weight: 500;
 }
 
 button.btn.btn-outline-secondary:hover {
-  background: #DB0000;
-  border: 1px solid #DB0000;
+  background: #d740c9;
+  border: 1px solid #d740c9;
 }
 
 button.btn.btn-primary {
   color: #fff;
-  background: #DB0000;
-  border: 1px solid #DB0000;
+  background: #d740c9;
+  border: 1px solid #d740c9;
   font-size: 14px;
   font-weight: 500;
 
@@ -187,7 +187,7 @@ button.btn.btn-primary {
 }
 
 .loginSection {
-  background-image: url('../assets/images/backround.jpg');
+  background-image: url('../assets/images/background.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -199,7 +199,7 @@ button.btn.btn-primary {
 }
 
 .loginSection .card.bg-primary {
-  background-color: #DB0000 !important;
+  background-color: #d740c9 !important;
 }
 
 .loginSection .card.bg-primary .btn.active {
@@ -208,20 +208,20 @@ button.btn.btn-primary {
 }
 
 .loginSection .card form button.btn.btn-primary.px-4 {
-  background: #DB0000 !important;
-  border-color: #DB0000 !important;
+  background: #d740c9 !important;
+  border-color: #d740c9 !important;
 }
 
 .loginSection .card form button.btn.btn-success {
-  background: #DB0000 !important;
-  border-color: #DB0000 !important;
+  background: #d740c9 !important;
+  border-color: #d740c9 !important;
   color: #fff;
 }
 
 [data-coreui-theme=dark] .dark\:bg-info,
 [data-coreui-theme=dark] .dark\:bg-info:not([class*="dark:"]),
 .bg-info {
-  background-color: #DB0000 !important;
+  background-color: #d740c9 !important;
 }
 
 [data-coreui-theme=dark] .footer {
@@ -312,7 +312,7 @@ button.btn.btn-primary {
 
 /* ON state */
 input:checked+.slider {
-  background-color: #db0000;
+  background-color: #d740c9;
 }
 
 input:checked+.slider::before {
@@ -320,13 +320,13 @@ input:checked+.slider::before {
 }
 
 section.tableSection .card-body select option {
-  color: #DB0000;
+  color: #d740c9;
   font-size: 14px;
   font-weight: 500;
 }
 
 .formSection select option {
-  color: #DB0000;
+  color: #d740c9;
 }
 
 .avatar-img {
@@ -336,8 +336,8 @@ section.tableSection .card-body select option {
 
 button.btn.btn-warning {
   color: #fff;
-  background: #DB0000;
-  border: 1px solid #DB0000;
+  background: #d740c9;
+  border: 1px solid #d740c9;
   font-size: 14px;
   font-weight: 500;
 }
@@ -394,7 +394,7 @@ button.btn.btn-sm.btn-danger {
 }
 
 select option{
-  color: #DB0000;
+  color: #d740c9;
 }
 .loginSection form button.btn.btn-undefined.btn-link{
   float: inline-end;
@@ -526,4 +526,8 @@ select option{
   .teacher-section__col {
     flex: 1 1 100%;
   }
+}
+
+.paginationControls{
+  margin-top: 15px;
 }
