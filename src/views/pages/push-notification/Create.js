@@ -1,50 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
 import { CSpinner } from '@coreui/react'
 
-const PlanEdit = () => {
-  const { id } = useParams()
+const Notification = () => {
   const navigate = useNavigate()
-  const [form, setForm] = useState({title:'', description:'', image:''})
+  const [form, setForm] = useState({ title: '', description: '' })
+  const [imageFile, setImageFile] = useState(null)
+  const [preview, setPreview] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleImageUpload = (e, code) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setLoading(true)
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      // setBase64Image(reader.result); // base64 string
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setImageFile(file)
 
-      setForm({...form, image:reader.result})
-      setLoading(false)
-    };
-    reader.readAsDataURL(file);
-  };
+    // preview
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setPreview(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+
     try {
-      const res = await API.post(`/send-notification`, form)
+      const formData = new FormData()
+      formData.append('title', form.title)
+      formData.append('description', form.description)
+      if (imageFile) {
+        formData.append('image', imageFile) // send file instead of base64
+      }
+
+      const res = await API.post(`/send-notification`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+
       if (res.status === 201) {
         Swal.fire({
           toast: true,
           position: 'top-end',
           icon: 'success',
-          title: 'Notification send successfully!',
+          title: 'Notification sent successfully!',
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
         }).then(() => {
+          navigate('/notification-list')
           window.location.reload()
         })
-        
       }
     } catch (err) {
-      setLoading(false)
       console.error(err)
       Swal.fire({
         toast: true,
@@ -55,6 +65,8 @@ const PlanEdit = () => {
         timer: 3000,
         timerProgressBar: true,
       })
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -65,60 +77,55 @@ const PlanEdit = () => {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="my-2 col-md-4">
-                <div className="form-group">
+              {/* Left Column (Title + Description) */}
+              <div className="col-md-6 my-2">
+                <div className="form-group mb-3">
                   <label>Title</label>
-                    <input
-                      type="text"
-                      name="title"
-                      className="form-control"
-                      minLength={3}
-                      value={form.name}
-                      onChange={(e) => setForm({...form, title:e.target.value}) }
-                      required
+                  <input
+                    type="text"
+                    name="title"
+                    className="form-control"
+                    minLength={3}
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="form-group mb-3">
+                  <label>Description</label>
+                  <textarea
+                    name="description"
+                    className="form-control"
+                    rows={5}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    required
+                    value={form.description}
+                  ></textarea>
+                </div>
+              </div>
+
+              {/* Right Column (Image + Preview + Save Button) */}
+              <div className="col-md-6 my-2">
+                <div className="form-group mb-3">
+                  <label>Image</label>
+                  <input type="file" className="form-control" onChange={handleImageUpload} />
+                  {preview && (
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="mt-3 border rounded shadow-sm"
+                      style={{ maxWidth: '100%', height: 'auto' }}
                     />
-                  </div>
-                  <div className="form-group">
-                    <label>Description</label>
-                    <textarea
-                      type="text"
-                      name="description"
-                      className="form-control"
-                      onChange={(e) => setForm({...form, description:e.target.value})}
-                      required
-                      value={form.description}
-                    ></textarea>
-                  </div>
-                  <div className="form-group">
-                    <label>Image</label>
-                      <input
-                        type="file"
-                        className="form-control"
+                  )}
+                </div>
 
-                        value={''}
-                        onChange={(e) => {
-                          handleImageUpload(e)
-                        }}
-
-                      />
-                      {form.image && (
-                        <img
-                          src={form.image}
-                          alt="Thumbnail"
-                          className="mt-2"
-                          style={{ maxWidth: '200px', height: 'auto' }}
-                        />
-                      )}
-                  </div>
-                  <div className="form-group">
-                    <button type="submit" className="btn btn-primary mt-3">
-                      {loading ? <><CSpinner color="primary" size="sm" /></> : 'Save'}
-                    </button>
-                  </div>
               </div>
-              <div className="my-2 col-md-12 w-25">
-                
-              </div>
+                <div className="form-group mt-4">
+                  <button type="submit" className="btn btn-primary">
+                    {loading ? <CSpinner color="light" size="sm" /> : 'Save'}
+                  </button>
+                </div>
             </div>
           </form>
         </div>
@@ -127,4 +134,4 @@ const PlanEdit = () => {
   )
 }
 
-export default PlanEdit
+export default Notification

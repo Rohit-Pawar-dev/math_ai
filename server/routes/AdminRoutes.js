@@ -83,4 +83,9 @@ router.get("/settings/:id", settingController.getSettingById);
 router.put("/settings/:id", settingController.uploadLogoImage, settingController.updateSetting);
 router.delete("/settings/:id", settingController.deleteSetting);
 
+// ----------------- Notification Routes -----------------
+router.get("/notifications", adminController.getNotifications);
+router.post("/send-notification", adminController.uploadNotificationImage, adminController.sendNotification);
+router.delete("/notifications/:id", adminController.deleteNotification);
+
 module.exports = router;

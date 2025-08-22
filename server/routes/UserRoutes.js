@@ -12,7 +12,7 @@ router.put("/feedbacks/:id", auth, feedbackController.updateUserFeedback);
 router.delete("/feedbacks/:id", auth, feedbackController.deleteUserFeedback);
 
 // ----------------- Plan Routes  -----------------------
-router.get("/plans/subscribers", auth, planController.getSubscribers);
+router.get("/plans-list", planController.getPlans);
 router.post("/plans/purchase", auth, planController.purchasePlan);
 
 module.exports = router;

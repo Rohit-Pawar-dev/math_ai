@@ -62,6 +62,7 @@ const ReelsView = React.lazy(() => import('./views/pages/reels/ReelsView'))
 const ReelsEdit = React.lazy(() => import('./views/pages/reels/ReelsEdit'))
 
 const PushNotification = React.lazy(() => import('./views/pages/push-notification/Create'))
+const NotificationList = React.lazy(() => import('./views/pages/push-notification/NotificationList'))
 
 const PageList = React.lazy(() => import('./views/pages/static-pages/PageList'))
 const PageEdit = React.lazy(() => import('./views/pages/static-pages/PageEdit'))
@@ -276,6 +277,7 @@ const routes = [
   { path: '/page-edit/:id', name: 'Static Pages', element: PageEdit },
 
   { path: '/push-notification', name: 'Push Notification', element: PushNotification },
+  { path: '/notification-list', name: 'Notification List', element: NotificationList },
 
   { path: '/series', name: 'Series', element: SeriesList },
   { path: '/add-series', name: 'Add Series', element: SeriesAdd },
