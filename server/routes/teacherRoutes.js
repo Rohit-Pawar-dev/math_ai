@@ -20,6 +20,10 @@ router.post(
 
 // ----------------- Teacher Dashboard Routes -----------------
 router.get("/teacher/dashboard/:id", teacherController.getTeacherDashboard);
+router.get(
+  "/teacher/dashboard/:teacherId/student-counts",
+  teacherController.getStudentCountsByTime
+);
 
 // ----------------- User Routes -----------------
 router.post('/teacher/users', userController.uploadUserImage, userController.createUser);      

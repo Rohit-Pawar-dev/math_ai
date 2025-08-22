@@ -32,7 +32,7 @@ exports.getSubscribers = async (req, res) => {
       { $lookup: { from: 'plans', localField: 'plan_id', foreignField: '_id', as: 'plan' } },
       { $unwind: '$plan' },
       { $match: matchStage },
-      { $sort: { createdAt: -1 } },
+      { $sort: { created_at: -1 } },
       { $skip: offset },
       { $limit: limit },
     ]);

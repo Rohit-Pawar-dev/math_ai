@@ -3,13 +3,14 @@ const User = require('../../models/User')
 const Subscriber = require('../../models/Subscriber')
 const PlanTransaction = require('../../models/PlanTransaction')
 
-// Get Subscribers
-exports.getSubscribers = async (req, res) => {
+// Plan List
+exports.getPlans = async (req, res) => {
   try {
-    const subscribers = await Subscriber.find()
-    res.json({ status: true, data: subscribers, message: 'Subscribers List' })
+    // where status is active
+    const plans = await Plan.find({ status: 'active' }).sort({ createdAt: -1 })
+    res.status(200).json({ status: true, plans })
   } catch (err) {
-    res.status(400).json({ status: false, message: err.message, data: [] })
+    res.status(400).json({ status: false, message: err.message })
   }
 }
 
@@ -17,6 +18,8 @@ exports.getSubscribers = async (req, res) => {
 exports.purchasePlan = async (req, res) => {
   try {
     const post = req.body
+    console.log('post', post);
+    
     const plan = await Plan.findById(post.plan_id)
     if (!plan) return res.status(404).json({ msg: 'Plan not found' })
 
