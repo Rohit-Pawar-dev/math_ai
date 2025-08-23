@@ -6,72 +6,94 @@ import Swal from 'sweetalert2'
 const QuestionView = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [question, setQuestion] = useState(null)
+  const [questionData, setQuestionData] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    API.get(`/questions/${id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setQuestion(res.data.data)
+    const fetchQuestion = async () => {
+      try {
+        const res = await API.get(`/questions/${id}`)
+        if (res.data.status) {
+          setQuestionData(res.data.data)
+        } else {
+          Swal.fire('Error', res.data.message || 'Failed to fetch question', 'error')
+          navigate('/questions')
         }
-      })
-      .catch(() => {
-        Swal.fire('Error', 'Failed to load question details', 'error')
-      })
-  }, [id])
+      } catch (err) {
+        Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+        navigate('/questions')
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  if (!question) return <div className="p-4">Loading...</div>
+    fetchQuestion()
+  }, [id, navigate])
+
+  if (loading) return <p>Loading...</p>
+  if (!questionData) return null
+
+  const { question, optionType, options, answer, explanationType, explanation, status } = questionData
 
   return (
-    <section className="tableSection">
-      <div className="card">
-        <div className="card-header d-flex justify-content-between align-items-center">
-          <h5>Question Details</h5>
-          <button className="btn btn-warning" onClick={() => navigate(-1)}>
-            Back
-          </button>
-        </div>
-        <div className="card-body">
-          <div className="row">
-            {/* Question */}
-            <Detail label="Question" value={question.question} />
+    <div className="card">
+      <div className="card-body">
+        <h2>Question Preview</h2>
+        <p><strong>Question:</strong> {question}</p>
 
-            {/* Status */}
-            <Detail label="Status" value={question.status} />
-
-            {/* Answer */}
-            <Detail label="Answer" value={question.answer} />
-
-            {/* Explanation */}
-            <Detail label="Explanation" value={question.explanation} />
-
-            {/* Options */}
-            <div className="col-md-12 mb-3">
-              <label className="form-label">
-                <strong>Options</strong>
-              </label>
-              <ul className="list-group">
-                {question.options.map((option, idx) => (
-                  <li key={idx} className="list-group-item">
-                    {option}
-                  </li>
-                ))}
-              </ul>
+        <div>
+          <strong>Options:</strong>
+          {optionType === 'text' ? (
+            <ul>
+              {options.map((opt, idx) => (
+                <li key={idx} style={{ fontWeight: idx === answer ? 'bold' : 'normal' }}>
+                  {opt} {idx === answer && '(Answer)'}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              {options.map((src, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    border: idx === answer ? '2px solid green' : '1px solid #ccc',
+                    padding: '5px',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={`Option ${idx + 1}`}
+                    style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '5px' }}
+                  />
+                  {idx === answer && <span style={{ color: 'green', fontWeight: 'bold' }}>Answer</span>}
+                </div>
+              ))}
             </div>
-          </div>
+          )}
         </div>
+
+        <div style={{ marginTop: '15px' }}>
+          <strong>Explanation:</strong>
+          {explanationType === 'text' ? (
+            <p>{explanation}</p>
+          ) : (
+            <img
+              src={explanation}
+              alt="Explanation"
+              style={{ width: '300px', objectFit: 'cover', borderRadius: '5px' }}
+            />
+          )}
+        </div>
+
+        <p style={{ marginTop: '15px' }}>
+          <strong>Status:</strong> {status}
+        </p>
       </div>
-    </section>
+    </div>
   )
 }
-
-const Detail = ({ label, value }) => (
-  <div className="col-md-6 mb-3">
-    <label className="form-label">
-      <strong>{label}</strong>
-    </label>
-    <p className="form-control-plaintext">{value}</p>
-  </div>
-)
 
 export default QuestionView

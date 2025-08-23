@@ -13,6 +13,7 @@ const pageController = require("../controllers/AdminsController/pageController")
 const settingController = require("../controllers/AdminsController/settingController");
 const adminController = require("../controllers/AdminsController/adminController");
 const questionController = require ("../controllers/AdminsController/questionController")
+const quizController = require ("../controllers/AdminsController/quizController")
 
 // ----------------- Admin Profile Routes -----------------
 router.get("/admins/:id", adminController.getAdminById)
@@ -95,5 +96,13 @@ router.get("/questions", questionController.getQuestions);
 router.get("/questions/:id", questionController.getQuestionById);
 router.put("/questions/:id", questionController.updateQuestion);
 router.delete("/questions/:id", questionController.deleteQuestion);
+
+//-----------------------Quiz Routes -----------------
+router.post("/quizzes", quizController.createQuiz);
+router.get("/quizzes", quizController.getQuizzes);
+router.get("/quizzes/:id", quizController.getQuizById);
+router.put("/quizzes/:id", quizController.updateQuiz);
+router.delete("/quizzes/:id", quizController.deleteQuiz);
+router.put("/quizzes/:id/add-questions", quizController.addQuestionsToQuiz);
 
 module.exports = router;

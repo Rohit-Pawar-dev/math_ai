@@ -124,6 +124,12 @@ const QuestionView = React.lazy(() => import('./views/admin-views/question/Quest
 const QuestionAdd = React.lazy(() => import('./views/admin-views/question/QuestionAdd'))
 const QuestionEdit = React.lazy(() => import('./views/admin-views/question/QuestionEdit'))
 
+//Quiz
+const QuizList = React.lazy(() => import('./views/admin-views/quiz/QuizList'))
+const QuizView = React.lazy(() => import('./views/admin-views/quiz/QuizView'))
+const QuizAdd = React.lazy(() => import('./views/admin-views/quiz/QuizAdd'))
+const QuizEdit = React.lazy(() => import('./views/admin-views/quiz/QuizEdit'))
+
 // Buttons
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
@@ -246,11 +252,17 @@ const routes = [
   { path: '/banner-add', name: 'BannerAdd', element: BannerAdd },
   { path: '/banner-edit/:id', name: 'BannerEdit', element: BannerEdit },
 
-
-    { path: '/question-list', name: 'QuestionList', element: QuestionList },
+  // Questions Routes
+  { path: '/question-list', name: 'QuestionList', element: QuestionList },
   { path: '/question-view/:id', name: 'QuestionView', element: QuestionView },
   { path: '/question-add', name: 'QuestionAdd', element: QuestionAdd },
   { path: '/question-edit/:id', name: 'QuestionEdit', element: QuestionEdit },
+
+    // Quiz Routes
+  { path: '/quiz-list', name: 'QuizList', element: QuizList },
+  { path: '/quiz-view/:id', name: 'QuizView', element: QuizView },
+  { path: '/quiz-add', name: 'QuizAdd', element: QuizAdd },
+  { path: '/quiz-edit/:id', name: 'QuizEdit', element: QuizEdit },
 
   // Classes Routes
   { path: '/class-list', name: 'ClassList', element: ClassList },

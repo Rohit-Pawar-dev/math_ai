@@ -86,6 +86,12 @@ const _nav = [
     to: '/question-list',
     icon: <i className="fa fa-question m-2"></i>,
   },
+  {
+    component: CNavItem,
+    name: 'Quizzes',
+    to: '/quiz-list',
+    icon: <i className="fa fa-store m-2"></i>,
+  },
 
   {
     component: CNavTitle,

@@ -11,7 +11,7 @@ const quizSchema = new Schema({
     type: String,
     required: [true]
   },
-  is_paid:{
+  is_paid: {
     type: Boolean,
     default: false
   },
@@ -23,7 +23,7 @@ const quizSchema = new Schema({
   amount: {
     type: String,
     required: [true],
-    default:'0'
+    default: '0'
   },
   image: {
     type: String,
@@ -33,7 +33,13 @@ const quizSchema = new Schema({
     type: String,
     default: 'active',
     enum: ['active', 'inactive']
-  }
+  },
+  questions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Question'
+    }
+  ]
 }, {
   timestamps: {
     createdAt: 'created_at',

@@ -1,145 +1,263 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
 
 const QuestionEdit = () => {
   const { id } = useParams()
+  const [question, setQuestion] = useState('')
+  const [optionType, setOptionType] = useState('text')
+  const [options, setOptions] = useState(['', '', '', ''])
+  const [optionFiles, setOptionFiles] = useState([null, null, null, null])
+  const [optionPreviews, setOptionPreviews] = useState([null, null, null, null])
+  const [answer, setAnswer] = useState(0)
+  const [explanationType, setExplanationType] = useState('text')
+  const [explanation, setExplanation] = useState('')
+  const [explanationFile, setExplanationFile] = useState(null)
+  const [explanationPreview, setExplanationPreview] = useState(null)
+  const [status, setStatus] = useState('active')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const [form, setForm] = useState({
-    question: '',
-    options: ['', '', '', ''],
-    answer: '',
-    explanation: '',
-    status: 'active',
-  })
-
   useEffect(() => {
-    API.get(`/questions/${id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setForm(res.data.data)
+    const fetchQuestion = async () => {
+      try {
+        const res = await API.get(`/questions/${id}`)
+        if (res.data.status) {
+          const q = res.data.data
+          setQuestion(q.question)
+          setOptionType(q.optionType)
+          setAnswer(q.answer)
+          setExplanationType(q.explanationType)
+          setStatus(q.status)
+          if (q.optionType === 'text') {
+            setOptions(q.options)
+          } else {
+            setOptions(q.options)
+            setOptionPreviews(q.options.map(o => o ? `${o}` : null))
+          }
+          if (q.explanationType === 'text') {
+            setExplanation(q.explanation)
+          } else {
+            setExplanationPreview(q.explanation ? `${q.explanation}` : null)
+          }
         }
-      })
-      .catch(() => Swal.fire('Error', 'Failed to load question data', 'error'))
+      } catch (err) {
+        Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+      }
+    }
+    fetchQuestion()
   }, [id])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-  }
-
   const handleOptionChange = (index, value) => {
-    const updatedOptions = [...form.options]
-    updatedOptions[index] = value
-    setForm((prev) => ({ ...prev, options: updatedOptions }))
+    const newOptions = [...options]
+    newOptions[index] = value
+    setOptions(newOptions)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const { question, options, answer, explanation, status } = form
+  const handleOptionFileChange = (index, file) => {
+    const newFiles = [...optionFiles]
+    const newPreviews = [...optionPreviews]
+    newFiles[index] = file
+    newPreviews[index] = file ? URL.createObjectURL(file) : optionPreviews[index]
+    setOptionFiles(newFiles)
+    setOptionPreviews(newPreviews)
+  }
 
-    API.put(`/questions/${id}`, {
-      question,
-      options,
-      answer,
-      explanation,
-      status,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          Swal.fire('Success', 'Question updated successfully', 'success').then(() =>
-            navigate('/question-list'),
-          )
-        }
+  const handleExplanationFileChange = (e) => {
+    const file = e.target.files[0]
+    setExplanationFile(file)
+    setExplanationPreview(file ? URL.createObjectURL(file) : explanationPreview)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const formData = new FormData()
+      formData.append('question', question)
+      formData.append('optionType', optionType)
+      formData.append('answer', answer)
+      formData.append('explanationType', explanationType)
+      formData.append('status', status)
+      if (optionType === 'text') {
+        formData.append('options', JSON.stringify(options))
+      } else {
+        optionFiles.forEach((file, idx) => {
+          if (file) {
+            formData.append('options', file)
+          } else if (options[idx]) {
+            formData.append('options', options[idx])
+          }
+        })
+      }
+      if (explanationType === 'text') {
+        formData.append('explanation', explanation)
+      } else if (explanationFile) {
+        formData.append('explanation', explanationFile)
+      } else if (explanationPreview) {
+        formData.append('explanation', explanationPreview)
+      }
+      const res = await API.put(`/questions/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       })
-      .catch(() => Swal.fire('Error', 'Failed to update question', 'error'))
+      if (res.data.status) {
+        Swal.fire('Success', 'Question updated successfully', 'success')
+        navigate('/question-list')
+      }
+    } catch (err) {
+      Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <section className="formSection">
-      <div className="card">
-        <div className="card-header">
-          <h5>Edit Question</h5>
-        </div>
+    <div style={{ display: 'flex', gap: '30px' }}>
+      <div className="card" style={{ flex: 1 }}>
         <div className="card-body">
+          <h2>Edit Question</h2>
           <form onSubmit={handleSubmit}>
-            {/* Question */}
-            <div className="form-group mb-3">
+            <div className="form-group">
               <label>Question</label>
               <input
                 type="text"
-                name="question"
                 className="form-control"
-                value={form.question}
-                onChange={handleChange}
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
                 required
               />
             </div>
-
-            {/* Options */}
-            <div className="form-group mb-3">
-              <label>Options</label>
-              {form.options.map((opt, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className="form-control mb-2"
-                  value={opt}
-                  onChange={(e) => handleOptionChange(index, e.target.value)}
-                  required
-                  placeholder={`Option ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Correct Answer */}
-            <div className="form-group mb-3">
-              <label>Correct Answer</label>
-              <input
-                type="text"
-                name="answer"
-                className="form-control"
-                value={form.answer}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* Explanation */}
-            <div className="form-group mb-3">
-              <label>Explanation</label>
-              <textarea
-                name="explanation"
-                className="form-control"
-                value={form.explanation}
-                onChange={handleChange}
-                rows="3"
-              />
-            </div>
-
-            {/* Status */}
-            <div className="form-group mb-3">
-              <label>Status</label>
+            <div className="form-group">
+              <label>Option Type</label>
               <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
                 className="form-control"
+                value={optionType}
+                onChange={(e) => setOptionType(e.target.value)}
               >
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+              </select>
+            </div>
+            {optionType === 'text'
+              ? options.map((opt, idx) => (
+                  <div className="form-group" key={idx}>
+                    <label>Option {idx + 1}</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={opt}
+                      onChange={(e) => handleOptionChange(idx, e.target.value)}
+                      required
+                    />
+                  </div>
+                ))
+              : options.map((opt, idx) => (
+                  <div className="form-group" key={idx}>
+                    <label>Option {idx + 1}</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={(e) => handleOptionFileChange(idx, e.target.files[0])}
+                    />
+                    {optionPreviews[idx] && (
+                      <img
+                        src={optionPreviews[idx]}
+                        alt={`Option ${idx + 1}`}
+                        style={{ width: '100px', marginTop: '5px', objectFit: 'cover', borderRadius: '5px' }}
+                      />
+                    )}
+                  </div>
+                ))}
+            <div className="form-group">
+              <label>Answer (Index)</label>
+              <input
+                type="number"
+                className="form-control"
+                min="0"
+                max={options.length - 1}
+                value={answer}
+                onChange={(e) => setAnswer(parseInt(e.target.value))}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Explanation Type</label>
+              <select
+                className="form-control"
+                value={explanationType}
+                onChange={(e) => setExplanationType(e.target.value)}
+              >
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+              </select>
+            </div>
+            {explanationType === 'text' ? (
+              <div className="form-group">
+                <label>Explanation</label>
+                <textarea
+                  className="form-control"
+                  value={explanation}
+                  onChange={(e) => setExplanation(e.target.value)}
+                />
+              </div>
+            ) : (
+              <div className="form-group">
+                <label>Upload Explanation Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="image/*"
+                  onChange={handleExplanationFileChange}
+                />
+                {explanationPreview && (
+                  <img
+                    src={explanationPreview}
+                    alt="Explanation"
+                    style={{ width: '200px', marginTop: '10px', objectFit: 'cover', borderRadius: '5px' }}
+                  />
+                )}
+              </div>
+            )}
+            <div className="form-group">
+              <label>Status</label>
+              <select className="form-control" value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
             </div>
-
-            <button type="submit" className="btn btn-success">
-              Update Question
+            <button type="submit" className="btn btn-warning" disabled={loading}>
+              {loading ? 'Updating...' : 'Update Question'}
             </button>
           </form>
         </div>
       </div>
-    </section>
+      <div className="card" style={{ flex: 1, padding: '15px' }}>
+        <h3>Preview</h3>
+        <p><strong>Question:</strong> {question}</p>
+        <div>
+          <strong>Options:</strong>
+          <ul>
+            {optionType === 'text'
+              ? options.map((opt, idx) => <li key={idx}>{opt}</li>)
+              : optionPreviews.map((src, idx) => src && (
+                <li key={idx}>
+                  <img src={src} alt={`Option ${idx}`} style={{ width: '100px', objectFit: 'cover', borderRadius: '5px', marginBottom: '5px' }} />
+                </li>
+              ))}
+          </ul>
+        </div>
+        <p><strong>Answer Index:</strong> {answer}</p>
+        <div>
+          <strong>Explanation:</strong>
+          {explanationType === 'text'
+            ? <p>{explanation}</p>
+            : explanationPreview && <img src={explanationPreview} alt="Explanation" style={{ width: '200px', objectFit: 'cover', borderRadius: '5px' }} />}
+        </div>
+        <p><strong>Status:</strong> {status}</p>
+      </div>
+    </div>
   )
 }
 
