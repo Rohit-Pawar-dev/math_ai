@@ -12,6 +12,7 @@ const transactionController = require('../controllers/AdminsController/transacti
 const pageController = require("../controllers/AdminsController/pageController");
 const settingController = require("../controllers/AdminsController/settingController");
 const adminController = require("../controllers/AdminsController/adminController");
+const questionController = require ("../controllers/AdminsController/questionController")
 
 // ----------------- Admin Profile Routes -----------------
 router.get("/admins/:id", adminController.getAdminById)
@@ -87,5 +88,12 @@ router.delete("/settings/:id", settingController.deleteSetting);
 router.get("/notifications", adminController.getNotifications);
 router.post("/send-notification", adminController.uploadNotificationImage, adminController.sendNotification);
 router.delete("/notifications/:id", adminController.deleteNotification);
+
+//-----------------------Question Routes -----------------
+router.post("/questions", questionController.createQuestion);
+router.get("/questions", questionController.getQuestions);
+router.get("/questions/:id", questionController.getQuestionById);
+router.put("/questions/:id", questionController.updateQuestion);
+router.delete("/questions/:id", questionController.deleteQuestion);
 
 module.exports = router;

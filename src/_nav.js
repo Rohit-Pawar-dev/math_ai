@@ -80,6 +80,12 @@ const _nav = [
     to: '/saved-notes',
     icon: <i className="fa fa-file m-2"></i>,
   },
+   {
+    component: CNavItem,
+    name: 'Questions',
+    to: '/question-list',
+    icon: <i className="fa fa-question m-2"></i>,
+  },
 
   {
     component: CNavTitle,
@@ -113,12 +119,12 @@ const _nav = [
     to: '/notification-list',
     icon: <i className="fa fa-bell m-2"></i>,
   },
-  {
-    component: CNavItem,
-    name: 'Push Notification',
-    to: '/push-notification',
-    icon: <i className="fa fa-bell m-2"></i>,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Push Notification',
+  //   to: '/push-notification',
+  //   icon: <i className="fa fa-bell m-2"></i>,
+  // },
   {
     component: CNavItem,
     name: 'Setting',

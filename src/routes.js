@@ -118,6 +118,12 @@ const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'))
 const Tables = React.lazy(() => import('./views/base/tables/Tables'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
+//Questions
+const QuestionList = React.lazy(() => import('./views/admin-views/question/QuestionList'))
+const QuestionView = React.lazy(() => import('./views/admin-views/question/QuestionView'))
+const QuestionAdd = React.lazy(() => import('./views/admin-views/question/QuestionAdd'))
+const QuestionEdit = React.lazy(() => import('./views/admin-views/question/QuestionEdit'))
+
 // Buttons
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
@@ -239,6 +245,12 @@ const routes = [
   { path: '/banner-view/:id', name: 'BannerView', element: BannerView },
   { path: '/banner-add', name: 'BannerAdd', element: BannerAdd },
   { path: '/banner-edit/:id', name: 'BannerEdit', element: BannerEdit },
+
+
+    { path: '/question-list', name: 'QuestionList', element: QuestionList },
+  { path: '/question-view/:id', name: 'QuestionView', element: QuestionView },
+  { path: '/question-add', name: 'QuestionAdd', element: QuestionAdd },
+  { path: '/question-edit/:id', name: 'QuestionEdit', element: QuestionEdit },
 
   // Classes Routes
   { path: '/class-list', name: 'ClassList', element: ClassList },
