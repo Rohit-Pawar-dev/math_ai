@@ -171,7 +171,7 @@ exports.getQuizzesByTeacher = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
     const query = { teacher_id: teacherId };
-    console.log(query);
+    // console.log(query);
 
     if (searchText) {
       query.title = { $regex: searchText, $options: 'i' };

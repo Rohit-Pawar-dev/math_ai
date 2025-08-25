@@ -12,8 +12,19 @@ const transactionController = require('../controllers/AdminsController/transacti
 const pageController = require("../controllers/AdminsController/pageController");
 const settingController = require("../controllers/AdminsController/settingController");
 const adminController = require("../controllers/AdminsController/adminController");
-const questionController = require ("../controllers/AdminsController/questionController")
-const quizController = require ("../controllers/AdminsController/quizController")
+const questionController = require("../controllers/AdminsController/questionController");
+const quizController = require("../controllers/AdminsController/quizController");
+const chapterController = require("../controllers/AdminsController/chapterController");
+const topicController = require("../controllers/AdminsController/topicController");
+const sectionController = require("../controllers/AdminsController/sectionController");
+const subsectionController = require("../controllers/AdminsController/SubSection");
+const getCustomMulter = require('../utils/customMulter');
+
+// Upload handler (store in `uploads/chapters`)
+const uploadChapter = getCustomMulter('chapters');
+const uploadSection = getCustomMulter('sections');
+
+
 
 // ----------------- Admin Profile Routes -----------------
 router.get("/admins/:id", adminController.getAdminById)
@@ -21,7 +32,7 @@ router.put("/admins/:id", adminController.updateAdmin)
 router.post(
   "/admins/upload-profile",
   adminController.uploadAdminImage,
-  adminController.uploadProfile      
+  adminController.uploadProfile
 )
 
 // ----------------- Class Routes -----------------
@@ -31,7 +42,7 @@ router.get("/classes/:id", classController.getClassById);
 router.delete("/classes/:id", classController.deleteClass);
 
 // ----------------- User Routes -----------------
-router.post('/users', userController.uploadUserImage, userController.createUser);      
+router.post('/users', userController.uploadUserImage, userController.createUser);
 router.get("/users", userController.getUsers);
 router.get("/users/:id", userController.getUserById);
 router.put("/users/:id", userController.uploadUserImage, userController.updateUser);
@@ -73,7 +84,7 @@ router.get("/transactions", transactionController.getTransactions);
 // ----------------- Page Routes -----------------
 router.post("/page", pageController.createPage);
 router.get("/page", pageController.getAllPages);
-router.get("/page/slug/:slug", pageController.getPageBySlug); 
+router.get("/page/slug/:slug", pageController.getPageBySlug);
 router.get("/page/:id", pageController.getPageById);
 router.put("/page/:id", pageController.updatePage);
 router.delete("/page/:id", pageController.deletePage);
@@ -106,5 +117,35 @@ router.delete("/quizzes/:id", quizController.deleteQuiz);
 router.put("/quizzes/:id/add-questions", quizController.addQuestionsToQuiz);
 router.put("/quizzes/:id/set-questions", quizController.setQuestionsForQuiz);
 
+//-----------------------chapter Routes -----------------
+
+router.post('/chapter', uploadChapter.single('icon'), chapterController.createChapter);
+router.get('/chapter', chapterController.getChapters);
+router.get('/chapter/:id', chapterController.getChapterById);
+router.put('/chapter/:id', uploadChapter.single('icon'), chapterController.updateChapter);
+router.delete('/chapter/:id', chapterController.deleteChapter);
+
+//-----------------------Topic Routes -----------------
+
+router.post('/topic', topicController.createTopic);
+router.get('/topic', topicController.getTopics);
+router.get('/topic/:id', topicController.getTopicById);
+router.put('/topic/:id', topicController.updateTopic);
+router.delete('/topic/:id', topicController.deleteTopic);
+
+//-------------------- Section Routes -----------------
+
+router.post('/section', uploadSection.single('video'), sectionController.createSection);
+router.get('/section', sectionController.getSections);
+router.get('/section/:id', sectionController.getSectionById);
+router.put('/section/:id', uploadSection.single('video'), sectionController.updateSection);
+router.delete('/section/:id', sectionController.deleteSection);
+
+//------------------Subsection Routes --------------------
+router.post('/subsection', subsectionController.createSubsection);
+router.get('/subsection', subsectionController.getSubsections);
+router.get('/subsection/:id', subsectionController.getSubsectionById);
+router.put('/subsection/:id', subsectionController.updateSubsection);
+router.delete('/subsection/:id', subsectionController.deleteSubsection);
 
 module.exports = router;

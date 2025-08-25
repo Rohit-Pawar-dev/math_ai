@@ -128,5 +128,4 @@ exports.deleteBanner = async (req, res) => {
   }
 };
 
-// Export multer for routes
 exports.uploadBannerImage = upload.single('image');
