@@ -2,10 +2,78 @@ const Question = require('../../models/Question');
 const getCustomMulter = require('../../utils/customMulter');
 const MEDIA_URL = process.env.MEDIA_URL;
 
+// const upload = getCustomMulter('questions').fields([
+//   { name: 'options', maxCount: 10 },
+//   { name: 'explanation', maxCount: 1 },
+// ]);
 const upload = getCustomMulter('questions').fields([
-  { name: 'options', maxCount: 10 },
+  { name: 'options[0]', maxCount: 1 },
+  { name: 'options[1]', maxCount: 1 },
+  { name: 'options[2]', maxCount: 1 },
+  { name: 'options[3]', maxCount: 1 },
   { name: 'explanation', maxCount: 1 },
 ]);
+
+
+// exports.createQuestion = (req, res) => {
+//   upload(req, res, async (err) => {
+//     if (err) {
+//       return res.status(400).json({ status: false, message: err.message });
+//     }
+
+//     try {
+//       const { question, answer, status, optionType, explanationType } = req.body;
+
+//       if (!optionType) {
+//         return res.status(400).json({ status: false, message: 'optionType is required' });
+//       }
+
+//       let options = [];
+
+//       // Text options
+//       if (optionType === 'text' && req.body.options) {
+//         const bodyOptions = Array.isArray(req.body.options)
+//           ? req.body.options
+//           : JSON.parse(req.body.options);
+//         options.push(...bodyOptions); // only strings
+//       }
+
+//       // Image options
+//       if (optionType === 'image' && req.files && req.files.options) {
+//         req.files.options.forEach((file) => {
+//           options.push(file.path); // only string paths
+//         });
+//       }
+
+//       // Explanation (text or image)
+//       let explanation = '';
+//       if (explanationType === 'text' && req.body.explanation) {
+//         explanation = req.body.explanation;
+//       } else if (explanationType === 'image' && req.files && req.files.explanation) {
+//         explanation = req.files.explanation[0].path;
+//       }
+
+//       const newQuestion = await Question.create({
+//         question,
+//         optionType,
+//         options,
+//         answer,
+//         explanationType,
+//         explanation,
+//         status: status || 'active',
+//       });
+
+//       res.status(201).json({
+//         status: true,
+//         message: 'Question created successfully',
+//         data: newQuestion,
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       res.status(400).json({ status: false, message: err.message });
+//     }
+//   });
+// };
 
 exports.createQuestion = (req, res) => {
   upload(req, res, async (err) => {
@@ -22,19 +90,27 @@ exports.createQuestion = (req, res) => {
 
       let options = [];
 
-      // Text options
+      // Handle text options
       if (optionType === 'text' && req.body.options) {
         const bodyOptions = Array.isArray(req.body.options)
           ? req.body.options
           : JSON.parse(req.body.options);
-        options.push(...bodyOptions); // only strings
+        options = [...bodyOptions];
       }
 
-      // Image options
-      if (optionType === 'image' && req.files && req.files.options) {
-        req.files.options.forEach((file) => {
-          options.push(file.path); // only string paths
+      // Handle image options using indexed fields like options[0], options[1], etc.
+      if (optionType === 'image' && req.files) {
+        const imageOptions = [];
+
+        Object.keys(req.files).forEach((key) => {
+          const match = key.match(/^options\[(\d+)\]$/);
+          if (match) {
+            const index = parseInt(match[1]);
+            imageOptions[index] = req.files[key][0].path; // Put file at correct index
+          }
         });
+
+        options = imageOptions;
       }
 
       // Explanation (text or image)
@@ -62,10 +138,12 @@ exports.createQuestion = (req, res) => {
       });
     } catch (err) {
       console.error(err);
-      res.status(400).json({ status: false, message: err.message });
+      res.status(500).json({ status: false, message: err.message });
     }
   });
 };
+
+
 exports.getQuestions = async (req, res) => {
   try {
     const searchText = req.query.search || ''
@@ -189,15 +267,18 @@ exports.updateQuestion = (req, res) => {
         }
       } else if (optionType === 'image') {
         let existingOptions = Array.isArray(q.options) ? q.options : [];
-
-        if (req.files && req.files.options) {
-          // Replace only the indices where new files were uploaded
-          req.files.options.forEach((file, idx) => {
-            existingOptions[idx] = file.path;
-          });
-        }
-
-        q.options = existingOptions;
+        if (req.files) {
+          for (const fieldName in req.files) {
+            if (fieldName.startsWith('options[')) {
+              const match = fieldName.match(/options\[(\d+)\]/);
+              if (match) {
+                const index = parseInt(match[1]);
+                const file = req.files[fieldName][0];
+                existingOptions[index] = file.path;
+              }
+            }
+          }
+        } q.options = existingOptions;
       }
 
       // --- Handle Explanation ---
@@ -222,68 +303,6 @@ exports.updateQuestion = (req, res) => {
     }
   });
 };
-
-
-// exports.updateQuestion = (req, res) => {
-//   upload(req, res, async (err) => {
-//     if (err) {
-//       return res.status(400).json({ status: false, message: err.message });
-//     }
-
-//     try {
-//       const { id } = req.params;
-//       const { question, answer, status, optionType, explanationType } = req.body;
-
-//       let q = await Question.findById(id);
-//       if (!q) {
-//         return res.status(404).json({ status: false, message: 'Question not found' });
-//       }
-
-//       q.question = question || q.question;
-//       q.answer = answer !== undefined ? answer : q.answer;
-//       q.optionType = optionType || q.optionType;
-//       q.explanationType = explanationType || q.explanationType;
-//       q.status = status || q.status;
-
-//       let options = [];
-//       if (optionType === 'text') {
-//         if (req.body.options) {
-//           const bodyOptions = Array.isArray(req.body.options)
-//             ? req.body.options
-//             : JSON.parse(req.body.options);
-//           options.push(...bodyOptions);
-//         }
-//         q.options = options.length > 0 ? options : q.options;
-//       } else if (optionType === 'image') {
-//         if (req.files && req.files.options) {
-//           req.files.options.forEach((file) => {
-//             options.push(file.path);
-//           });
-//           q.options = options;
-//         }
-//       }
-
-//       if (explanationType === 'text') {
-//         if (req.body.explanation) q.explanation = req.body.explanation;
-//       } else if (explanationType === 'image') {
-//         if (req.files && req.files.explanation) {
-//           q.explanation = req.files.explanation[0].path;
-//         }
-//       }
-
-//       await q.save();
-
-//       res.json({
-//         status: true,
-//         message: 'Question updated successfully',
-//         data: q,
-//       });
-//     } catch (err) {
-//       console.error('Error updating question:', err);
-//       res.status(500).json({ status: false, message: 'Internal server error', error: err.message });
-//     }
-//   });
-// };
 
 
 exports.deleteQuestion = async (req, res) => {
