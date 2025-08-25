@@ -9,6 +9,12 @@ const ViewUser = React.lazy(() => import('./views/teacher/user-management/ViewUs
 const UserList = React.lazy(() => import('./views/teacher/user-management/UserList'))
 const UserEdit = React.lazy(() => import('./views/teacher/user-management/EditUser'))
 
+//Quiz
+const QuizList = React.lazy(() => import('./views/teacher/quiz/QuizList'))
+const QuizView = React.lazy(() => import('./views/teacher/quiz/QuizView'))
+const QuizAdd = React.lazy(() => import('./views/teacher/quiz/QuizAdd'))
+const QuizEdit = React.lazy(() => import('./views/teacher/quiz/QuizEdit'))
+
 const teacherRoutes = [
   { path: '/teacher/dashboard', name: 'Teacher Dashboard', element: TeacherDashboard },
   { path: '/teacher/profile', name: 'Teacher Profile', element: TeacherProfile },
@@ -35,6 +41,10 @@ const teacherRoutes = [
     name: 'UserList',
     element: UserList,
   },
+  { path: '/teacher/quiz-list', name: 'QuizList', element: QuizList },
+  { path: '/teacher/quiz-view/:id', name: 'QuizView', element: QuizView },
+  { path: '/teacher/quiz-add', name: 'QuizAdd', element: QuizAdd },
+  { path: '/teacher/quiz-edit/:id', name: 'QuizEdit', element: QuizEdit },
 ]
 
 export default teacherRoutes

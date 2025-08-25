@@ -225,10 +225,10 @@ const routes = [
   { path: '/saved-notes', name: 'Saved Notes', element: notesList },
   { path: '/saved-notes/view/:id', name: 'View', element: notesEdit },
 
-  { path: '/quizes', name: 'Quiz', element: quizList },
-  { path: '/quizes/create', name: 'Create', element: quizCreate },
-  { path: '/quizes/edit', name: 'Edit', element: quizEdit },
-  
+  { path: '/quizzes', name: 'Quiz', element: quizList },
+  { path: '/quizzes/create', name: 'Create', element: quizCreate },
+  { path: '/quizzes/edit', name: 'Edit', element: quizEdit },
+
   { path: '/calculator', name: 'Calculator', element: calculatorList },
   { path: '/calculator/create', name: 'Create', element: calculatorCreate },
   { path: '/calculator/edit/:id', name: 'Edit', element: calculatorEdit },

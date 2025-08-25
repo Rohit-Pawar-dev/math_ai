@@ -10,6 +10,7 @@ export default function QuizAdd() {
   const [amount, setAmount] = useState('0');
   const [status, setStatus] = useState('active');
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("teacher_token")?.replace(/^"|"$/g, "");
 
   const navigate = useNavigate();
 
@@ -37,11 +38,15 @@ export default function QuizAdd() {
         status,
       };
 
-      const res = await API.post('/quizzes', payload);
+      const res = await API.post('/teacher/quizzes', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (res.data.status) {
         Swal.fire('Success', 'Quiz added successfully!', 'success').then(() => {
-          navigate('/quiz-list'); 
+          navigate('/teacher/quiz-list'); 
         });
       }
     } catch (err) {

@@ -16,7 +16,6 @@ const _nav = [
     component: CNavTitle,
     name: 'User Management',
   },
-  
   {
     component: CNavItem,
     name: 'Users',

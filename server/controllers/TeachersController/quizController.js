@@ -4,7 +4,8 @@ const MEDIA_URL = process.env.MEDIA_URL;
 
 exports.createQuiz = async (req, res) => {
   try {
-    const { title, description, is_paid, amount, teacher_id, status, questions } = req.body;
+    const { title, description, is_paid, amount, status, questions } = req.body;
+    const teacher_id = req.user.id;
 
     const quiz = await Quiz.create({
       title,
@@ -24,42 +25,6 @@ exports.createQuiz = async (req, res) => {
     });
   } catch (err) {
     res.status(400).json({ status: false, message: err.message });
-  }
-};
-exports.getQuizzes = async (req, res) => {
-  try {
-    const searchText = req.query.search ?? '';
-    const limit = parseInt(req.query.limit) || 10;
-    const offset = parseInt(req.query.offset) || 0;
-
-    const query = {};
-    if (searchText) {
-      query.title = { $regex: searchText, $options: 'i' };
-    }
-
-    const total = await Quiz.countDocuments(query);
-    const quizzes = await Quiz.find(query)
-      .populate('questions')
-      .skip(offset)
-      .limit(limit)
-      .sort({ created_at: -1 });
-
-    const data = quizzes.map((quiz) => ({
-      ...quiz.toObject(),
-      image: quiz.image ? `${MEDIA_URL}${quiz.image}` : null,
-    }));
-
-    res.json({
-      status: true,
-      message: 'Quizzes fetched successfully',
-      data,
-      total,
-      limit,
-      offset,
-      totalPages: Math.ceil(total / limit),
-    });
-  } catch (err) {
-    res.status(500).json({ status: false, message: 'Internal server error', error: err.message });
   }
 };
 
@@ -133,27 +98,6 @@ exports.deleteQuiz = async (req, res) => {
   }
 };
 
-// exports.addQuestionsToQuiz = async (req, res) => {
-//   try {
-//     const { questions } = req.body;
-//     const quiz = await Quiz.findById(req.params.id);
-
-//     if (!quiz) {
-//       return res.status(404).json({ status: false, message: 'Quiz not found' });
-//     }
-
-//     quiz.questions = [...new Set([...quiz.questions, ...questions])];
-//     await quiz.save();
-
-//     res.json({
-//       status: true,
-//       message: 'Questions added to quiz successfully',
-//       data: quiz,
-//     });
-//   } catch (err) {
-//     res.status(500).json({ status: false, message: 'Internal server error', error: err.message });
-//   }
-// };
 exports.addQuestionsToQuiz = async (req, res) => {
   try {
     const { questions } = req.body; // should be array of questionIds
@@ -218,6 +162,40 @@ exports.setQuestionsForQuiz = async (req, res) => {
     res
       .status(500)
       .json({ status: false, message: "Internal server error", error: err.message });
+  }
+};
+exports.getQuizzesByTeacher = async (req, res) => {
+  try {
+    const teacherId = req.user.id;
+    const searchText = req.query.search ?? '';
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
+    const query = { teacher_id: teacherId };
+    console.log(query);
+
+    if (searchText) {
+      query.title = { $regex: searchText, $options: 'i' };
+    }
+
+    const total = await Quiz.countDocuments(query);
+
+    const quizzes = await Quiz.find(query)
+      .populate("questions")
+      .skip(offset)
+      .limit(limit)
+      .sort({ created_at: -1 });
+
+    res.json({
+      status: true,
+      message: "Quizzes fetched successfully",
+      data: quizzes,
+      total,
+      limit,
+      offset,
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (err) {
+    res.status(500).json({ status: false, message: "Internal server error", error: err.message });
   }
 };
 

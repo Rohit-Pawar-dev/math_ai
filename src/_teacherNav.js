@@ -10,7 +10,7 @@ const _teacherNav = [
   {
     component: CNavItem,
     name: 'My Quizzes',
-    to: '/teacher/quizzes',
+    to: '/teacher/quiz-list',
     icon: <i className="fa fa-book"></i>, 
   },
   {

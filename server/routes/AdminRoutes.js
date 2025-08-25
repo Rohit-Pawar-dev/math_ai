@@ -104,5 +104,7 @@ router.get("/quizzes/:id", quizController.getQuizById);
 router.put("/quizzes/:id", quizController.updateQuiz);
 router.delete("/quizzes/:id", quizController.deleteQuiz);
 router.put("/quizzes/:id/add-questions", quizController.addQuestionsToQuiz);
+router.put("/quizzes/:id/set-questions", quizController.setQuestionsForQuiz);
+
 
 module.exports = router;

@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import MEDIA_URL from '../../../media'
 
 
-
 const QuizView = () => {
   const { id } = useParams();
   const [quiz, setQuiz] = useState(null);
@@ -15,6 +14,19 @@ const QuizView = () => {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "short", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
+  const fetchQuiz = async () => {
+    try {
+      const res = await API.get(`/teacher/quizzes/${id}`);
+      if (res.data.status) {
+        setQuiz(res.data.data);
+      }
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || err.message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -28,19 +40,6 @@ const QuizView = () => {
     }
   }, [quiz]);
 
-
-  const fetchQuiz = async () => {
-    try {
-      const res = await API.get(`/quizzes/${id}`);
-      if (res.data.status) {
-        setQuiz(res.data.data);
-      }
-    } catch (err) {
-      Swal.fire("Error", err.response?.data?.message || err.message, "error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchQuiz();
@@ -58,7 +57,7 @@ const QuizView = () => {
     return (
       <div className="text-center mt-5">
         <h4>Quiz not found</h4>
-        <NavLink to="/quiz-list" className="btn btn-warning mt-3">
+        <NavLink to="/teacher/quiz-list" className="btn btn-warning mt-3">
           Back to List
         </NavLink>
       </div>
@@ -70,7 +69,7 @@ const QuizView = () => {
       <div className="card shadow-lg p-4">
         <div className="d-flex justify-content-between align-items-center">
           <h2>{quiz.title}</h2>
-          <NavLink to="/quiz-list" className="btn btn-secondary">
+          <NavLink to="/teacher/quiz-list" className="btn btn-secondary">
             Back
           </NavLink>
         </div>
@@ -180,7 +179,6 @@ const QuizView = () => {
                             )}
                           </li>
                         ))}
-
                       </ul>
 
                       {/* <p>
@@ -233,7 +231,6 @@ const QuizView = () => {
                           )}
                         </div>
                       )}
-
                     </div>
                   </div>
                 </div>

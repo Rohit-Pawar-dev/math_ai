@@ -15,13 +15,18 @@ const QuizList = () => {
   const [selectedQuestions, setSelectedQuestions] = useState([])
   const [selectedQuizId, setSelectedQuizId] = useState(null)
   const [showModal, setShowModal] = useState(false)
+ const token = localStorage.getItem("teacher_token")?.replace(/^"|"$/g, "");
 
   const limit = 10
 
   const fetchQuizzes = async (pageNo = 1, searchText = '') => {
     try {
       const offset = (pageNo - 1) * limit
-      const res = await API.get(`/quizzes?limit=${limit}&offset=${offset}&search=${searchText}`)
+      const res = await API.get(`/teacher/quizzes?limit=${limit}&offset=${offset}&search=${searchText}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.data.status) {
         setQuizzes(res.data.data)
         setTotalPages(res.data.totalPages)
@@ -74,6 +79,7 @@ const QuizList = () => {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')
     }
   }
+
   const handleAddQuestionClick = async (quizId) => {
     setSelectedQuizId(quizId)
     setSelectedQuestions([])
@@ -86,7 +92,7 @@ const QuizList = () => {
 
       if (questionsRes.data.status && quizRes.data.status) {
         setActiveQuestions(questionsRes.data.data)
-        setSelectedQuestions(quizRes.data.data.questions.map((q) => q._id))
+        setSelectedQuestions(quizRes.data.data.questions.map((q) => q._id)) // pre-select
         setShowModal(true)
       }
     } catch (err) {
@@ -116,18 +122,17 @@ const QuizList = () => {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')
     }
   }
-
-  useEffect(() => {
-    if (showModal) {
-      // Wait for DOM to update, then re-typeset
-      setTimeout(() => {
-        if (window.MathJax) {
-          window.MathJax.typesetPromise && window.MathJax.typesetPromise()
-        }
-      }, 0)
-    }
-  }, [showModal, activeQuestions, selectedQuestions])
-
+    useEffect(() => {
+      if (showModal) {
+        // Wait for DOM to update, then re-typeset
+        setTimeout(() => {
+          if (window.MathJax) {
+            window.MathJax.typesetPromise && window.MathJax.typesetPromise()
+          }
+        }, 0)
+      }
+    }, [showModal, activeQuestions, selectedQuestions])
+  
 
   return (
     <section className="container mt-4">
@@ -149,7 +154,7 @@ const QuizList = () => {
                 Search
               </button>
             </div>
-            <NavLink to="/quiz-add">
+            <NavLink to="/teacher/quiz-add">
               <button className="btn btn-warning">Add Quiz</button>
             </NavLink>
           </div>
@@ -192,10 +197,10 @@ const QuizList = () => {
                       </td>
                       <td>
                         <div className="d-flex flex-wrap gap-2">
-                          <NavLink to={`/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
+                          <NavLink to={`/teacher/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
                             View
                           </NavLink>
-                          <NavLink to={`/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
+                          <NavLink to={`/teacher/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
                             <CIcon icon={cilPencil} />
                           </NavLink>
                           <button
@@ -247,42 +252,7 @@ const QuizList = () => {
           </div>
         </div>
       </div>
-
-      {/* Modal for adding questions */}
-      {/* {showModal && (
-        <div className="modal-backdrop d-flex align-items-center justify-content-center">
-          <div className="modal-dialog">
-            <div className="modal-content p-3">
-              <h4>Select Questions</h4>
-              <div className="question-list" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                {activeQuestions.map((q) => (
-                  <div key={q._id} className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={`q-${q._id}`}
-                      checked={selectedQuestions.includes(q._id)}
-                      onChange={() => handleCheckboxChange(q._id)}
-                    />
-                    <label className="form-check-label" htmlFor={`q-${q._id}`}>
-                      {q.question}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-3 text-end">
-                <button className="btn btn-secondary me-2" onClick={() => setShowModal(false)}>
-                  Cancel
-                </button>
-                <button className="btn btn-success" onClick={handleSaveQuestions}>
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
-      {showModal && (
+       {showModal && (
         <div className="modal-backdrop d-flex align-items-center justify-content-center">
           <div className="modal-dialog">
             <div className="modal-content p-3">
