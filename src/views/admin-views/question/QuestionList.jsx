@@ -110,7 +110,7 @@ const QuestionList = () => {
                   <tr>
                     <th>SL</th>
                     <th>Question</th>
-                    <th>Answer</th>
+                    <th>Answer option</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -127,7 +127,7 @@ const QuestionList = () => {
                       <tr key={question._id}>
                         <td>{(page - 1) * limit + index + 1}</td>
                         <td>{question.question}</td>
-                        <td>{question.answer}</td>
+                        <td>{question.answer + 1}</td>
                         <td>
                           <label className="switch">
                             <input

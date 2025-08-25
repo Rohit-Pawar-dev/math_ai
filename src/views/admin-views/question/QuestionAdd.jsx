@@ -43,6 +43,51 @@ const QuestionAdd = () => {
     setExplanationPreview(file ? URL.createObjectURL(file) : null)
   }
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   setLoading(true)
+
+  //   try {
+  //     const formData = new FormData()
+  //     formData.append('question', question)
+  //     formData.append('optionType', optionType)
+  //     formData.append('answer', answer)
+  //     formData.append('explanationType', explanationType)
+  //     formData.append('status', status)
+
+  //     // Append options
+  //     if (optionType === 'text') {
+  //       formData.append('options', JSON.stringify(options))
+  //     } else {
+  //       optionFiles.forEach((file) => {
+  //         if (file) formData.append('options', file)
+  //       })
+  //     }
+
+  //     // Append explanation
+  //     if (explanationType === 'text') {
+  //       formData.append('explanation', explanation)
+  //     } else if (explanationFile) {
+  //       formData.append('explanation', explanationFile)
+  //     }
+
+  //     const res = await API.post('/questions', formData, {
+  //       headers: { 'Content-Type': 'multipart/form-data' }
+  //     })
+
+  //     if (res.data.status) {
+  //       Swal.fire('Success', 'Question created successfully', 'success')
+  //       navigate('/question-list')
+  //     }
+  //   } catch (err) {
+  //     console.error(err)
+  //     Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -55,16 +100,18 @@ const QuestionAdd = () => {
       formData.append('explanationType', explanationType)
       formData.append('status', status)
 
-      // Append options
+      // Handle options
       if (optionType === 'text') {
         formData.append('options', JSON.stringify(options))
       } else {
-        optionFiles.forEach((file) => {
-          if (file) formData.append('options', file)
+        optionFiles.forEach((file, idx) => {
+          if (file) {
+            formData.append(`options[${idx}]`, file)
+          }
         })
       }
 
-      // Append explanation
+      // Handle explanation
       if (explanationType === 'text') {
         formData.append('explanation', explanation)
       } else if (explanationFile) {
@@ -121,37 +168,37 @@ const QuestionAdd = () => {
             {/* Options */}
             {optionType === 'text'
               ? options.map((opt, idx) => (
-                  <div className="form-group" key={idx}>
-                    <label>Option {idx + 1}</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={opt}
-                      onChange={(e) => handleOptionChange(idx, e.target.value)}
-                      required
-                    />
-                  </div>
-                ))
+                <div className="form-group" key={idx}>
+                  <label>Option {idx + 1}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={opt}
+                    onChange={(e) => handleOptionChange(idx, e.target.value)}
+                    required
+                  />
+                </div>
+              ))
               : optionFiles.map((_, idx) => (
-                  <div className="form-group" key={idx}>
-                    <label>Option {idx + 1}</label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      accept="image/*"
-                      onChange={(e) => handleOptionFileChange(idx, e.target.files[0])}
+                <div className="form-group" key={idx}>
+                  <label>Option {idx + 1}</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={(e) => handleOptionFileChange(idx, e.target.files[0])}
+                  />
+                  {optionPreviews[idx] && (
+                    <img
+                      src={optionPreviews[idx]}
+                      alt={`Option ${idx + 1}`}
+                      style={{ width: '100px', marginTop: '5px', objectFit: 'cover', borderRadius: '5px' }}
                     />
-                    {optionPreviews[idx] && (
-                      <img
-                        src={optionPreviews[idx]}
-                        alt={`Option ${idx + 1}`}
-                        style={{ width: '100px', marginTop: '5px', objectFit: 'cover', borderRadius: '5px' }}
-                      />
-                    )}
-                  </div>
-                ))}
+                  )}
+                </div>
+              ))}
 
-            {/* Answer */}
+            {/* Answer
             <div className="form-group">
               <label>Answer (Index)</label>
               <input
@@ -163,7 +210,26 @@ const QuestionAdd = () => {
                 onChange={(e) => setAnswer(parseInt(e.target.value))}
                 required
               />
+            </div> */}
+
+            <div className="form-group">
+              <label>Answer (Option Number: 1 to 4)</label>
+              <input
+                type="number"
+                className="form-control"
+                min="1"
+                max={4}
+                value={answer + 1} // display as 1-based
+                onChange={(e) => {
+                  const val = parseInt(e.target.value)
+                  if (!isNaN(val) && val >= 1 && val <= 4) {
+                    setAnswer(val - 1) // store as 0-based
+                  }
+                }}
+                required
+              />
             </div>
+
 
             {/* Explanation Type */}
             <div className="form-group">

@@ -80,27 +80,27 @@ const QuestionEdit = () => {
       formData.append('answer', answer)
       formData.append('explanationType', explanationType)
       formData.append('status', status)
+
       if (optionType === 'text') {
         formData.append('options', JSON.stringify(options))
       } else {
         optionFiles.forEach((file, idx) => {
           if (file) {
-            formData.append('options', file)
-          } else if (options[idx]) {
-            formData.append('options', options[idx])
+            formData.append(`options[${idx}]`, file)
           }
         })
       }
+
       if (explanationType === 'text') {
         formData.append('explanation', explanation)
       } else if (explanationFile) {
         formData.append('explanation', explanationFile)
-      } else if (explanationPreview) {
-        formData.append('explanation', explanationPreview)
       }
+
       const res = await API.put(`/questions/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
+
       if (res.data.status) {
         Swal.fire('Success', 'Question updated successfully', 'success')
         navigate('/question-list')
@@ -141,47 +141,53 @@ const QuestionEdit = () => {
             </div>
             {optionType === 'text'
               ? options.map((opt, idx) => (
-                  <div className="form-group" key={idx}>
-                    <label>Option {idx + 1}</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={opt}
-                      onChange={(e) => handleOptionChange(idx, e.target.value)}
-                      required
-                    />
-                  </div>
-                ))
+                <div className="form-group" key={idx}>
+                  <label>Option {idx + 1}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={opt}
+                    onChange={(e) => handleOptionChange(idx, e.target.value)}
+                    required
+                  />
+                </div>
+              ))
               : options.map((opt, idx) => (
-                  <div className="form-group" key={idx}>
-                    <label>Option {idx + 1}</label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      accept="image/*"
-                      onChange={(e) => handleOptionFileChange(idx, e.target.files[0])}
+                <div className="form-group" key={idx}>
+                  <label>Option {idx + 1}</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={(e) => handleOptionFileChange(idx, e.target.files[0])}
+                  />
+                  {optionPreviews[idx] && (
+                    <img
+                      src={optionPreviews[idx]}
+                      alt={`Option ${idx + 1}`}
+                      style={{ width: '100px', marginTop: '5px', objectFit: 'cover', borderRadius: '5px' }}
                     />
-                    {optionPreviews[idx] && (
-                      <img
-                        src={optionPreviews[idx]}
-                        alt={`Option ${idx + 1}`}
-                        style={{ width: '100px', marginTop: '5px', objectFit: 'cover', borderRadius: '5px' }}
-                      />
-                    )}
-                  </div>
-                ))}
+                  )}
+                </div>
+              ))}
             <div className="form-group">
-              <label>Answer (Index)</label>
+              <label>Answer (Option Number: 1 to 4)</label>
               <input
                 type="number"
                 className="form-control"
-                min="0"
-                max={options.length - 1}
-                value={answer}
-                onChange={(e) => setAnswer(parseInt(e.target.value))}
+                min="1"
+                max={options.length}
+                value={answer + 1}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value)
+                  if (!isNaN(val) && val >= 1 && val <= options.length) {
+                    setAnswer(val - 1)
+                  }
+                }}
                 required
               />
             </div>
+
             <div className="form-group">
               <label>Explanation Type</label>
               <select
@@ -248,7 +254,7 @@ const QuestionEdit = () => {
               ))}
           </ul>
         </div>
-        <p><strong>Answer Index:</strong> {answer}</p>
+        <p><strong>Answer option:</strong> {answer + 1}</p>
         <div>
           <strong>Explanation:</strong>
           {explanationType === 'text'
