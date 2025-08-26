@@ -56,27 +56,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-
-// router.post('/login', async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     const user = await User.findOne({ email });
-//     if (!user) return res.status(400).json({ message: 'Invalid email' });
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
-
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-//       expiresIn: process.env.JWT_EXPIRES_IN
-//     });
-
-//     res.json({ user, token });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
 router.post('/signup-otp', async (req, res) => {
   try {
     let { email, password, mobile } = req.body;
@@ -155,39 +134,6 @@ router.post('/register', async (req, res) => {
 });
 
 
-// router.post('/register', async (req, res) => {
-//   try {
-//     let { email, password, mobile } = req.body;
-
-//     email = email?.trim();
-//     mobile = mobile?.trim();
-
-//     if (await User.findOne({ email })) {
-//       return res.status(409).json({ status: false, message: 'Email already in use' });
-//     }
-
-//     if (await User.findOne({ mobile })) {
-//       return res.status(409).json({ status: false, message: 'Mobile number already in use' });
-//     }
-
-//     let hashedPassword = '';
-//     if (password && password.trim() !== '') {
-//       const salt = await bcrypt.genSalt(10);
-//       hashedPassword = await bcrypt.hash(password, salt);
-//     }
-
-//     const user = await User.create(req.body);
-
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-//       expiresIn: process.env.JWT_EXPIRES_IN,
-//     });
-
-//     res.status(201).json({ status: true, message: 'User registered successfully', token });
-//   } catch (err) {
-//     res.status(400).json({ status: false, message: err.message, token: '' });
-//   }
-// });
-
 
 router.post('/send-otp', async (req, res) => {
   try {
@@ -230,7 +176,7 @@ router.post('/verify-otp', async (req, res) => {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
 
-    res.json({status:true, message:'OTP verified successfully', token: token });
+    res.json({status:true, message:'OTP verified successfully', token: token, data: user });
     
   } catch (err) {
     res.status(500).json({ status: false, message: err.message });

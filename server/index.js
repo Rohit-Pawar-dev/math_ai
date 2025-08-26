@@ -8,7 +8,7 @@ const path = require('path');
 
 const User = require('./models/User');
 const adminRoutes = require("./routes/AdminRoutes");
-const teacherRoutes = require("./routes/TeacherRoutes");
+const teacherRoutes = require("./routes/TeacherRoutes")
 const userRoutes = require('./routes/UserRoutes');
 const authRoutes = require('./routes/AuthRoutes');
 const accountRoutes = require('./routes/AccountRoutes');
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 // CRUD OPERATION ROUTES
 app.use("/api", adminRoutes);
-app.use("/api", teacherRoutes);
+app.use("/api/teacher", teacherRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/faq', faqRoutes);
 app.use('/api/genre', genreRoutes);
