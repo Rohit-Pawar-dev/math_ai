@@ -66,7 +66,7 @@ const QuizView = () => {
   }
 
   return (
-    <section className="quizView container mt-4">
+    <section className="quizView">
       <div className="card shadow-lg p-4">
         <div className="d-flex justify-content-between align-items-center">
           <h2>{quiz.title}</h2>
