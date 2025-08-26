@@ -1,14 +1,14 @@
 .tableSection {}
 
 a {
-  color: #ffffff !important;
+  color: #000 !important;
   text-decoration: none !important;
 }
 
 .tableSection h2 {
   text-transform: uppercase;
   font-size: 25px;
-  color: #75797F;
+  color: #525252;
   font-weight: 700;
 }
 
@@ -26,22 +26,32 @@ a {
   font-weight: 400;
   /* text-transform: capitalize; */
   font-size: 14px;
-  color: #c5c5c5;
+  color: #000;
 
 }
 
 .form-control-plaintext {
   text-transform: capitalize;
+  color: grey !important;
 }
 
 .mainContent table td img {
   height: 80px;
   object-fit: contain;
   object-position: left;
+      filter: invert(1);
 }
 
+.card-header{
+      color: #525252;
+    font-weight: 600;
+    font-size: 20px;
+}
 .mainContent table th:last-child {
   width: 150px;
+}
+strong{
+  color: #525252;
 }
 
 .mainContent table th {
@@ -53,6 +63,9 @@ a {
   text-transform: uppercase;
   font-size: 14px;
 }
+h1, h2, h3, h4, h5{
+  color: #525252;
+}
 
 .actionTable a {
   /* font-size: 20px; */
@@ -61,9 +74,9 @@ a {
   padding: 9px 9px;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #777777;
+  border: 1px solid #000;
   align-items: center;
-  background: #696969;
+  background: #fff;
   display: flex;
 }
 
@@ -88,11 +101,12 @@ a {
 .mainContent .card .card-body .form-group label {
   font-weight: 500;
   font-size: 13px;
+  color: #000;
 }
 
 .formSubmitDiv {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
   gap: 30px;
   margin-top: 30px;
@@ -113,7 +127,7 @@ a {
 
 .searchBox {
   display: flex;
-  border: #ffffff1a 1px solid;
+  border: #0000001a 1px solid;
   border-radius: 5px;
   height: 40px;
   padding-left: 15px;
@@ -140,24 +154,35 @@ a {
 }
 
 .sidebar-dark {
-  --cui-body-bg: #000000 !important;
+  --cui-body-bg: #fff !important;
 }
 
 .header {
-  --cui-header-bg: #000000 !important;
+  --cui-header-bg: #fff !important;
 }
 
 .card {
-  --cui-card-bg: #121212 !important;
+  --cui-card-bg: #fff !important;
+      padding: 15px 20px;
+    border: 1px solid #5e5cd0;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+    border: 1px solid #dfdfdf;
+    height: 100%;
+    transition: .3s all ease;
+    border-radius: 15px;
+    cursor: pointer;
 }
-
+  /* .card:hover{
+    transform: scale(101%);
+  } */
 .sidebar-nav .nav-link.active {
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #121212 !important;
+  color: #fff !important;
+  background: linear-gradient(to left, #ca49ca, #7482e6) !important;
 }
 
 .wrapper.d-flex.flex-column.min-vh-100 {
-  background: #000 !important;
+  background: #ffffff !important;
 }
 
 button.btn.btn-outline-warning.active {
@@ -184,6 +209,7 @@ button.btn.btn-primary {
 
 .form-control {
   background-color: transparent !important;
+
 }
 
 .loginSection {
@@ -225,7 +251,7 @@ button.btn.btn-primary {
 }
 
 [data-coreui-theme=dark] .footer {
-  --cui-footer-bg: #121212;
+  --cui-footer-bg: #fff;
 }
 
 .border-bottom {
@@ -262,7 +288,7 @@ button.btn.btn-primary {
 }
 
 .form-control {
-  border: var(--cui-border-width) solid #ffffff1a !important;
+  border: var(--cui-border-width) solid #d7d7d7 !important;
 }
 
 .profileImgClass {
@@ -271,7 +297,9 @@ button.btn.btn-primary {
   border-radius: 50%;
   object-fit: cover;
 }
-
+.img-thumbnail{
+  background-color: #fff !important;
+}
 
 .switch {
   display: flex;
@@ -374,7 +402,7 @@ button.btn.btn-sm.btn-danger {
 
 }
 .row.g-3.customTableView .col-md-6.col-lg-4 strong{
-      color: #8d8d8d;
+      color: #6c6c6c;
     font-size: 14px;
     font-weight: 700;
 }
@@ -398,7 +426,7 @@ select option{
 }
 .loginSection form button.btn.btn-undefined.btn-link{
   float: inline-end;
-  text-decoration: none; 
+  text-decoration: none;
   color: #fff;
 }
 
@@ -407,7 +435,7 @@ select option{
 
 .teacher-section {
   padding: 2rem;
-  background-color: #121212; /* Dark background */
+  background-color: #fff; /* Dark background */
   min-height: 100vh;
   color: #e0e0e0; /* Light text for dark mode */
 }
@@ -520,6 +548,39 @@ select option{
 .teacher-section__button:hover {
   background-color: #218838;
 }
+.mainLogo{
+  max-height: 100px !important;
+}
+.sidebar-nav .nav-title{
+  margin-top: 0 !important;
+  color: #7480e6;
+}
+.sidebar-nav .nav-link:hover{
+    background-image: linear-gradient(to left, #ca49ca, #7482e6) !important;
+    color: #fff !important;
+}
+.sidebar-nav .nav-link{
+  font-weight: 600;
+}
+.container-fluid.border-bottom.px-4 {
+    background-color: #7480e6;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.sidebar.sidebar-dark.sidebar-fixed.border-end {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.header-nav .nav-link {
+    color: #fff !important;
+}
+.text-body-secondary{
+   color: grey !important;
+}
+.card-title{
+  color: #000 !important;
+}
+.text-truncate{
+  color: #000;
+}
 
 /* Responsive: Stack fields on small screens */
 @media (max-width: 600px) {
@@ -530,4 +591,36 @@ select option{
 
 .paginationControls{
   margin-top: 15px;
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.5rem 0.5rem;
+    color: var(--cui-table-color-state, var(--cui-table-color-type, #000000));
+    background-color: #ffffff;
+}
+label{
+  color: #000;
+}
+.form-select{
+  background-color: #fff;
+  color: #000;
+}
+.list-group-item{
+  background-color: #fff;
+  color: #000;
+}
+.btn-secondary{
+  color: #fff;
+  background-color: #212631;
+}
+.accordion-button{
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+.row.g-3.customTableView .col-md-6.col-lg-4 div {
+    color: #000;
+}
+.breadcrumb-item.active{
+  color: #000;
 }

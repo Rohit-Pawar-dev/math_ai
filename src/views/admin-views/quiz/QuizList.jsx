@@ -130,7 +130,7 @@ const QuizList = () => {
 
 
   return (
-    <section className="container mt-4">
+    <section className="">
       <div className="card">
         <div className="card-body">
 
