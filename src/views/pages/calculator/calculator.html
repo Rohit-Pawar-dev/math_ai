@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Math Keyboard (HTML + JS)</title>
+  <!-- MathJax v3 for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root{
+      --bg:#f9fafb; /* light gray */
+      --fg:#111827; /* gray-900 */
+      --muted:#4b5563; /* gray-600 */
+      --accent:#2563eb; /* blue-600 */
+      --card:#ffffff; /* white */
+      --btn:#f3f4f6;  /* gray-100 */
+      --btn-hover:#e5e7eb; /* gray-200 */
+      --ring:#60a5fa; /* blue-400 */
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+      Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--fg);
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .app{ width:min(1100px, 100%); }
+    .card{
+      background: var(--card);
+      border:1px solid #e5e7eb;
+      border-radius:20px; padding:18px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+    .row{ display:grid; grid-template-columns: 1.2fr 1fr; gap:16px; }
+    @media (max-width: 900px){ .row{ grid-template-columns: 1fr; } }
+
+    .heading{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    .heading h1{ font-size:20px; margin:0; letter-spacing:0.3px; }
+    .heading .actions{ display:flex; gap:8px; }
+
+    .btn{
+      background: var(--btn); color: var(--fg); border:1px solid #d1d5db;
+      padding:8px 12px; border-radius:12px; cursor:pointer; font-size:14px;
+    }
+    .btn:hover{ background: var(--btn-hover); }
+    .btn:focus{ outline: 2px solid var(--ring); outline-offset:2px; }
+    .btn.small{ padding:6px 10px; font-size:13px; border-radius:10px; }
+
+    textarea{
+      width:100%; min-height:220px; resize:vertical; background:#ffffff; color:var(--fg);
+      border:1px solid #d1d5db; border-radius:14px; padding:12px 14px;
+      font-size:16px; line-height:1.45; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .kbd{
+      margin-top:12px; display:grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+      gap:8px; max-height: 260px; overflow:auto; padding:8px; background:#f9fafb;
+      border:1px solid #d1d5db; border-radius:14px;
+    }
+    .key{
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      background: #f3f4f6; border:1px solid #d1d5db;
+      border-radius:12px; padding:10px 8px; cursor:pointer; user-select:none; height:44px;
+      transition: transform .06s ease, background .2s ease;
+      font-size:16px;
+    }
+    .key:hover{ background:#e5e7eb; }
+    .key:active{ transform: translateY(1px) scale(0.99); }
+
+    .preview{
+      background:#ffffff; border:1px solid #d1d5db; border-radius:14px; padding:14px; min-height:220px;
+    }
+    .subtle{ color: var(--muted); font-size:12px; margin-top:6px; }
+
+    .toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 12px; }
+    .chip{ background:#f9fafb; border:1px solid #d1d5db; border-radius:999px; padding:6px 10px; font-size:12px; cursor:pointer; }
+    .chip[aria-pressed="true"]{ border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <div class="heading">
+        <h1>Math Keyboard · LaTeX Input with Live Preview</h1>
+        <div class="actions">
+          <button class="btn small" id="copyLatex" title="Copy LaTeX">Copy LaTeX</button>
+          <button class="btn small" id="copyUnicode" title="Copy as Unicode (rendered)">Copy Rendered</button>
+          <button class="btn small" id="clearBtn" title="Clear">Clear</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <section>
+          <label for="input" class="subtle">Type LaTeX here. Use the keyboard below to insert symbols/templates. Try: <code>\\frac{a}{b} + \\sqrt{x^2+y^2}</code></label>
+          <textarea id="input" spellcheck="false" placeholder="e.g. x^2 + y^2 = r^2"></textarea>
+
+          <div class="toolbar" role="toolbar" aria-label="Insert templates">
+            <button class="chip" data-template="wrap:^" title="Superscript (wrap selection with ^{…})">x^</button>
+            <button class="chip" data-template="wrap:_" title="Subscript (wrap selection with _{…})">x<sub>_</sub></button>
+            <button class="chip" data-template="template:\\frac{•}{•}" title="Fraction template">\frac{·}{·}</button>
+            <button class="chip" data-template="template:\\sqrt{•}" title="Square root">\sqrt{·}</button>
+            <button class="chip" data-template="template:\\sum_{i=1}^{n}{•}" title="Summation">\sum</button>
+            <button class="chip" data-template="template:\\int_{a}^{b}{•}\,dx" title="Integral">\int</button>
+            <button class="chip" data-template="template:\\begin{bmatrix}•&•\\\\•&•\\end{bmatrix}" title="2x2 Matrix">[ ]<sub>2×2</sub></button>
+            <button class="chip" data-template="wrap:(paren)" title="Parentheses wrap">( )</button>
+            <button class="chip" data-template="wrap:[brack]" title="Brackets wrap">[ ]</button>
+            <button class="chip" data-template="wrap:{brace}" title="Braces wrap">{ }</button>
+          </div>
+
+          <div class="kbd" id="keyboard" aria-label="Math keyboard"></div>
+        </section>
+
+        <section>
+          <div class="subtle">Live Preview</div>
+          <div id="preview" class="preview">Type LaTeX on the left, or click keys below.</div>
+          <div class="subtle">Tips: Press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Enter</kbd> to re-render. Double-click a key to insert its LaTeX command name.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Utility: insert text at the caret ---
+    function insertAtCaret(el, text, {selectOffset=0, replaceSelection=false}={}){
+      const start = el.selectionStart ?? 0;
+      const end = el.selectionEnd ?? 0;
+      const before = el.value.slice(0, start);
+      const after = el.value.slice(end);
+      const selected = el.value.slice(start, end);
+      const finalText = replaceSelection ? text : (selected ? text.replace('•', selected) : text);
+      const caretPos = before.length + finalText.length + selectOffset;
+      el.value = before + finalText + after;
+      el.focus();
+      el.setSelectionRange(caretPos, caretPos);
+      triggerRender();
+    }
+
+    // --- Symbol sets ---
+    const groups = {
+      Basics: [
+        {label:'+','ins':'+'},{label:'−','ins':'−'},{label:'×','ins':'\\times'},{label:'÷','ins':'\\div'},
+        {label:'=',ins:'='},{label:'≠',ins:'\\neq'},{label:'≈',ins:'\\approx'},{label:'≡',ins:'\\equiv'},
+        {label:'≤',ins:'\\leq'},{label:'≥',ins:'\\geq'},{label:'±',ins:'\\pm'},{label:'∓',ins:'\\mp'},
+      ],
+      Greek: [
+        {label:'α',ins:'\\alpha'},{label:'β',ins:'\\beta'},{label:'γ',ins:'\\gamma'},{label:'Δ',ins:'\\Delta'},
+        {label:'θ',ins:'\\theta'},{label:'λ',ins:'\\lambda'},{label:'μ',ins:'\\mu'},{label:'π',ins:'\\pi'},
+        {label:'σ',ins:'\\sigma'},{label:'φ',ins:'\\phi'},{label:'Ω',ins:'\\Omega'},{label:'∞',ins:'\\infty'},
+      ],
+      Algebra: [
+        {label:'^',ins:'^{•}'},{label:'_',ins:'_{•}'},{label:'√',ins:'\\sqrt{•}'},{label:'n√',ins:'\\sqrt[•]{•}'},
+        {label:'|x|',ins:'\\left|•\\right|'},{label:'⌊x⌋',ins:'\\lfloor • \\rfloor'},{label:'⌈x⌉',ins:'\\lceil • \\rceil'},
+        {label:'( )',ins:'\\left(•\\right)'},{label:'[ ]',ins:'\\left[•\\right]'},{label:'{ }',ins:'\\left\\{•\\right\\}'},
+      ],
+      Calculus: [
+        {label:'∑',ins:'\\sum_{i=1}^{n} •'},{label:'∏',ins:'\\prod_{i=1}^{n} •'},{label:'∫',ins:'\\int_{a}^{b} • \\, dx'},
+        {label:'∂',ins:'\\partial'},{label:'d/dx',ins:'\\frac{d}{dx} •'},{label:'∇',ins:'\\nabla'},{label:'→',ins:'\\to'},
+      ],
+      Sets: [
+        {label:'∈',ins:'\\in'},{label:'∉',ins:'\\notin'},{label:'⊂',ins:'\\subset'},{label:'⊆',ins:'\\subseteq'},
+        {label:'⊄',ins:'\\nsubseteq'},{label:'∪',ins:'\\cup'},{label:'∩',ins:'\\cap'},{label:'∖',ins:'\\setminus'},
+      ],
+      Vectors: [
+        {label:'→v',ins:'\\vec{•}'},{label:'·',ins:'\\cdot'},{label:'∘',ins:'\\circ'},{label:'⟨⟩',ins:'\\langle • \\rangle'},
+        {label:'↦',ins:'\\mapsto'},{label:'↔',ins:'\\leftrightarrow'},{label:'↗',ins:'\\nearrow'},{label:'⊥',ins:'\\perp'},
+      ],
+      Matrices: [
+        {label:'[ ]',ins:'\\begin{bmatrix}•&•\\\\•&•\\end{bmatrix}'},
+        {label:'( )',ins:'\\begin{pmatrix}•&•\\\\•&•\\end{pmatrix}'},
+        {label:'| |',ins:'\\begin{vmatrix}•&•\\\\•&•\\end{vmatrix}'},
+      ]
+    };
+
+    // --- Build keyboard ---
+    const kbd = document.getElementById('keyboard');
+    const input = document.getElementById('input');
+    const preview = document.getElementById('preview');
+
+    const sectionOrder = Object.keys(groups);
+    sectionOrder.forEach(groupName => {
+      const title = document.createElement('div');
+      title.textContent = groupName;
+      title.className = 'subtle';
+      title.style.gridColumn = '1 / -1';
+      title.style.marginTop = '6px';
+      title.style.marginBottom = '-2px';
+      kbd.appendChild(title);
+
+      groups[groupName].forEach(({label, ins}) => {
+        const btn = document.createElement('button');
+        btn.className = 'key';
+        btn.type = 'button';
+        btn.setAttribute('title', ins);
+        btn.setAttribute('aria-label', `Insert ${label}`);
+        btn.textContent = label;
+        btn.addEventListener('click', () => handleInsert(ins));
+        btn.addEventListener('dblclick', () => insertAtCaret(input, ins, {replaceSelection:true}));
+        kbd.appendChild(btn);
+      });
+    });
+
+    // --- Template toolbar logic ---
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const t = chip.dataset.template;
+        if(!t) return;
+        if(t.startsWith('wrap:')){
+          const kind = t.slice(5);
+          wrapSelection(kind);
+        }else if(t.startsWith('template:')){
+          const tpl = t.slice(9);
+          insertTemplate(tpl);
+        }
+      });
+    });
+
+    function wrapSelection(kind){
+      const start = input.selectionStart ?? 0;
+      const end = input.selectionEnd ?? 0;
+      const sel = input.value.slice(start, end) || '•';
+      let latex = sel;
+      if(kind === '^') latex = `^{${sel}}`;
+      else if(kind === '_') latex = `_{${sel}}`;
+      else if(kind === '(paren)') latex = `\\left(${sel}\\right)`;
+      else if(kind === '[brack]') latex = `\\left[${sel}\\right]`;
+      else if(kind === '{brace}') latex = `\\left\\{${sel}\\right\\}`;
+      insertAtCaret(input, latex, {replaceSelection:true});
+    }
+
+    function insertTemplate(tpl){
+      // Place caret at first bullet • if present
+      const firstIdx = tpl.indexOf('•');
+      let selectOffset = 0;
+      if(firstIdx >= 0){ selectOffset = -(tpl.length - firstIdx); }
+      insertAtCaret(input, tpl, {selectOffset});
+    }
+
+    function handleInsert(ins){
+      // If the insertion contains a bullet placeholder, prefer wrapping selection
+      const hasBullet = ins.includes('•');
+      if(hasBullet){
+        const start = input.selectionStart ?? 0;
+        const end = input.selectionEnd ?? 0;
+        const sel = input.value.slice(start, end);
+        if(sel){
+          insertAtCaret(input, ins.replace('•', sel), {replaceSelection:true});
+          return;
+        }
+      }
+      // Default insertion
+      const firstIdx = ins.indexOf('•');
+      let selectOffset = 0;
+      if(firstIdx >= 0){ selectOffset = -(ins.length - firstIdx); }
+      insertAtCaret(input, ins, {selectOffset});
+    }
+
+    // --- Live rendering ---
+    let renderTimer = null;
+    function triggerRender(){
+      clearTimeout(renderTimer);
+      renderTimer = setTimeout(render, 180);
+    }
+    async function render(){
+      const latex = input.value.trim();
+      preview.innerHTML = latex ? `$${latex}$` : 'Type LaTeX on the left, or click keys below.';
+      if(window.MathJax && window.MathJax.typesetPromise){
+        try{ await MathJax.typesetPromise([preview]); }catch(e){ /* ignore */ }
+      }
+    }
+
+    input.addEventListener('input', triggerRender);
+    input.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+        e.preventDefault(); render();
+      }
+    });
+
+    // --- Clipboard helpers ---
+    document.getElementById('copyLatex').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(input.value); toast('LaTeX copied!'); }
+      catch{ fallbackCopy(input.value); toast('Copied (fallback).'); }
+    });
+
+    document.getElementById('copyUnicode').addEventListener('click', async ()=>{
+      // grab rendered text content as a quick-n-dirty unicode copy
+      const txt = preview.textContent || '';
+      try{ await navigator.clipboard.writeText(txt); toast('Rendered text copied!'); }
+      catch{ fallbackCopy(txt); toast('Copied (fallback).'); }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', ()=>{ input.value=''; triggerRender(); input.focus(); });
+
+    function fallbackCopy(text){
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+
+    // Tiny toast
+    let toastEl=null, toastTimer=null;
+    function toast(msg){
+      if(!toastEl){
+        toastEl = document.createElement('div');
+        toastEl.style.position='fixed'; toastEl.style.bottom='18px'; toastEl.style.left='50%'; toastEl.style.transform='translateX(-50%)';
+        toastEl.style.background='rgba(0,0,0,0.7)'; toastEl.style.color='white'; toastEl.style.padding='10px 14px';
+        toastEl.style.borderRadius='12px'; toastEl.style.fontSize='14px'; toastEl.style.border='1px solid rgba(255,255,255,0.2)';
+        document.body.appendChild(toastEl);
+      }
+      toastEl.textContent = msg; toastEl.style.opacity='1';
+      clearTimeout(toastTimer); toastTimer = setTimeout(()=> toastEl.style.opacity='0', 1200);
+    }
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
