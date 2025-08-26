@@ -17,7 +17,7 @@ const SectionSchema = new mongoose.Schema({
         trim: true
     },
     video: {
-        type: String 
+        type: String
     },
     status: {
         type: String,

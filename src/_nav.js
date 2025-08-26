@@ -36,6 +36,34 @@ const _nav = [
   },
   {
     component: CNavTitle,
+    name: 'Practice',
+  },
+  {
+    component: CNavItem,
+    name: 'Chapter',
+    to: '/chapter-list',
+    icon: <i className="fa fa-folder m-2"></i>,
+  },
+  {
+    component: CNavItem,
+    name: 'Topics',
+    to: '/topic-list',
+    icon: <i className="fa fa-folder m-2"></i>,
+  },
+  {
+    component: CNavItem,
+    name: 'Section',
+    to: '/section-list',
+    icon: <i className="fa fa-folder m-2"></i>,
+  },
+  {
+    component: CNavItem,
+    name: 'Sub Section',
+    to: '/subsection-list',
+    icon: <i className="fa fa-folder m-2"></i>,
+  },
+  {
+    component: CNavTitle,
     name: 'Transactions',
   },
   {
@@ -44,7 +72,7 @@ const _nav = [
     to: '/subscribers',
     icon: <i className="fa fa-user m-2"></i>,
   },
-  
+
   {
     component: CNavItem,
     name: 'Transactions',
@@ -79,7 +107,7 @@ const _nav = [
     to: '/saved-notes',
     icon: <i className="fa fa-file m-2"></i>,
   },
-   {
+  {
     component: CNavItem,
     name: 'Questions',
     to: '/question-list',
@@ -102,12 +130,10 @@ const _nav = [
     to: '/banner-list',
     icon: <i className="fa fa-image m-2"></i>,
   },
-
   {
     component: CNavTitle,
     name: 'Feedback Management',
   },
-
   {
     component: CNavItem,
     name: 'FeedBacks',

@@ -37,17 +37,17 @@ exports.getSections = async (req, res) => {
 
     const query = {};
     if (searchText) {
-      query.title = { $regex: searchText, $options: 'i' }; // Assuming 'title' is a field in Section
+      query.title = { $regex: searchText, $options: 'i' }; 
     }
 
     const total = await Section.countDocuments(query);
 
     const sections = await Section.find(query)
-      .populate('chapterId', 'title') // Only get 'title' field from Chapter
-      .populate('topicId', 'title')   // Only get 'title' field from Topic
+      .populate('chapterId', 'title')
+      .populate('topicId', 'title') 
       .skip(offset)
       .limit(limit)
-      .sort({ created_at: -1 }); // Optional: change sort field if needed
+      .sort({ created_at: -1 }); 
 
     res.json({
       status: true,

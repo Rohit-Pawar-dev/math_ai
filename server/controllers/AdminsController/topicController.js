@@ -10,7 +10,6 @@ exports.createTopic = async (req, res) => {
       description,
       status
     });
-
     await topic.save();
     res.status(201).json({
       status: true,
@@ -29,17 +28,16 @@ exports.getTopics = async (req, res) => {
     const offset = parseInt(req.query.offset) || 0;
 
     const query = {};
-    if (searchText) {
-      query.title = { $regex: searchText, $options: 'i' }; // Assuming 'title' is a field in Topic
+    if (searchText.trim() !== '') {
+      query.title = { $regex: searchText, $options: 'i' };
     }
-
     const total = await Topic.countDocuments(query);
 
     const topics = await Topic.find(query)
-      .populate('chapterId', 'title') // Populates only 'title' from chapter
+      .populate('chapterId', 'title')
       .skip(offset)
       .limit(limit)
-      .sort({ created_at: -1 }); // Optional: change sort if needed
+      .sort({ created_at: -1 });
 
     res.json({
       status: true,

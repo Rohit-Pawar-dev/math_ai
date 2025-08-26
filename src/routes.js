@@ -130,6 +130,30 @@ const QuizView = React.lazy(() => import('./views/admin-views/quiz/QuizView'))
 const QuizAdd = React.lazy(() => import('./views/admin-views/quiz/QuizAdd'))
 const QuizEdit = React.lazy(() => import('./views/admin-views/quiz/QuizEdit'))
 
+//Chapter
+const ChapterList = React.lazy(() => import('./views/admin-views/chapter/ChapterList'))
+const ChapterView = React.lazy(() => import('./views/admin-views/chapter/ChapterView'))
+const ChapterAdd = React.lazy(() => import('./views/admin-views/chapter/ChapterAdd'))
+const ChapterEdit = React.lazy(() => import('./views/admin-views/chapter/ChapterEdit'))
+
+//Topic
+const TopicList = React.lazy(() => import('./views/admin-views/topic/TopicList'))
+const TopicView = React.lazy(() => import('./views/admin-views/topic/TopicView'))
+const TopicAdd = React.lazy(() => import('./views/admin-views/topic/TopicAdd'))
+const TopicEdit = React.lazy(() => import('./views/admin-views/topic/TopicEdit'))
+
+//Section
+const SectionList = React.lazy(() => import('./views/admin-views/section/SectionList'))
+const SectionView = React.lazy(() => import('./views/admin-views/section/SectionView'))
+const SectionAdd = React.lazy(() => import('./views/admin-views/section/SectionAdd'))
+const SectionEdit = React.lazy(() => import('./views/admin-views/section/SectionEdit'))
+
+//SubSection
+const SubSectionList = React.lazy(() => import('./views/admin-views/sub-section/SubSectionList'))
+const SubSectionView = React.lazy(() => import('./views/admin-views/sub-section/SubSectionView'))
+const SubSectionAdd = React.lazy(() => import('./views/admin-views/sub-section/SubSectionAdd'))
+const SubSectionEdit = React.lazy(() => import('./views/admin-views/sub-section/SubSectionEdit'))
+
 // Buttons
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
@@ -232,7 +256,7 @@ const routes = [
   { path: '/calculator', name: 'Calculator', element: calculatorList },
   { path: '/calculator/create', name: 'Create', element: calculatorCreate },
   { path: '/calculator/edit/:id', name: 'Edit', element: calculatorEdit },
-  
+
   { path: '/cheat-sheet', name: 'Cheat Sheet', element: cheatsheetList },
   { path: '/cheat-sheet/create', name: 'Create', element: cheatsheetCreate },
   { path: '/cheat-sheet/edit/:id', name: 'Edit', element: cheatsheetEdit },
@@ -258,11 +282,35 @@ const routes = [
   { path: '/question-add', name: 'QuestionAdd', element: QuestionAdd },
   { path: '/question-edit/:id', name: 'QuestionEdit', element: QuestionEdit },
 
-    // Quiz Routes
+  // Quiz Routes
   { path: '/quiz-list', name: 'QuizList', element: QuizList },
   { path: '/quiz-view/:id', name: 'QuizView', element: QuizView },
   { path: '/quiz-add', name: 'QuizAdd', element: QuizAdd },
   { path: '/quiz-edit/:id', name: 'QuizEdit', element: QuizEdit },
+
+  //Chapter Routes
+  { path: '/chapter-list', name: 'ChapterList', element: ChapterList },
+  { path: '/chapter-view/:id', name: 'ChapterView', element: ChapterView },
+  { path: '/chapter-add', name: 'ChapterAdd', element: ChapterAdd },
+  { path: '/chapter-edit/:id', name: 'ChapterEdit', element: ChapterEdit },
+
+  //Topic Routes
+  { path: '/topic-list', name: 'TopicList', element: TopicList },
+  { path: '/topic-view/:id', name: 'TopicView', element: TopicView },
+  { path: '/topic-add', name: 'TopicAdd', element: TopicAdd },
+  { path: '/topic-edit/:id', name: 'TopicEdit', element: TopicEdit },
+
+  //Section Routes
+  { path: '/section-list', name: 'SectionList', element: SectionList },
+  { path: '/section-view/:id', name: 'SectionView', element: SectionView },
+  { path: '/section-add', name: 'SectionAdd', element: SectionAdd },
+  { path: '/section-edit/:id', name: 'SectionEdit', element: SectionEdit },
+
+  //Sub Section Routes
+  { path: '/subsection-list', name: 'SubSectionList', element: SubSectionList },
+  { path: '/subsection-view/:id', name: 'SubSectionView', element: SubSectionView },
+  { path: '/subsection-add', name: 'SubSectionAdd', element: SubSectionAdd },
+  { path: '/subsection-edit/:id', name: 'SubSectionEdit', element: SubSectionEdit },
 
   // Classes Routes
   { path: '/class-list', name: 'ClassList', element: ClassList },
@@ -278,7 +326,6 @@ const routes = [
   { path: '/reels-add', name: 'ReelsAdd', element: ReelsAdd },
   { path: '/reels-edit/:id', name: 'ReelsEdit', element: ReelsEdit },
   { path: '/reels-view/:id', name: 'ReelsView', element: ReelsView },
-
   { path: '/community', name: 'Community', element: Community },
 
   { path: '/notification-view', name: 'Notification View', element: NotificationView },

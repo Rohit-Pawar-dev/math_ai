@@ -1,56 +1,61 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
-import defaultImage from '../../../assets/images/default.png'
 
-const AddChapter = () => {
+const EditTopic = () => {
+  const { id } = useParams()
   const navigate = useNavigate()
-
+  const [chapters, setChapters] = useState([])
   const [formData, setFormData] = useState({
+    chapterId: '',
     title: '',
     description: '',
     status: 'active',
-    icon: null, // will store File object here
   })
 
-  const [preview, setPreview] = useState(defaultImage)
+  // fetch chapters for dropdown
+  useEffect(() => {
+    const fetchChapters = async () => {
+      const res = await API.get('/chapter')
+      if (res.data.status) setChapters(res.data.data)
+    }
+    fetchChapters()
+  }, [])
 
-  // handle text input
+  // fetch topic by id
+  useEffect(() => {
+    const fetchTopic = async () => {
+      try {
+        const res = await API.get(`/topic/${id}`)
+        if (res.data.status) {
+          const data = res.data.data
+          setFormData({
+            chapterId: data.chapterId?._id || '',
+            title: data.title,
+            description: data.description || '',
+            status: data.status,
+          })
+        }
+      } catch (err) {
+        Swal.fire('Error', err.response?.data?.message || err.message, 'error')
+      }
+    }
+    fetchTopic()
+  }, [id])
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
 
-  // handle file input
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      setFormData({ ...formData, icon: file })
-      setPreview(URL.createObjectURL(file)) // just for preview
-    }
-  }
-
-  // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const formDataToSend = new FormData()
-      formDataToSend.append('title', formData.title)
-      formDataToSend.append('description', formData.description)
-      formDataToSend.append('status', formData.status)
-
-      if (formData.icon) {
-        formDataToSend.append('icon', formData.icon) // actual file
-      }
-
-      const res = await API.post('/chapter', formDataToSend, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-
+      const res = await API.put(`/topic/${id}`, formData)
       if (res.data.status) {
-        Swal.fire('Success', 'Chapter added successfully!', 'success')
-        navigate('/chapter-list')
+        Swal.fire('Updated!', 'Topic updated successfully', 'success')
+        navigate('/topic-list')
       }
     } catch (err) {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')
@@ -61,8 +66,24 @@ const AddChapter = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-body">
-          <h2>Add New Chapter</h2>
+          <h2>Edit Topic</h2>
           <form onSubmit={handleSubmit}>
+            {/* Chapter */}
+            <div className="mb-3">
+              <label className="form-label">Chapter</label>
+              <select
+                className="form-select"
+                name="chapterId"
+                value={formData.chapterId}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Chapter</option>
+                {chapters.map((ch) => (
+                  <option key={ch._id} value={ch._id}>{ch.title}</option>
+                ))}
+              </select>
+            </div>
 
             {/* Title */}
             <div className="mb-3">
@@ -89,20 +110,6 @@ const AddChapter = () => {
               />
             </div>
 
-            {/* Icon Upload */}
-            <div className="mb-3">
-              <label className="form-label">Icon</label>
-              <input
-                type="file"
-                className="form-control"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-              <div style={{ marginTop: '10px' }}>
-                <img src={preview} alt="Preview" width="100px" />
-              </div>
-            </div>
-
             {/* Status */}
             <div className="mb-3">
               <label className="form-label">Status</label>
@@ -117,10 +124,7 @@ const AddChapter = () => {
               </select>
             </div>
 
-            {/* Submit */}
-            <button type="submit" className="btn btn-warning">
-              Save Chapter
-            </button>
+            <button type="submit" className="btn btn-warning">Update Topic</button>
           </form>
         </div>
       </div>
@@ -128,4 +132,4 @@ const AddChapter = () => {
   )
 }
 
-export default AddChapter
+export default EditTopic
