@@ -47,7 +47,7 @@ exports.getSections = async (req, res) => {
       .populate('topicId', 'title') 
       .skip(offset)
       .limit(limit)
-      .sort({ created_at: -1 }); 
+      .sort({ timestamp: -1 }); 
 
     res.json({
       status: true,

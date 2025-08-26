@@ -33,7 +33,7 @@ exports.getSubsections = async (req, res) => {
 
     const query = {};
     if (searchText) {
-      query.title = { $regex: searchText, $options: 'i' }; // Assuming 'title' exists in Subsection
+      query.title = { $regex: searchText, $options: 'i' };
     }
 
     const total = await Subsection.countDocuments(query);
@@ -44,7 +44,7 @@ exports.getSubsections = async (req, res) => {
       .populate('sectionId', 'title')
       .skip(offset)
       .limit(limit)
-      .sort({ created_at: -1 }); // Change if needed
+      .sort({ timestamp: -1 });
 
     res.json({
       status: true,

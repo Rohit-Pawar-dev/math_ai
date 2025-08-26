@@ -40,10 +40,9 @@ app.use((req, res, next) => {
   // nlogger.info('Query:' +  JSON.stringify(req.query));
   // nlogger.info('Body:' + JSON.stringify(req.body));
   // nlogger.info('Headers:' + JSON.stringify(req.headers));
-  // nlogger.info('-----------------------------------------------------------------------------------------------------------------');
+  // nlogger.info('------------------------------');
   next();
 });
-
 
 // CRUD OPERATION ROUTES
 app.use("/api", adminRoutes);
@@ -74,14 +73,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // nlogger.info('Hitting socket -------------------- ')
 
 mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 })
-.then(() => {
-  console.log('MongoDB connected'),
-  nlogger.info('New client connected | ')    
-})
-.catch(err => {
-  console.error(err),
-  nlogger.info(err)
-});
+  .then(() => {
+    console.log('MongoDB connected'),
+      nlogger.info('New client connected | ')
+  })
+  .catch(err => {
+    console.error(err),
+      nlogger.info(err)
+  });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));

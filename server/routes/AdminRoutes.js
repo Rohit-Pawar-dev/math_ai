@@ -17,7 +17,7 @@ const quizController = require("../controllers/AdminsController/quizController")
 const chapterController = require("../controllers/AdminsController/chapterController");
 const topicController = require("../controllers/AdminsController/topicController");
 const sectionController = require("../controllers/AdminsController/sectionController");
-const subsectionController = require("../controllers/AdminsController/SubSection");
+const subsectionController = require("../controllers/AdminsController/SubSectionController");
 const getCustomMulter = require('../utils/customMulter');
 
 // Upload handler (store in `uploads/chapters`)

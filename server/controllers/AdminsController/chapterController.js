@@ -42,9 +42,9 @@ exports.getChapters = async (req, res) => {
     const chapters = await Chapter.find(query)
       .skip(offset)
       .limit(limit)
-      .sort({ created_at: -1 });
+      .sort({ timestamp: -1 });
 
-    res.json({
+    res.json({ 
       status: true,
       message: 'Chapters fetched successfully',
       data: chapters,
