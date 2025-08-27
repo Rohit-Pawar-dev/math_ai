@@ -247,21 +247,8 @@ const QuizList = () => {
               </table>
             </div>
 
-<<<<<<< HEAD
-          {/* Pagination */}
-          <div className="d-flex justify-content-end mt-3">
-            <button
-              className="btn btn-outline-secondary me-2"
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Prev
-            </button>
-            {[...Array(totalPages)].map((_, i) => (
-=======
             {/* Pagination */}
             <div className="d-flex justify-content-center mt-3">
->>>>>>> df752ebd4355d5abc108ff21e6bf18e1e4f23594
               <button
                 className="btn btn-outline-secondary me-2"
                 disabled={page === 1}
