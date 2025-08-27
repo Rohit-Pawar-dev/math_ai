@@ -62,7 +62,7 @@ const FeedbackView = () => {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="">
       <CCard>
         <CCardHeader>
           <h4>Feedback Details</h4>

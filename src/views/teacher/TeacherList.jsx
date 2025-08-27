@@ -14,7 +14,7 @@ const TeacherList = () => {
         if (res.status === 200) {
          var list = teacherList.filter((elm, ind) => {
           return elm._id != id
-         }) 
+         })
          console.log('---------- list --------------- ', list)
          setTeacherList(list)
         }
@@ -69,7 +69,7 @@ const TeacherList = () => {
                       <td>{ elm.mobile }</td>
                       <td>{ elm.status == 'active' ? <span className="badge bg-success">Active</span> : <span className="badge bg-danger">Inactive</span> }</td>
                       <td>
-                        <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => navigate('/teachers/view/' + elm._id)}><i className="fa fa-pencil"></i></button>
+                        <button type="button" className="btn btn-primary btn-sm m-2 editbtn" onClick={() => navigate('/teachers/view/' + elm._id)}><i className="fa fa-pencil"></i></button>
                         <button type="button" className="btn btn-primary btn-sm m-2" onClick={() => deleteQuiz(elm._id)}><i className="fa fa-trash"></i></button>
                       </td>
                     </tr>

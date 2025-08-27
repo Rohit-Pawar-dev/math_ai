@@ -94,10 +94,11 @@ const ClassEdit = () => {
                 <option value="inactive">Inactive</option>
               </select>
             </div>
-
-            <button type="submit" className="btn btn-success">
+             <div className="savediv">
+            <button type="submit" className="btn btn-success savebtndiv">
               Save Class
             </button>
+            </div>
           </form>
         </div>
       </div>

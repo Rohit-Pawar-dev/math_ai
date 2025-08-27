@@ -24,8 +24,8 @@ a {
   border: 1px solid #616161;
   padding: 10px;
   font-weight: 400;
-  /* text-transform: capitalize; */
-  font-size: 14px;
+  text-transform: capitalize;
+  font-size: 16px;
   color: #000;
 
 }
@@ -39,7 +39,7 @@ a {
   height: 80px;
   object-fit: contain;
   object-position: left;
-      filter: invert(1);
+      /* filter: invert(1); */
 }
 
 .card-header{
@@ -95,13 +95,18 @@ h1, h2, h3, h4, h5{
   color: #75797F;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .mainContent .card .card-body .form-group label {
-  font-weight: 500;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 16px;
   color: #000;
+}
+button.btn.btn-outline-success.active {
+    color: #fff;
+    background-color: #2a303d;
+    border: 1px solid #2a303d;
 }
 
 .formSubmitDiv {
@@ -191,6 +196,7 @@ button.btn.btn-outline-warning.active {
   border: 1px solid #2b2b2b;
   font-size: 14px;
   font-weight: 500;
+      padding: 8px 13px;
 }
 
 button.btn.btn-outline-secondary:hover {
@@ -200,11 +206,12 @@ button.btn.btn-outline-secondary:hover {
 
 button.btn.btn-primary {
   color: #fff;
-  background: #d740c9;
-  border: 1px solid #d740c9;
+  background: #525252;
+  border: 1px solid #525252;
   font-size: 14px;
   font-weight: 500;
-
+  width: fit-content !important;
+  padding: 5px 20px;
 }
 
 .form-control {
@@ -364,8 +371,8 @@ section.tableSection .card-body select option {
 
 button.btn.btn-warning {
   color: #fff;
-  background: #d740c9;
-  border: 1px solid #d740c9;
+  background: #525252;
+  border: 1px solid #525252;
   font-size: 14px;
   font-weight: 500;
 }
@@ -644,4 +651,54 @@ p{
 }
 .btn-secondary {
     color: #fff !important;
+}
+.table-hover > tbody > tr:hover > *{
+  color: #000;
+}
+.text-muted{
+  color: #000 !important;
+}
+span {
+    color: #444444;
+}
+.modal-content{
+   background-color: #fff !important;
+}
+.footer{
+      border: 1px solid #ebebeb !important;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.headdiv{
+  display: flex;
+  justify-content: space-between;
+      align-items: center;
+}
+.eyeIconClass{
+      filter: invert(1);
+}
+.btn .btn-success{
+   color: #fff !important;
+   background-color: #525252 !important;
+   border: 1px solid #525252 !important;
+}
+.savebtndiv{
+   color: #fff !important;
+   background-color: #525252 !important;
+   border: 1px solid #525252 !important;
+}
+.savediv{
+  display: flex;
+  justify-content: end;
+}
+thead th {
+    background-color: #2b2b2b !important;
+    color: #fff !important;
+}
+td {
+    border: 1px solid #575757;
+}
+.editbtn{
+   border: 1px solid #000 !important;
+   background-color: #fff !important;
+   color: #000 !important;
 }

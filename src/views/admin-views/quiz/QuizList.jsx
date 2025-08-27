@@ -220,7 +220,7 @@ const QuizList = () => {
           </div>
 
           {/* Pagination */}
-          <div className="d-flex justify-content-center mt-3">
+          <div className="d-flex justify-content-end mt-3">
             <button
               className="btn btn-outline-secondary me-2"
               disabled={page === 1}

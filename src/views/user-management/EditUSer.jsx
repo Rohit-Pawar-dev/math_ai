@@ -104,7 +104,7 @@ const EditUser = () => {
         <div className="mainContent">
           <div className="card">
             <div className="card-body">
-              <h6 className="mb-4">User Information</h6>
+              <h4 className="mb-4">User Information</h4>
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6">
