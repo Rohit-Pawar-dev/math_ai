@@ -2,10 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
+import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 const TopicView = () => {
   const { id } = useParams()
   const [topic, setTopic] = useState(null)
+
+
+  
+  const mathjaxConfig = {
+    tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+  }
+
+  const processDescription = (desc) => {
+  let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+    if (/^\$.*\$$/.test(match)) return match;
+    return `$${match}$`;
+  });
+  processed = processed.replace(/\n/g, " \\\\ ");
+  return processed;
+};
 
   useEffect(() => {
     const fetchTopic = async () => {
@@ -28,6 +44,7 @@ const TopicView = () => {
   }
 
   return (
+        <MathJaxContext config={mathjaxConfig}>
     <section className="formSection">
       <div className="card">
         <div className="card-body">
@@ -45,7 +62,7 @@ const TopicView = () => {
 
           <div className="mb-3">
             <strong>Description:</strong>
-            <p>{topic.description || '-'}</p>
+            <MathJax dynamic>{processDescription(topic.description) || "-"}</MathJax>
           </div>
 
           <div className="mb-3">
@@ -59,6 +76,7 @@ const TopicView = () => {
         </div>
       </div>
     </section>
+    </MathJaxContext>
   )
 }
 

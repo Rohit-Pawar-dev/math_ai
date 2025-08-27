@@ -4,6 +4,22 @@ import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import API from '../../../api'
 import Swal from 'sweetalert2'
+import { MathJax, MathJaxContext } from 'better-react-mathjax'
+
+const processDescription = (desc) => {
+  let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+    if (/^\$.*\$$/.test(match)) return match;
+    return `$${match}$`;
+  });
+  processed = processed.replace(/\n/g, " \\\\ ");
+  return processed;
+};
+
+const mathjaxConfig = {
+  tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+}
+
+
 
 const QuizList = () => {
   const [quizzes, setQuizzes] = useState([])
@@ -130,178 +146,181 @@ const QuizList = () => {
 
 
   return (
-    <section className="">
-      <div className="card">
-        <div className="card-body">
+    <MathJaxContext config={mathjaxConfig}>
+      <section className="">
+        <div className="card">
+          <div className="card-body">
 
-          {/* Search and Add */}
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <div className="input-group w-50">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search quiz"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              />
-              <button className="btn btn-warning" onClick={handleSearch}>
-                Search
-              </button>
+            {/* Search and Add */}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="input-group w-50">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search quiz"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                />
+                <button className="btn btn-warning" onClick={handleSearch}>
+                  Search
+                </button>
+              </div>
+              <NavLink to="/quiz-add">
+                <button className="btn btn-warning">Add Quiz</button>
+              </NavLink>
             </div>
-            <NavLink to="/quiz-add">
-              <button className="btn btn-warning">Add Quiz</button>
-            </NavLink>
-          </div>
 
-          {/* Table */}
-          <div className="table-responsive">
-            <h4>All Quizzes</h4>
-            <table className="table table-bordered table-hover">
-              <thead className="table-dark">
-                <tr>
-                  <th>SL</th>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {quizzes.length === 0 ? (
+            {/* Table */}
+            <div className="table-responsive">
+              <h4>All Quizzes</h4>
+              <table className="table table-bordered table-hover">
+                <thead className="table-dark">
                   <tr>
-                    <td colSpan={5} className="text-center">
-                      No quizzes found
-                    </td>
+                    <th>SL</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
-                ) : (
-                  quizzes.map((quiz, index) => (
-                    <tr key={quiz._id}>
-                      <td>{(page - 1) * limit + index + 1}</td>
-                      <td>{quiz.title}</td>
-                      <td>{quiz.description}</td>
-                      <td>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            onChange={() => handleStatusToggle(quiz)}
-                            checked={quiz.status === 'active'}
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div className="d-flex flex-wrap gap-2">
-                          <NavLink to={`/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
-                            View
-                          </NavLink>
-                          <NavLink to={`/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
-                            <CIcon icon={cilPencil} />
-                          </NavLink>
-                          <button
-                            className="btn btn-sm btn-danger"
-                            onClick={() => handleDelete(quiz._id)}
-                          >
-                            <CIcon icon={cilTrash} />
-                          </button>
-                          <button
-                            className="btn btn-sm btn-warning text-white"
-                            onClick={() => handleAddQuestionClick(quiz._id)}
-                          >
-                            Add Question
-                          </button>
-                        </div>
+                </thead>
+                <tbody>
+                  {quizzes.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center">
+                        No quizzes found
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                  ) : (
+                    quizzes.map((quiz, index) => (
+                      <tr key={quiz._id}>
+                        <td>{(page - 1) * limit + index + 1}</td>
+                        <td>{quiz.title}</td>
+                        <td>{quiz.description}</td>
+                        <td>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              onChange={() => handleStatusToggle(quiz)}
+                              checked={quiz.status === 'active'}
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div className="d-flex flex-wrap gap-2">
+                            <NavLink to={`/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
+                              View
+                            </NavLink>
+                            <NavLink to={`/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
+                              <CIcon icon={cilPencil} />
+                            </NavLink>
+                            <button
+                              className="btn btn-sm btn-danger"
+                              onClick={() => handleDelete(quiz._id)}
+                            >
+                              <CIcon icon={cilTrash} />
+                            </button>
+                            <button
+                              className="btn btn-sm btn-warning text-white"
+                              onClick={() => handleAddQuestionClick(quiz._id)}
+                            >
+                              Add Question
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-          {/* Pagination */}
-          <div className="d-flex justify-content-center mt-3">
-            <button
-              className="btn btn-outline-secondary me-2"
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Prev
-            </button>
-            {[...Array(totalPages)].map((_, i) => (
+            {/* Pagination */}
+            <div className="d-flex justify-content-center mt-3">
               <button
-                key={i + 1}
-                className={`btn ${page === i + 1 ? 'btn-warning' : 'btn-outline-secondary'} mx-1`}
-                onClick={() => setPage(i + 1)}
+                className="btn btn-outline-secondary me-2"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
               >
-                {i + 1}
+                Prev
               </button>
-            ))}
-            <button
-              className="btn btn-outline-secondary ms-2"
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal for adding questions */}
-      {showModal && (
-        <div
-          className="modal fade show"
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-          tabIndex="-1"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Select Questions</h5>
+              {[...Array(totalPages)].map((_, i) => (
                 <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowModal(false)}
-                  aria-label="Close"
-                ></button>
-              </div>
-
-              <div className="modal-body">
-                <div className="question-list" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                  {activeQuestions.map((q) => (
-                    <div key={q._id} className="form-check mb-2">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id={`q-${q._id}`}
-                        checked={selectedQuestions.includes(q._id)}
-                        onChange={() => handleCheckboxChange(q._id)}
-                      />
-                      <label className="form-check-label" htmlFor={`q-${q._id}`}>
-                        <span dangerouslySetInnerHTML={{ __html: q.question }} />
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
-                  Close
+                  key={i + 1}
+                  className={`btn ${page === i + 1 ? 'btn-warning' : 'btn-outline-secondary'} mx-1`}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
                 </button>
-                <button type="button" className="btn btn-primary" onClick={handleSaveQuestions}>
-                  Save changes
-                </button>
-              </div>
+              ))}
+              <button
+                className="btn btn-outline-secondary ms-2"
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Modal for adding questions */}
+        {showModal && (
+          <div
+            className="modal fade show"
+            style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+            tabIndex="-1"
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Select Questions</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setShowModal(false)}
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div className="modal-body">
+                  <div className="question-list" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                    {activeQuestions.map((q) => (
+                      <div key={q._id} className="form-check mb-2">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id={`q-${q._id}`}
+                          checked={selectedQuestions.includes(q._id)}
+                          onChange={() => handleCheckboxChange(q._id)}
+                        />
+                        <label className="form-check-label" htmlFor={`q-${q._id}`}>
+                          {/* <span dangerouslySetInnerHTML={{ __html: q.question }} /> */}
+                          <MathJax dynamic>{processDescription(q.question)}</MathJax>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                    Close
+                  </button>
+                  <button type="button" className="btn btn-primary" onClick={handleSaveQuestions}>
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
 
-    </section>
+      </section>
+    </MathJaxContext>
   )
 }
 

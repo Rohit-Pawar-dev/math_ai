@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
+import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 const EditTopic = () => {
   const { id } = useParams()
@@ -13,6 +14,8 @@ const EditTopic = () => {
     description: '',
     status: 'active',
   })
+
+
 
   // fetch chapters for dropdown
   useEffect(() => {
@@ -44,6 +47,19 @@ const EditTopic = () => {
     fetchTopic()
   }, [id])
 
+  const processDescription = (desc) => {
+    let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+      if (/^\$.*\$$/.test(match)) return match;
+      return `$${match}$`;
+    });
+    processed = processed.replace(/\n/g, " \\\\ ");
+    return processed;
+  };
+
+  const mathjaxConfig = {
+    tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
@@ -63,72 +79,84 @@ const EditTopic = () => {
   }
 
   return (
-    <section className="formSection">
-      <div className="card">
-        <div className="card-body">
-          <h2>Edit Topic</h2>
-          <form onSubmit={handleSubmit}>
-            {/* Chapter */}
-            <div className="mb-3">
-              <label className="form-label">Chapter</label>
-              <select
-                className="form-select"
-                name="chapterId"
-                value={formData.chapterId}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Chapter</option>
-                {chapters.map((ch) => (
-                  <option key={ch._id} value={ch._id}>{ch.title}</option>
-                ))}
-              </select>
-            </div>
+    <MathJaxContext config={mathjaxConfig}>
+      <section className="formSection">
+        <div className="card">
+          <div className="card-body">
+            <h2>Edit Topic</h2>
+            <form onSubmit={handleSubmit}>
+              {/* Chapter */}
+              <div className="mb-3">
+                <label className="form-label">Chapter</label>
+                <select
+                  className="form-select"
+                  name="chapterId"
+                  value={formData.chapterId}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Chapter</option>
+                  {chapters.map((ch) => (
+                    <option key={ch._id} value={ch._id}>{ch.title}</option>
+                  ))}
+                </select>
+              </div>
 
-            {/* Title */}
-            <div className="mb-3">
-              <label className="form-label">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              {/* Title */}
+              <div className="mb-3">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            {/* Description */}
-            <div className="mb-3">
-              <label className="form-label">Description</label>
-              <textarea
-                className="form-control"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={4}
-              />
-            </div>
+              {/* Description */}
+              <div className="mb-3">
+                <label className="form-label">Description</label>
+                <textarea
+                  className="form-control"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                />
+              </div>
+              {/* Live MathJax Preview */}
+              {formData.description && (
+                <div className="mb-3 p-3 border rounded bg-light">
+                  <label className="form-label fw-bold">Preview:</label>
+                  {/* <MathJax dynamic>{"$$" + formData.description + "$$"}</MathJax> */}
+                  <MathJax dynamic>{processDescription(formData.description)}</MathJax>
 
-            {/* Status */}
-            <div className="mb-3">
-              <label className="form-label">Status</label>
-              <select
-                className="form-select"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
+                </div>
+              )}
 
-            <button type="submit" className="btn btn-warning">Update Topic</button>
-          </form>
+
+              {/* Status */}
+              <div className="mb-3">
+                <label className="form-label">Status</label>
+                <select
+                  className="form-select"
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+
+              <button type="submit" className="btn btn-warning">Update Topic</button>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </MathJaxContext>
   )
 }
 
