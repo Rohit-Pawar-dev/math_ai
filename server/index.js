@@ -74,12 +74,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect(process.env.MONGO_URI, { connectTimeoutMS: 30000 })
   .then(() => {
-    console.log('MongoDB connected'),
-      nlogger.info('New client connected | ')
+    console.log('MongoDB connected')
+      // nlogger.info('New client connected | ')
   })
   .catch(err => {
-    console.error(err),
-      nlogger.info(err)
+    console.error(err)
+      // nlogger.info(err)
   });
 
 const PORT = process.env.PORT || 5000;

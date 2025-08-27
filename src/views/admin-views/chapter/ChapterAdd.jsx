@@ -9,7 +9,7 @@ const AddChapter = () => {
 
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
+    // description: '',
     status: 'active',
     icon: null, // will store File object here
   })
@@ -37,7 +37,7 @@ const AddChapter = () => {
     try {
       const formDataToSend = new FormData()
       formDataToSend.append('title', formData.title)
-      formDataToSend.append('description', formData.description)
+      // formDataToSend.append('description', formData.description)
       formDataToSend.append('status', formData.status)
 
       if (formData.icon) {
@@ -77,7 +77,7 @@ const AddChapter = () => {
               />
             </div>
 
-            {/* Description */}
+            {/* Description
             <div className="mb-3">
               <label className="form-label">Description</label>
               <textarea
@@ -87,7 +87,7 @@ const AddChapter = () => {
                 onChange={handleChange}
                 rows={4}
               />
-            </div>
+            </div> */}
 
             {/* Icon Upload */}
             <div className="mb-3">

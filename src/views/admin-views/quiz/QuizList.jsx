@@ -249,72 +249,57 @@ const QuizList = () => {
       </div>
 
       {/* Modal for adding questions */}
-      {/* {showModal && (
-        <div className="modal-backdrop d-flex align-items-center justify-content-center">
-          <div className="modal-dialog">
-            <div className="modal-content p-3">
-              <h4>Select Questions</h4>
-              <div className="question-list" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                {activeQuestions.map((q) => (
-                  <div key={q._id} className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={`q-${q._id}`}
-                      checked={selectedQuestions.includes(q._id)}
-                      onChange={() => handleCheckboxChange(q._id)}
-                    />
-                    <label className="form-check-label" htmlFor={`q-${q._id}`}>
-                      {q.question}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-3 text-end">
-                <button className="btn btn-secondary me-2" onClick={() => setShowModal(false)}>
-                  Cancel
-                </button>
-                <button className="btn btn-success" onClick={handleSaveQuestions}>
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
       {showModal && (
-        <div className="modal-backdrop d-flex align-items-center justify-content-center">
-          <div className="modal-dialog">
-            <div className="modal-content p-3">
-              <h4>Select Questions</h4>
-              <div className="question-list" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                {activeQuestions.map((q) => (
-                  <div key={q._id} className="form-check mb-2">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={`q-${q._id}`}
-                      checked={selectedQuestions.includes(q._id)}
-                      onChange={() => handleCheckboxChange(q._id)}
-                    />
-                    <label className="form-check-label" htmlFor={`q-${q._id}`}>
-                      <span dangerouslySetInnerHTML={{ __html: q.question }} />
-                    </label>
-                  </div>
-                ))}
+        <div
+          className="modal fade show"
+          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+          tabIndex="-1"
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Select Questions</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowModal(false)}
+                  aria-label="Close"
+                ></button>
               </div>
-              <div className="mt-3 text-end">
-                <button className="btn btn-secondary me-2" onClick={() => setShowModal(false)}>
-                  Cancel
+
+              <div className="modal-body">
+                <div className="question-list" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                  {activeQuestions.map((q) => (
+                    <div key={q._id} className="form-check mb-2">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={`q-${q._id}`}
+                        checked={selectedQuestions.includes(q._id)}
+                        onChange={() => handleCheckboxChange(q._id)}
+                      />
+                      <label className="form-check-label" htmlFor={`q-${q._id}`}>
+                        <span dangerouslySetInnerHTML={{ __html: q.question }} />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                  Close
                 </button>
-                <button className="btn btn-success" onClick={handleSaveQuestions}>
-                  Save
+                <button type="button" className="btn btn-primary" onClick={handleSaveQuestions}>
+                  Save changes
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+
 
     </section>
   )
