@@ -187,8 +187,8 @@ h1, h2, h3, h4, h5{
 
 button.btn.btn-outline-warning.active {
   color: #fff;
-  background: #d740c9;
-  border: 1px solid #d740c9;
+  background: #2b2b2b;
+  border: 1px solid #2b2b2b;
   font-size: 14px;
   font-weight: 500;
 }
@@ -632,4 +632,16 @@ input.form-control{
 }
 .form-control:focus{
   color: #000;
+}
+.form-check-label{
+  color: #000;
+}
+.modal-backdrop{
+  background-color: #fff;
+}
+p{
+      color: grey;
+}
+.btn-secondary {
+    color: #fff !important;
 }
