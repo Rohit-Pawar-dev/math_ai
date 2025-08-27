@@ -48,13 +48,25 @@ const EditTopic = () => {
   }, [id])
 
   const processDescription = (desc) => {
-    let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
-      if (/^\$.*\$$/.test(match)) return match;
-      return `$${match}$`;
-    });
-    processed = processed.replace(/\n/g, " \\\\ ");
-    return processed;
-  };
+  if (!desc) return "";
+
+  // If the whole input already looks like LaTeX, wrap it once.
+  const looksLikeFullLatex = /^[^a-zA-Z0-9]*x\^.*\\left|\\right|\\mathrm|\\quad/.test(desc);
+  if (looksLikeFullLatex) {
+    return `$${desc}$`;
+  }
+
+  // Otherwise, only wrap inline math pieces with ^ or _
+  let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+    if (/^\$.*\$$/.test(match)) return match;
+    return `$${match}$`;
+  });
+
+  // Replace newlines with LaTeX line breaks
+  processed = processed.replace(/\n/g, " \\\\ ");
+  return processed;
+};
+
 
   const mathjaxConfig = {
     tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
