@@ -624,3 +624,12 @@ label{
 .breadcrumb-item.active{
   color: #000;
 }
+input.form-control{
+  color:  #000 !important;
+}
+.form-control{
+  color: #000;
+}
+.form-control:focus{
+  color: #000;
+}
