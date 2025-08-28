@@ -37,7 +37,7 @@ const QuizResultView = () => {
   const [openIndexes, setOpenIndexes] = useState({})
 
   useEffect(() => {
-      console.log(MEDIA_URL);
+    console.log(MEDIA_URL);
     const fetchResult = async () => {
       try {
         const res = await API.get(`/result/${attemptId}`)
@@ -149,47 +149,47 @@ const QuizResultView = () => {
                     })}
                   </ul> */}
                   <ul className="mb-2">
-  {question?.options?.map((option, i) => {
-    const isSelected = answer.selectedOption === i
-    const isAnswer = question.correctOption === i
+                    {question?.options?.map((option, i) => {
+                      const isSelected = answer.selectedOption === i
+                      const isAnswer = question.correctOption === i
 
-    const optionStyle = {
-      fontWeight: isAnswer ? 'bold' : 'normal',
-      color: isSelected
-        ? isCorrect
-          ? 'green'
-          : 'red'
-        : isAnswer
-          ? 'green'
-          : '',
-      listStyleType: 'none',
-      marginBottom: '10px',
-    }
+                      const optionStyle = {
+                        fontWeight: isAnswer ? 'bold' : 'normal',
+                        color: isSelected
+                          ? isCorrect
+                            ? 'green'
+                            : 'red'
+                          : isAnswer
+                            ? 'green'
+                            : '',
+                        listStyleType: 'none',
+                        marginBottom: '10px',
+                      }
 
-    return (
-      <li key={i} style={optionStyle}>
-        {question.optionType === 'image' ? (
-          <>
-            <img
-              src={`${MEDIA_URL}/${option}`}
-              alt={`Option ${i + 1}`}
-              style={{ maxWidth: '100%', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
-            <br />
-            {isSelected && <strong>(Your Answer)</strong>}{' '}
-            {isAnswer && <span>✓</span>}
-          </>
-        ) : (
-          <>
-            <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
-            {isSelected && <strong>(Your Answer)</strong>}{' '}
-            {isAnswer && <span>✓</span>}
-          </>
-        )}
-      </li>
-    )
-  })}
-</ul>
+                      return (
+                        <li key={i} style={optionStyle}>
+                          {question.optionType === 'image' ? (
+                            <>
+                              <img
+                                src={`${MEDIA_URL}/${option}`}
+                                alt={`Option ${i + 1}`}
+                                style={{ maxWidth: '100%', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '4px' }}
+                              />
+                              <br />
+                              {isSelected && <strong>(Your Answer)</strong>}{' '}
+                              {isAnswer && <span>✓</span>}
+                            </>
+                          ) : (
+                            <>
+                              <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
+                              {isSelected && <strong>(Your Answer)</strong>}{' '}
+                              {isAnswer && <span>✓</span>}
+                            </>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
 
 
                   {/* EXPLANATION with MathJax */}
@@ -199,7 +199,7 @@ const QuizResultView = () => {
                       {question.explanationType === 'image' ? (
                         <div className="mt-2">
                           <img
-                            src={MEDIA_URL+"/"+question.explanation}
+                            src={MEDIA_URL + "/" + question.explanation}
                             alt="Explanation"
                             style={{ maxWidth: '100%', border: '1px solid #ddd' }}
                           />
