@@ -214,20 +214,6 @@ exports.setQuestionsForQuiz = async (req, res) => {
   }
 };
 
-
-// exports.getQuizAttempts = async (req, res) => {
-//   try {
-//     const { quizId } = req.params;
-
-//     const attempts = await QuizAttempt.find({ quiz: quizId })
-//       .populate('user', 'name email')
-//       .populate('quiz', 'title');
-
-//     res.status(200).json(attempts);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Server error', error: err.message });
-//   }
-// };
 exports.getQuizAttempts = async (req, res) => {
   try {
     const { quizId } = req.params;
@@ -235,10 +221,8 @@ exports.getQuizAttempts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
 
-    // Build query
     const query = { quiz: quizId };
 
-    // If searching by user name or email
     if (searchText) {
       query['$expr'] = {
         $regexMatch: {
@@ -254,13 +238,12 @@ exports.getQuizAttempts = async (req, res) => {
 
     // Fetch attempts
     const attempts = await QuizAttempt.find({ quiz: quizId })
-      .populate('user', 'name email') // Populate user name & email
-      .populate('quiz', 'title') // Populate quiz title
+      .populate('user', 'name email') 
+      .populate('quiz', 'title') 
       .skip(offset)
       .limit(limit)
       .sort({ created_at: -1 });
 
-    // Map attempts to include QuizResult info
     const enrichedData = await Promise.all(
       attempts.map(async (attempt) => {
         const result = await QuizResult.findOne({ attempt: attempt._id });
@@ -297,31 +280,147 @@ exports.getQuizAttempts = async (req, res) => {
 };
 
 // 5. Get Full Result for an Attempt
+// exports.getFullResult = async (req, res) => {
+//   try {
+//     const { attemptId } = req.params;
+
+//     const result = await QuizResult.findOne({ attempt: attemptId })
+//       .populate('quiz', 'title description') // You can include more fields if needed
+//       .populate('user', 'name email')
+//       .populate({
+//         path: 'attempt',
+//         populate: {
+//           path: 'answers.question',
+//           model: 'Question',
+//           select: 'questionText options correctOption', // select only required fields
+//         }
+//       });
+
+//     if (!result) {
+//       return res.status(404).json({
+//         status: false,
+//         message: 'Result not found',
+//         data: null,
+//       });
+//     }
+
+//     res.status(200).json({
+//       status: true,
+//       message: 'Quiz result fetched successfully',
+//       data: {
+//         _id: result._id,
+//         quiz: result.quiz,
+//         user: result.user,
+//         score: result.score,
+//         totalQuestions: result.totalQuestions,
+//         correctAnswers: result.correctAnswers,
+//         percentage: result.percentage,
+//         passed: result.passed,
+//         attempt: {
+//           _id: result.attempt._id,
+//           status: result.attempt.status,
+//           startedAt: result.attempt.startedAt,
+//           completedAt: result.attempt.completedAt,
+//           created_at: result.attempt.created_at,
+//           updated_at: result.attempt.updated_at,
+//           answers: result.attempt.answers.map((answer) => ({
+//             _id: answer._id,
+//             question: {
+//               _id: answer.question?._id,
+//               questionText: answer.question?.questionText,
+//               options: answer.question?.options,
+//               correctOption: answer.question?.correctOption,
+//             },
+//             selectedOption: answer.selectedOption,
+//             isCorrect: answer.isCorrect,
+//           })),
+//         },
+//         created_at: result.created_at,
+//         updated_at: result.updated_at,
+//       }
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       status: false,
+//       message: 'Internal server error',
+//       error: err.message,
+//     });
+//   }
+// };
+
 exports.getFullResult = async (req, res) => {
   try {
     const { attemptId } = req.params;
 
     const result = await QuizResult.findOne({ attempt: attemptId })
-      .populate('quiz')
+      .populate('quiz', 'title description')
       .populate('user', 'name email')
       .populate({
         path: 'attempt',
         populate: {
           path: 'answers.question',
-          model: 'Question'
-        }
+          model: 'Question',
+          select: 'question optionType options answer explanation explanationType',
+        },
       });
 
     if (!result) {
-      return res.status(404).json({ message: 'Result not found' });
+      return res.status(404).json({
+        status: false,
+        message: 'Result not found',
+        data: null,
+      });
     }
 
-    res.status(200).json(result);
+    res.status(200).json({
+      status: true,
+      message: 'Quiz result fetched successfully',
+      data: {
+        _id: result._id,
+        quiz: result.quiz,
+        user: result.user,
+        score: result.score,
+        totalQuestions: result.totalQuestions,
+        correctAnswers: result.correctAnswers,
+        percentage: result.percentage,
+        passed: result.passed,
+        attempt: {
+          _id: result.attempt._id,
+          status: result.attempt.status,
+          startedAt: result.attempt.startedAt,
+          completedAt: result.attempt.completedAt,
+          created_at: result.attempt.created_at,
+          updated_at: result.attempt.updated_at,
+          answers: result.attempt.answers.map((answer) => {
+            const question = answer.question || {}
+            return {
+              _id: answer._id,
+              question: {
+                _id: question._id,
+                questionText: question.question,
+                optionType: question.optionType,
+                options: question.options,
+                correctOption: question.answer,
+                explanation: question.explanation,
+                explanationType: question.explanationType,
+              },
+              selectedOption: answer.selectedOption,
+              isCorrect: answer.isCorrect,
+            }
+          }),
+        },
+        created_at: result.created_at,
+        updated_at: result.updated_at,
+      },
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({
+      status: false,
+      message: 'Internal server error',
+      error: err.message,
+    });
   }
 };
-
 
 
 

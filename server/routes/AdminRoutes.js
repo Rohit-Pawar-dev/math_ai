@@ -18,6 +18,7 @@ const chapterController = require("../controllers/AdminsController/chapterContro
 const topicController = require("../controllers/AdminsController/topicController");
 const sectionController = require("../controllers/AdminsController/sectionController");
 const subsectionController = require("../controllers/AdminsController/SubSectionController");
+const teacherController = require("../controllers/AdminsController/teacherController");
 const auth = require("../middleware/authMiddleware");
 const getCustomMulter = require('../utils/customMulter');
 
@@ -49,8 +50,13 @@ router.get("/users/:id", userController.getUserById);
 router.put("/users/:id", userController.uploadUserImage, userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 
-router.get("/teachers", userController.getTeachers);
-router.get("/teachers/:id", userController.getUserById);
+//-----------------Teachers Routes -----------------------
+
+router.get("/teachers", teacherController.getTeachers);
+router.get("/teachers/:id", teacherController.getUserById);
+router.delete("/teachers/:id", teacherController.deleteUser);
+router.put("/teachers/:id", teacherController.uploadUserImage, teacherController.updateUser);
+router.post('/teachers', teacherController.uploadUserImage,teacherController.createUser );
 
 // ----------------- Banner Routes -----------------
 
@@ -154,6 +160,7 @@ router.put('/section/:id', uploadSection.single('video'), sectionController.upda
 router.delete('/section/:id', sectionController.deleteSection);
 
 //------------------Subsection Routes --------------------
+
 router.post('/subsection', subsectionController.createSubsection);
 router.get('/subsection', subsectionController.getSubsections);
 router.get('/subsection/:id', subsectionController.getSubsectionById);
@@ -161,6 +168,7 @@ router.put('/subsection/:id', subsectionController.updateSubsection);
 router.delete('/subsection/:id', subsectionController.deleteSubsection);
 
 //----------------------Attempt Quiz -------------------
+
 router.get('/quiz/:quizId/attempts', quizController.getQuizAttempts);
 router.get('/result/:attemptId', quizController.getFullResult);
 
