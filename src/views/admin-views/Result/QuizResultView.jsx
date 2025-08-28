@@ -80,7 +80,7 @@ const QuizResultView = () => {
 
   return (
     <MathJaxContext config={mathjaxConfig}>
-      <div className="container mt-4">
+      <div className="">
         <div className="card shadow">
           <div className="card-body">
 
@@ -109,7 +109,7 @@ const QuizResultView = () => {
 
               return (
                 <div key={answer._id} className="mb-4 p-3 border rounded">
-                  {/* QUESTION TEXT with MathJax */}
+
                   <p
                     onClick={() => toggleExplanation(index)}
                     style={{ cursor: 'pointer', fontWeight: 'bold' }}
@@ -121,34 +121,11 @@ const QuizResultView = () => {
                     </span>
                   </p>
 
-                  {/* OPTIONS with MathJax */}
-                  {/* <ul className="mb-2">
-                    {question?.options?.map((option, i) => {
-                      const isSelected = answer.selectedOption === i
-                      const isAnswer = question.correctOption === i
 
-                      return (
-                        <li
-                          key={i}
-                          style={{
-                            fontWeight: isAnswer ? 'bold' : 'normal',
-                            color: isSelected
-                              ? isCorrect
-                                ? 'green'
-                                : 'red'
-                              : isAnswer
-                                ? 'green'
-                                : '',
-                          }}
-                        >
-                          <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
-                          {isSelected && <strong>(Your Answer)</strong>}{' '}
-                          {isAnswer && <span>✓</span>}
-                        </li>
-                      )
-                    })}
-                  </ul> */}
-                  <ul className="mb-2">
+                  <ul
+                    className="mb-2"
+                    style={{ listStyleType: 'upper-alpha', paddingLeft: '20px' }} // applies to all
+                  >
                     {question?.options?.map((option, i) => {
                       const isSelected = answer.selectedOption === i
                       const isAnswer = question.correctOption === i
@@ -162,7 +139,6 @@ const QuizResultView = () => {
                           : isAnswer
                             ? 'green'
                             : '',
-                        listStyleType: 'none',
                         marginBottom: '10px',
                       }
 
@@ -173,7 +149,12 @@ const QuizResultView = () => {
                               <img
                                 src={`${MEDIA_URL}/${option}`}
                                 alt={`Option ${i + 1}`}
-                                style={{ maxWidth: '100%', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '4px' }}
+                                style={{
+                                  maxWidth: '100%',
+                                  maxHeight: '150px',
+                                  border: '1px solid #ccc',
+                                  borderRadius: '4px',
+                                }}
                               />
                               <br />
                               {isSelected && <strong>(Your Answer)</strong>}{' '}
@@ -190,6 +171,7 @@ const QuizResultView = () => {
                       )
                     })}
                   </ul>
+
 
 
                   {/* EXPLANATION with MathJax */}
