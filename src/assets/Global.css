@@ -662,8 +662,9 @@ label{
   border: 1px solid rgb(208, 219, 233);
 }
 .list-group-item{
-  background-color: #fff;
-  color: #000;
+    background-color: #fff;
+    color: #334257;
+    border: 1px solid #0081fe36;
 }
 .btn-secondary{
   color: #fff;
@@ -677,8 +678,14 @@ label{
 }
 .accordion-button{
   background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
+  color: #334257;
+  border: 1px solid #0081fe36;
+}
+.accordion-button:not(.collapsed){
+  background-color: #fff !important;
+}
+.accordion{
+  background-color: #fff ;
 }
 .row.g-3.customTableView .col-md-6.col-lg-4 div {
     color: #334257;
@@ -703,7 +710,7 @@ input.form-control{
   background-color: #fff;
 }
 p{
-      color: grey;
+      color: #334257;
 }
 .btn-secondary {
     color: #fff !important;
@@ -866,4 +873,16 @@ th {
 }
 .sidebar-footer.border-top {
     background-color: #123a7b;
+}
+td a {
+    color: #1877f2 !important;
+    border: 1px solid #1877f2;
+    border-radius: 5px;
+    padding: 6px;
+}
+.card-body .mb-3 {
+    color: #334257;
+}
+.mb-4.p-3.border.rounded {
+    border: 1px solid #0081fe36 !important;
 }

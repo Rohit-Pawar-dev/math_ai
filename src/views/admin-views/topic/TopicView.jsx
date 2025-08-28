@@ -57,23 +57,23 @@ const TopicView = () => {
 
   return (
     <MathJaxContext config={mathjaxConfig}>
-      <div className="backbtn">
+      {/* <div className="backbtn">
       <Link to="/topic-list" className="btn btn-secondary">
               Back to Topics
             </Link>
-            </div>
+            </div> */}
       <section className="formSection">
 
         <div className="card">
           <div className="card-body">
             <div className="cardheaddiv">
-            <h2>Topic Details</h2>
+              <h2>Topic Details</h2>
 
-            {/* <Link to="/topic-list" className="btn btn-secondary">
-              Back to Topics
-            </Link> */}
-</div>
-            <div className="mb-3">
+              <Link to="/topic-list" className="btn btn-secondary">
+                Back to Topics
+              </Link>
+            </div>
+            {/* <div className="mb-3">
               <strong>Title:</strong>
               <p>{topic.title}</p>
             </div>
@@ -91,7 +91,27 @@ const TopicView = () => {
             <div className="mb-3">
               <strong>Status:</strong>
               <p>{topic.status}</p>
-            </div>
+            </div> */}
+<table className="table table-bordered mt-4">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Chapter</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{topic.title}</td>
+      <td>{topic.chapterId?.title || '-'}</td>
+      <td>
+        <MathJax dynamic>{processDescription(topic.description) || "-"}</MathJax>
+      </td>
+      <td>{topic.status}</td>
+    </tr>
+  </tbody>
+</table>
 
           </div>
         </div>

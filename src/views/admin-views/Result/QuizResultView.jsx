@@ -78,7 +78,7 @@ const QuizResultView = () => {
 
   return (
     <MathJaxContext config={mathjaxConfig}>
-      <div className="container mt-4">
+      <div className="">
         <div className="card shadow">
           <div className="card-body">
 

@@ -63,7 +63,7 @@ const PlanView = () => {
                 <th>Validity</th>
                 <th>Status</th>
                 <th>Description</th>
-                <th>Image</th>
+                <th className="d-none">Image</th>
               </tr>
               <tr>
 
@@ -92,7 +92,7 @@ const PlanView = () => {
                 {plan.image && (
 
 
-                  <td>
+                  <td className="d-none">
                     <img
                       src={plan.image}
                       alt="Plan"
