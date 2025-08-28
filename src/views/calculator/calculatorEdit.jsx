@@ -52,7 +52,7 @@ const calculatorEdit = () => {
                 <input type="text" name="title" className="form-control" value={form?.title} onChange={(e) => setForm({...form, title:e.target.value})} />
               </div>
             </div>
-           
+
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Type</label>
