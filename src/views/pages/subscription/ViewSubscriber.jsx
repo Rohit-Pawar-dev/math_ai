@@ -22,8 +22,9 @@ const SubscriptionDetails = () => {
   const user = subscription.user
 
   return (
+    <section className="">
     <section className="tableSection">
-      <div className="container-fluid mt-2">
+      <div className="card mt-2">
         <div className="headdiv">
           <h2 className="">Subscription Details</h2>
 
@@ -78,6 +79,7 @@ const SubscriptionDetails = () => {
 
 
       </div>
+    </section>
     </section>
   )
 }

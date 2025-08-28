@@ -51,7 +51,7 @@ const QuestionEdit = () => {
   const fetchData = async () => {
     try {
       const res = await API.get(`/questions/${id}`)
-      const q = res.data?.data || res.data || {}   
+      const q = res.data?.data || res.data || {}
       setQuestion(q.question || "")
       setOptionType(q.optionType || "text")
 
@@ -149,7 +149,7 @@ const QuestionEdit = () => {
 
   return (
     <MathJaxContext config={mathjaxConfig}>
-      <div className="container mt-4">
+      <div className="card">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="text-primary">Edit Question</h2>
           <button
@@ -299,7 +299,7 @@ const QuestionEdit = () => {
 
                   <button
                     type="submit"
-                    className="btn btn-success w-100"
+                    className="btn btn-success"
                     disabled={loading}
                   >
                     {loading ? "Updating..." : "Update Question"}

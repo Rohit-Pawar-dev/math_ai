@@ -27,8 +27,12 @@ const SectionView = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-body">
-          <h2>Section Details</h2>
-          <p><strong>Title:</strong> {section.title}</p>
+          <div className="cardheaddiv">
+            <h2>Section Details</h2>
+            <Link to="/section-list" className="btn btn-secondary ">Back to Sections</Link>
+          </div>
+
+          {/* <p><strong>Title:</strong> {section.title}</p>
           <p><strong>Topic:</strong> {section.topicId?.title}</p>
           <p><strong>Chapter:</strong> {section.chapterId?.title}</p>
           <p><strong>Status:</strong> {section.status}</p>
@@ -37,8 +41,36 @@ const SectionView = () => {
               <strong>Video:</strong>
               <video width="400" controls src={`${MEDIA_URL}/${section.video}`} />
             </div>
-          )}
-          <Link to="/section-list" className="btn btn-secondary mt-3">Back to Sections</Link>
+          )} */}
+
+          <table className="table table-bordered mt-4">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Topic</th>
+                <th>Chapter</th>
+                <th>Status</th>
+                <th>Video</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{section.title}</td>
+                <td>{section.topicId?.title}</td>
+                <td>{section.chapterId?.title}</td>
+                <td>{section.status}</td>
+                <td>
+                  {section.video ? (
+                    <video width="200" controls src={`${MEDIA_URL}/${section.video}`} />
+                  ) : (
+                    "No Video"
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
         </div>
       </div>
     </section>

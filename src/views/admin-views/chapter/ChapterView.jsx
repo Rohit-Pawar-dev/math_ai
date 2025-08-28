@@ -33,10 +33,13 @@ const ChapterView = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-body">
+          <div className="cardheaddiv">
           <h2>Chapter Details</h2>
-
-          {/* Icon */}
-          <div className="mb-3">
+             <Link to="/chapter-list" className="btn btn-secondary">
+            Back to Chapters
+          </Link>
+          </div>
+          {/* <div className="mb-3">
             <strong>Icon:</strong>
             <div>
               <img
@@ -51,27 +54,55 @@ const ChapterView = () => {
             </div>
           </div>
 
-          {/* Title */}
           <div className="mb-3">
             <strong>Title:</strong>
             <p>{chapter.title}</p>
           </div>
 
-          {/* Status */}
+
           <div className="mb-3">
             <strong>Status:</strong>
             <p>{chapter.status}</p>
           </div>
 
-          {/* Created At */}
           <div className="mb-3">
             <strong>Created At:</strong>
             <p>{new Date(chapter.timestamp).toLocaleString()}</p>
-          </div>
+          </div> */}
 
-          <Link to="/chapter-list" className="btn btn-secondary mt-3">
+          {/* <Link to="/chapter-list" className="btn btn-secondary mt-3">
             Back to Chapters
-          </Link>
+          </Link> */}
+
+             <table className="table table-bordered mt-4">
+            <tbody>
+              {/* Icon */}
+              <tr>
+                <th>Icon:</th>
+                <th>Title:</th>
+                <th>Status:</th>
+                <th>Created At:</th>
+              </tr>
+
+
+              <tr>
+                <td>
+                  <img
+                    src={chapter.icon ? `${MEDIA_URL}/${chapter.icon}` : defaultImage}
+                    alt="Chapter Icon"
+                    width="100px"
+                    onError={(e) => {
+                      e.target.onerror = null
+                      e.target.src = defaultImage
+                    }}
+                  />
+                </td>
+                <td>{chapter.title}</td>
+                <td>{chapter.status}</td>
+                <td>{new Date(chapter.timestamp).toLocaleString()}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

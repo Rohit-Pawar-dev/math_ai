@@ -51,7 +51,9 @@ a {
   width: 150px;
 }
 strong{
-  color: #525252;
+      color: #334257;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .mainContent table th {
@@ -150,7 +152,7 @@ button.btn.btn-outline-success.active {
   outline: none;
   border: none;
   background-color: transparent;
-
+  color: #334257;
 }
 
 .searchBox button {
@@ -202,6 +204,19 @@ button.btn.btn-outline-warning.active {
   font-size: 14px;
   font-weight: 500;
   padding: 8px 13px;
+      display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .54688rem .875rem;
+    font-size: .875rem;
+    line-height: 1.6;
+    border-radius: .3125rem;
+    transition: all .2s ease-in-out;
 }
 
 button.btn.btn-outline-secondary:hover {
@@ -211,8 +226,8 @@ button.btn.btn-outline-secondary:hover {
 
 button.btn.btn-primary {
   color: #fff;
-  background: #123a7b;
-  border: 1px solid #123a7b;
+  background: #1877f2;
+  border: 1px solid #1877f2;
   font-size: 14px;
   font-weight: 500;
   width: fit-content !important;
@@ -378,17 +393,36 @@ section.tableSection .card-body select option {
 
 button.btn.btn-warning {
   color: #fff;
-  background: #525252;
-  border: 1px solid #525252;
+  background: #1877f2;
+  border: 1px solid #1877f2;
   font-size: 14px;
   font-weight: 500;
+      display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .54688rem .875rem;
+    font-size: .875rem;
+    line-height: 1.6;
+    border-radius: .3125rem;
+    transition: all .2s ease-in-out;
 }
 
 button.btn.btn-sm.btn-danger {
-     color: #1877f2;
+     color: #ed4c78;
     padding: 7px 9px;
-    border: 1px solid #1877f2;
+    border: 1px solid #ed4c78;
     background-color: #fff;
+}
+button.btn.btn-sm.btn-danger:hover {
+     color: #fff;
+    padding: 7px 9px;
+    border: 1px solid #ed4c78;
+    background-color: #ed4c78;
 }
 
 .tableSection .card-body .row label {
@@ -418,14 +452,14 @@ button.btn.btn-sm.btn-danger {
 
 }
 .row.g-3.customTableView .col-md-6.col-lg-4 strong{
-      color: #6c6c6c;
+      color: #334257;
     font-size: 14px;
     font-weight: 700;
 }
 
 .row.g-3.customTableView .col-md-6.col-lg-4 {
   margin-top: 0;
-  border: .5px solid #1e1e1e;
+  border: 1px solid #0081fe36;
   padding: 20px;
 }
 
@@ -625,6 +659,7 @@ label{
 .form-select{
   background-color: #fff;
   color: #000;
+  border: 1px solid rgb(208, 219, 233);
 }
 .list-group-item{
   background-color: #fff;
@@ -632,7 +667,13 @@ label{
 }
 .btn-secondary{
   color: #fff;
-  background-color: #212631;
+  background-color: #1877f2;
+  border: 1px solid #1877f2;
+}
+.btn-secondary:hover{
+  color: #1877f2 !important;
+  background-color: #fff;
+  border: 1px solid #1877f2;
 }
 .accordion-button{
   background-color: #fff;
@@ -640,7 +681,7 @@ label{
   border: 1px solid #000;
 }
 .row.g-3.customTableView .col-md-6.col-lg-4 div {
-    color: #000;
+    color: #334257;
 }
 .breadcrumb-item.active{
   color: #000;
@@ -656,7 +697,7 @@ input.form-control{
   color: #000;
 }
 .form-check-label{
-  color: #000;
+  color: #334257;
 }
 .modal-backdrop{
   background-color: #fff;
@@ -713,13 +754,13 @@ td {
     border: 1px solid #575757;
 }
 .editbtn{
-   border: 1px solid #123a7b !important;
+   border: 1px solid #1877f2 !important;
    background-color: #fff !important;
-   color: #123a7b !important;
+   color: #1877f2 !important;
 }
 .editbtn:hover{
-   border: 1px solid #123a7b !important;
-   background-color: #123a7b !important;
+   border: 1px solid #1877f2 !important;
+   background-color: #1877f2 !important;
    color: #fff !important;
 }
 .form-check-input{
@@ -736,7 +777,7 @@ td {
     border: 1px solid #1877F2;
 }
 .bg-primary{
-      background-color: #123a7b !important;
+      background-color: #1877f2 !important;
 }
 .btn-outline-primary:hover{
    background-color: #fff;
@@ -745,12 +786,12 @@ td {
 }
 .deletebtn{
   background-color: #fff !important;
-  border: 1px solid #123a7b !important;
-  color: #123a7b !important;
+  border: 1px solid #ed4c78 !important;
+  color: #ed4c78 !important;
 }
 .deletebtn:hover{
-  background-color: #123a7b !important;
-  border: 1px solid #123a7b !important;
+  background-color: #ed4c78 !important;
+  border: 1px solid #ed4c78 !important;
   color: #fff !important;
 }
 .dropdown-menu{
@@ -776,8 +817,53 @@ li.breadcrumb-item {
 li.breadcrumb-item.active{
      color: #334257 !important;
 }
- /* .card-header{
-  border-bottom: 1px solid #f4f4f4;
-  box-shadow: 0px 3px 3px rgba(51, 66, 87, 0.05);
-} */
+.bg-light{
+    border: 1px solid rgb(208, 219, 233) !important;
+    background-color: #fff !important;
+}
+.bg-light:hover{
+  border: 1px solid #123a7b !important;
+}
+.form-select:hover{
+  border: 1px solid #123a7b;
+}
+a.btn.btn-sm.btn-primary {
+    background-color: #fff;
+    color: #3d99f5 !important;
+    border: 1px solid #3d99f5;
+        align-items: center;
+        display: flex;
+}
+.form-check-input:checked{
+      background-color: #2960BA;
 
+}
+.cardheaddiv{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.text-primary{
+  color: #334257 !important;
+}
+button.btn.btn-success {
+    color: #fff;
+    background-color: #1877f2 !important;
+    border: 1px solid #1877f2;
+}
+button.btn.btn-success:hover {
+    color: #1877f2;
+    background-color: #fff !important;
+    border: 1px solid #1877f2;
+}
+th {
+    background-color: #f7faff !important;
+}
+.backbtn{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 7px;
+}
+.sidebar-footer.border-top {
+    background-color: #123a7b;
+}

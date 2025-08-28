@@ -120,7 +120,7 @@ const PlanEdit = () => {
         <div className="card-header">Setting</div>
         <div className="card-body">
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <div className="form-group">
                 <label htmlFor="">App Name</label>
                 <input
@@ -133,7 +133,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <div className="form-group">
                 <label htmlFor="">App Detail</label>
                 <input
@@ -146,7 +146,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6 mt-4">
               <div className="form-group">
                 <label htmlFor="">Support Mobile</label>
                 <input
@@ -159,7 +159,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6 mt-4">
               <div className="form-group">
                 <label htmlFor="">Support Email</label>
                 <input
@@ -172,7 +172,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 d-none">
+            <div className="col-lg-6 d-none mt-4">
               <div className="form-group">
                 <label htmlFor="">Free Episodes</label>
                 <input
@@ -185,7 +185,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 d-none">
+            <div className="col-lg-6 d-none mt-4">
               <div className="form-group">
                 <label htmlFor="">Coins/Episode Charges</label>
                 <input
@@ -198,7 +198,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 d-none">
+            <div className="col-lg-6 d-none mt-4">
               <div className="form-group">
                 <label htmlFor="">Refer n earn reward coins</label>
                 <input
@@ -211,7 +211,7 @@ const PlanEdit = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 d-none">
+            <div className="col-lg-6 d-none mt-4">
               <div className="form-group">
                 <label htmlFor="">App Languages</label>
                 <Select
@@ -226,7 +226,7 @@ const PlanEdit = () => {
               </div>
             </div>
             {/* Website Logo Upload */}
-            <div className="col-lg-4">
+            <div className="col-lg-6 mt-4">
               <div className="form-group">
                 <label>Website Logo</label>
                 <input

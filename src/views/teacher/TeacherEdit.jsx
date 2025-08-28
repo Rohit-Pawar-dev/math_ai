@@ -50,25 +50,25 @@ const TeacherEdit = () => {
           <div className="row">
             <div className="col-lg-6">
               <div className="form-group">
-                <label htmlFor="" className=''>Name</label>
+                <label htmlFor="" className='mb-2'>Name</label>
                 <input type="text" name="name" className="form-control" value={form?.name} readOnly/>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <div className="form-group">
-                <label htmlFor="">Email</label>
+                <label htmlFor="" className='mb-2'>Email</label>
                 <input type="text" name="email" className="form-control" value={form?.email} readOnly/>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6 mt-4">
               <div className="form-group">
-                <label htmlFor="">Mobile</label>
+                <label htmlFor="" className='mb-2'>Mobile</label>
                 <input type="text" name="mobile" className="form-control" value={form?.mobile} readOnly/>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6 mt-4">
               <div className="form-group">
-                <label htmlFor="">Status</label>
+                <label htmlFor="" className='mb-2'>Status</label>
                 <input type="text" name="mobile" className="form-control" value={status??''} readOnly/>
               </div>
             </div>

@@ -9,30 +9,30 @@ const TopicView = () => {
   const [topic, setTopic] = useState(null)
 
 
-  
+
   const mathjaxConfig = {
     tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
   }
 
   const processDescription = (desc) => {
-  if (!desc) return "";
+    if (!desc) return "";
 
-  // If the whole input already looks like LaTeX, wrap it once.
-  const looksLikeFullLatex = /^[^a-zA-Z0-9]*x\^.*\\left|\\right|\\mathrm|\\quad/.test(desc);
-  if (looksLikeFullLatex) {
-    return `$${desc}$`;
-  }
+    // If the whole input already looks like LaTeX, wrap it once.
+    const looksLikeFullLatex = /^[^a-zA-Z0-9]*x\^.*\\left|\\right|\\mathrm|\\quad/.test(desc);
+    if (looksLikeFullLatex) {
+      return `$${desc}$`;
+    }
 
-  // Otherwise, only wrap inline math pieces with ^ or _
-  let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
-    if (/^\$.*\$$/.test(match)) return match;
-    return `$${match}$`;
-  });
+    // Otherwise, only wrap inline math pieces with ^ or _
+    let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+      if (/^\$.*\$$/.test(match)) return match;
+      return `$${match}$`;
+    });
 
-  // Replace newlines with LaTeX line breaks
-  processed = processed.replace(/\n/g, " \\\\ ");
-  return processed;
-};
+    // Replace newlines with LaTeX line breaks
+    processed = processed.replace(/\n/g, " \\\\ ");
+    return processed;
+  };
 
 
   useEffect(() => {
@@ -56,38 +56,46 @@ const TopicView = () => {
   }
 
   return (
-        <MathJaxContext config={mathjaxConfig}>
-    <section className="formSection">
-      <div className="card">
-        <div className="card-body">
-          <h2>Topic Details</h2>
+    <MathJaxContext config={mathjaxConfig}>
+      <div className="backbtn">
+      <Link to="/topic-list" className="btn btn-secondary">
+              Back to Topics
+            </Link>
+            </div>
+      <section className="formSection">
 
-          <div className="mb-3">
-            <strong>Title:</strong>
-            <p>{topic.title}</p>
+        <div className="card">
+          <div className="card-body">
+            <div className="cardheaddiv">
+            <h2>Topic Details</h2>
+
+            {/* <Link to="/topic-list" className="btn btn-secondary">
+              Back to Topics
+            </Link> */}
+</div>
+            <div className="mb-3">
+              <strong>Title:</strong>
+              <p>{topic.title}</p>
+            </div>
+
+            <div className="mb-3">
+              <strong>Chapter:</strong>
+              <p>{topic.chapterId?.title || '-'}</p>
+            </div>
+
+            <div className="mb-3">
+              <strong>Description:</strong>
+              <MathJax dynamic>{processDescription(topic.description) || "-"}</MathJax>
+            </div>
+
+            <div className="mb-3">
+              <strong>Status:</strong>
+              <p>{topic.status}</p>
+            </div>
+
           </div>
-
-          <div className="mb-3">
-            <strong>Chapter:</strong>
-            <p>{topic.chapterId?.title || '-'}</p>
-          </div>
-
-          <div className="mb-3">
-            <strong>Description:</strong>
-            <MathJax dynamic>{processDescription(topic.description) || "-"}</MathJax>
-          </div>
-
-          <div className="mb-3">
-            <strong>Status:</strong>
-            <p>{topic.status}</p>
-          </div>
-
-          <Link to="/topic-list" className="btn btn-secondary mt-3">
-            Back to Topics
-          </Link>
         </div>
-      </div>
-    </section>
+      </section>
     </MathJaxContext>
   )
 }

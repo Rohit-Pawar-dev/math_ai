@@ -35,11 +35,10 @@ const PlanView = () => {
           <h5>Plan Details</h5>
           <button className="btn btn-warning" onClick={() => navigate(-1)}>Back</button>
         </div>
-        <div className="card-body">
+        {/* <div className="card-body">
           <div className="row">
             <Detail label="Title" value={plan.title} />
             <Detail label="Amount" value={`₹ ${plan.amount}`} />
-            {/* <Detail label="Discount" value={`${plan.discount} (${plan.discount_type})`} /> */}
             <Detail label="Validity" value={`${plan.validity_time} ${plan.validity_type}`} />
             <Detail label="Status" value={plan.status} />
             <div className="col-md-12 mb-3">
@@ -53,7 +52,61 @@ const PlanView = () => {
               </div>
             )}
           </div>
+        </div> */}
+        <div className="card-body">
+          <table className="table table-bordered">
+            <tbody>
+
+              <tr>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Validity</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Image</th>
+              </tr>
+              <tr>
+
+                <td>{plan.title}</td>
+
+
+
+                <td>₹ {plan.amount}</td>
+
+                {/* <tr>
+        <th>Discount</th>
+        <td>{plan.discount} ({plan.discount_type})</td>
+      </tr> */}
+
+
+                <td>{plan.validity_time} {plan.validity_type}</td>
+
+
+
+                <td>{plan.status}</td>
+
+
+
+                <td>{plan.description}</td>
+
+                {plan.image && (
+
+
+                  <td>
+                    <img
+                      src={plan.image}
+                      alt="Plan"
+                      className="img-fluid rounded"
+                      style={{ maxWidth: "300px" }}
+                    />
+                  </td>
+
+                )}
+              </tr>
+            </tbody>
+          </table>
         </div>
+
       </div>
     </section>
   )
