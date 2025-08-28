@@ -99,7 +99,8 @@ const QuizAttemptsList = () => {
                         <td>{new Date(attempt.completedAt || attempt.created_at).toLocaleString()}</td>
                         <td>
                           <NavLink to={`/quiz-result/${attempt._id}`}>
-                            <img src={eyeIcon} alt="View Result" width="20" />
+                            {/* <img src={eyeIcon} alt="View Result" width="20" /> */}
+                              <i className="fa fa-eye"></i>
                           </NavLink>
                         </td>
                       </tr>
