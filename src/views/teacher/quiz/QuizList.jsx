@@ -132,10 +132,10 @@ const QuizList = () => {
         }, 0)
       }
     }, [showModal, activeQuestions, selectedQuestions])
-  
+
 
   return (
-    <section className="container mt-4">
+    <section className="">
       <div className="card">
         <div className="card-body">
 
