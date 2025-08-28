@@ -11,7 +11,7 @@ const cheatsheetEdit = () => {
   const [form, setForm] = useState(null)
 
   const formatMath = (raw) => {
-    if(raw) {
+    if (raw) {
       return String.raw`\begin{aligned}
         ${raw.replace(/\n/g, " \\\\ ")}
         \end{aligned}`;
@@ -24,7 +24,7 @@ const cheatsheetEdit = () => {
       .then((res) => {
         if (res.status === 200) {
 
-          Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
+          Swal.fire('success', 'Data Updated successfully', 'success').then(function () {
             navigate('/cheat-sheet')
           })
         }

@@ -128,7 +128,7 @@ exports.getTeachers = async (req, res) => {
 
     res.json({
       status: true,
-      message: 'Users fetched successfully',
+      message: 'Teachers fetched successfully',
       data,
       total,
       limit,
@@ -136,7 +136,7 @@ exports.getTeachers = async (req, res) => {
       totalPages: Math.ceil(total / limit),
     })
   } catch (err) {
-    nlogger.error('Error retrieving users', err)
+    nlogger.error('Error retrieving Teacher', err)
     res.status(500).json({ status: false, message: 'Internal server error' })
   }
 }

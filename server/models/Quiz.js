@@ -40,6 +40,12 @@ const quizSchema = new Schema({
       ref: 'Question'
     }
   ]
+  ,
+  uniqueCode: {
+    type: String,
+    unique: true,
+    required: true
+  }
 }, {
   timestamps: {
     createdAt: 'created_at',
