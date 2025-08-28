@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import eyeIcon from '../../../assets/images/eyeIcon.svg'
 import { MathJax, MathJaxContext } from "better-react-mathjax"
 
-  const processDescription = (desc) => {
+const processDescription = (desc) => {
   if (!desc) return "";
 
   // If the whole input already looks like LaTeX, wrap it once.
