@@ -48,9 +48,9 @@ const TeacherEdit = () => {
         </div>
         <div className="card-body">
           <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <div className="form-group">
-                <label htmlFor="">Name</label>
+                <label htmlFor="" className=''>Name</label>
                 <input type="text" name="name" className="form-control" value={form?.name} readOnly/>
               </div>
             </div>
@@ -65,7 +65,7 @@ const TeacherEdit = () => {
                 <label htmlFor="">Mobile</label>
                 <input type="text" name="mobile" className="form-control" value={form?.mobile} readOnly/>
               </div>
-            </div>            
+            </div>
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Status</label>
