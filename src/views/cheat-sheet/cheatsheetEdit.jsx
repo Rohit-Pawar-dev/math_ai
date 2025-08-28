@@ -11,7 +11,7 @@ const cheatsheetEdit = () => {
   const [form, setForm] = useState(null)
 
   const formatMath = (raw) => {
-    if(raw) {
+    if (raw) {
       return String.raw`\begin{aligned}
         ${raw.replace(/\n/g, " \\\\ ")}
         \end{aligned}`;
@@ -24,7 +24,7 @@ const cheatsheetEdit = () => {
       .then((res) => {
         if (res.status === 200) {
 
-          Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
+          Swal.fire('success', 'Data Updated successfully', 'success').then(function () {
             navigate('/cheat-sheet')
           })
         }
@@ -58,14 +58,14 @@ const cheatsheetEdit = () => {
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Title</label>
-                <input type="text" name="title" className="form-control" value={form?.title} onChange={(e) => setForm({...form, title:e.target.value})} />
+                <input type="text" name="title" className="form-control" value={form?.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
               </div>
             </div>
-           
+
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Type</label>
-                <select name="type" className="form-control" value={form?.type} onChange={(e) => setForm({...form, type:e.target.value})} >
+                <select name="type" className="form-control" value={form?.type} onChange={(e) => setForm({ ...form, type: e.target.value })} >
                   <option value="">--</option>
                   <option value="Algebra">Algebra</option>
                   <option value="Trigonometry">Trigonometry</option>
@@ -79,7 +79,7 @@ const cheatsheetEdit = () => {
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Status</label>
-                <select name="status" className="form-control" onChange={(e) => setForm({...form, status:e.target.value})} value={form?.status}>
+                <select name="status" className="form-control" onChange={(e) => setForm({ ...form, status: e.target.value })} value={form?.status}>
                   <option value="">--</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -89,7 +89,7 @@ const cheatsheetEdit = () => {
             <div className="col-lg-6">
               <div className="form-group">
                 <label htmlFor="">Description</label>
-                <textarea type="text" rows="10" name="description" className="form-control" value={form?.description} onChange={(e) => setForm({...form, description:e.target.value})} />
+                <textarea type="text" rows="10" name="description" className="form-control" value={form?.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
               </div>
             </div>
             <div className="col-lg-4">

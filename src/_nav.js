@@ -18,6 +18,13 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'User Attempts',
+    to: '/user-attempt',
+    icon: <i className="fa fa-users m-2"></i>,
+  },
+
+  {
+    component: CNavItem,
     name: 'Users',
     to: '/users',
     icon: <i className="fa fa-users m-2"></i>,

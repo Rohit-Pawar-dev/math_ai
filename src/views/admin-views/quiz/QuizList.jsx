@@ -6,7 +6,7 @@ import API from '../../../api'
 import Swal from 'sweetalert2'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
-  const processDescription = (desc) => {
+const processDescription = (desc) => {
   if (!desc) return "";
 
   // If the whole input already looks like LaTeX, wrap it once.
@@ -238,6 +238,9 @@ const QuizList = () => {
                             >
                               Add Question
                             </button>
+                            <NavLink to={`/quiz-attempts/${quiz._id}`} className="btn btn-sm btn-success text-white">
+                              View Attempts
+                            </NavLink>
                           </div>
                         </td>
                       </tr>

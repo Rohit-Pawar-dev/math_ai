@@ -1,8 +1,23 @@
 
 const Quiz = require('../../models/Quiz');
 const MEDIA_URL = process.env.MEDIA_URL;
+const QuizAttempt = require('../../models/QuizAttempt');
+const QuizResult = require('../../models/QuizResult');
+const crypto = require('crypto');
+
+function generateUniqueCode(length = 6) {
+  return crypto.randomBytes(length).toString('hex').slice(0, length).toUpperCase();
+}
 
 exports.createQuiz = async (req, res) => {
+  let uniqueCode;
+  let isUnique = false;
+  while (!isUnique) {
+    uniqueCode = "QUIZ-" + generateUniqueCode(6);
+    const existing = await Quiz.findOne({ uniqueCode });
+    if (!existing) isUnique = true;
+  }
+
   try {
     const { title, description, is_paid, amount, teacher_id, status, questions } = req.body;
 
@@ -15,6 +30,7 @@ exports.createQuiz = async (req, res) => {
       status: status || 'active',
       questions: questions || [],
       image: req.file ? `/uploads/quizzes/${req.file.filename}` : '',
+      uniqueCode
     });
 
     res.status(201).json({
@@ -133,27 +149,6 @@ exports.deleteQuiz = async (req, res) => {
   }
 };
 
-// exports.addQuestionsToQuiz = async (req, res) => {
-//   try {
-//     const { questions } = req.body;
-//     const quiz = await Quiz.findById(req.params.id);
-
-//     if (!quiz) {
-//       return res.status(404).json({ status: false, message: 'Quiz not found' });
-//     }
-
-//     quiz.questions = [...new Set([...quiz.questions, ...questions])];
-//     await quiz.save();
-
-//     res.json({
-//       status: true,
-//       message: 'Questions added to quiz successfully',
-//       data: quiz,
-//     });
-//   } catch (err) {
-//     res.status(500).json({ status: false, message: 'Internal server error', error: err.message });
-//   }
-// };
 exports.addQuestionsToQuiz = async (req, res) => {
   try {
     const { questions } = req.body; // should be array of questionIds
@@ -178,8 +173,6 @@ exports.addQuestionsToQuiz = async (req, res) => {
         data: quiz,
       });
     }
-
-    // Add only non-existing questions
     quiz.questions.push(...newQuestions);
     await quiz.save();
 
@@ -220,4 +213,115 @@ exports.setQuestionsForQuiz = async (req, res) => {
       .json({ status: false, message: "Internal server error", error: err.message });
   }
 };
+
+
+// exports.getQuizAttempts = async (req, res) => {
+//   try {
+//     const { quizId } = req.params;
+
+//     const attempts = await QuizAttempt.find({ quiz: quizId })
+//       .populate('user', 'name email')
+//       .populate('quiz', 'title');
+
+//     res.status(200).json(attempts);
+//   } catch (err) {
+//     res.status(500).json({ message: 'Server error', error: err.message });
+//   }
+// };
+exports.getQuizAttempts = async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    const searchText = req.query.search ?? '';
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
+
+    // Build query
+    const query = { quiz: quizId };
+
+    // If searching by user name or email
+    if (searchText) {
+      query['$expr'] = {
+        $regexMatch: {
+          input: { $concat: ['$user.name', ' ', '$user.email'] },
+          regex: searchText,
+          options: 'i'
+        }
+      };
+    }
+
+    // Total count before pagination
+    const total = await QuizAttempt.countDocuments({ quiz: quizId });
+
+    // Fetch attempts
+    const attempts = await QuizAttempt.find({ quiz: quizId })
+      .populate('user', 'name email') // Populate user name & email
+      .populate('quiz', 'title') // Populate quiz title
+      .skip(offset)
+      .limit(limit)
+      .sort({ created_at: -1 });
+
+    // Map attempts to include QuizResult info
+    const enrichedData = await Promise.all(
+      attempts.map(async (attempt) => {
+        const result = await QuizResult.findOne({ attempt: attempt._id });
+
+        return {
+          ...attempt.toObject(),
+          user: attempt.user,
+          quiz: attempt.quiz,
+          score: result?.score ?? null,
+          correctAnswers: result?.correctAnswers ?? null,
+          totalQuestions: result?.totalQuestions ?? null,
+          percentage: result?.percentage ?? null,
+          passed: result?.passed ?? null,
+        };
+      })
+    );
+
+    res.status(200).json({
+      status: true,
+      message: 'Quiz attempts fetched successfully',
+      data: enrichedData,
+      total,
+      limit,
+      offset,
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: false,
+      message: 'Internal server error',
+    });
+  }
+};
+
+// 5. Get Full Result for an Attempt
+exports.getFullResult = async (req, res) => {
+  try {
+    const { attemptId } = req.params;
+
+    const result = await QuizResult.findOne({ attempt: attemptId })
+      .populate('quiz')
+      .populate('user', 'name email')
+      .populate({
+        path: 'attempt',
+        populate: {
+          path: 'answers.question',
+          model: 'Question'
+        }
+      });
+
+    if (!result) {
+      return res.status(404).json({ message: 'Result not found' });
+    }
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+
+
 

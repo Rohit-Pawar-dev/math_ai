@@ -18,6 +18,7 @@ const chapterController = require("../controllers/AdminsController/chapterContro
 const topicController = require("../controllers/AdminsController/topicController");
 const sectionController = require("../controllers/AdminsController/sectionController");
 const subsectionController = require("../controllers/AdminsController/SubSectionController");
+const auth = require("../middleware/authMiddleware");
 const getCustomMulter = require('../utils/customMulter');
 
 // Upload handler (store in `uploads/chapters`)
@@ -52,6 +53,7 @@ router.get("/teachers", userController.getTeachers);
 router.get("/teachers/:id", userController.getUserById);
 
 // ----------------- Banner Routes -----------------
+
 router.post('/banners', bannerController.uploadBannerImage, bannerController.createBanner);
 router.get('/banners', bannerController.getBanners);
 router.get('/banners/:id', bannerController.getBannerById);
@@ -59,12 +61,14 @@ router.put('/banners/:id', bannerController.uploadBannerImage, bannerController.
 router.delete('/banners/:id', bannerController.deleteBanner);
 
 // ----------------- Feedback Routes -----------------
+
 router.get("/feedbacks", feedbackController.getAllFeedbacks);
 router.get("/feedbacks/:id", feedbackController.getFeedbackById);
 router.put("/feedbacks/respond/:id", feedbackController.respondFeedback);
 router.delete("/feedbacks/:id", feedbackController.deleteFeedback);
 
 // ----------------- Plan Routes -----------------
+
 router.post("/plan", planController.createPlan);
 router.get("/plan", planController.getPlans);
 router.get("/plan/:id", planController.getPlan);
@@ -72,6 +76,7 @@ router.put("/plan/:id", planController.updatePlan);
 router.delete("/plan/:id", planController.deletePlan);
 
 // ----------------- Subscriber Routes -----------------
+
 router.post("/subscribers", subscriberController.createSubscriber);
 router.get("/subscribers", subscriberController.getSubscribers);
 router.get("/subscribers/:id", subscriberController.getSubscriberById);
@@ -79,9 +84,11 @@ router.put("/subscribers/:id", subscriberController.updateSubscriber);
 router.delete("/subscribers/:id", subscriberController.deleteSubscriber);
 
 // ----------------- Transaction Routes -----------------
+
 router.get("/transactions", transactionController.getTransactions);
 
 // ----------------- Page Routes -----------------
+
 router.post("/page", pageController.createPage);
 router.get("/page", pageController.getAllPages);
 router.get("/page/slug/:slug", pageController.getPageBySlug);
@@ -90,6 +97,7 @@ router.put("/page/:id", pageController.updatePage);
 router.delete("/page/:id", pageController.deletePage);
 
 // ----------------- Setting Routes -----------------
+
 router.post("/settings", settingController.createSetting);
 router.get("/settings", settingController.getAllSettings);
 router.get("/settings/:id", settingController.getSettingById);
@@ -97,11 +105,13 @@ router.put("/settings/:id", settingController.uploadLogoImage, settingController
 router.delete("/settings/:id", settingController.deleteSetting);
 
 // ----------------- Notification Routes -----------------
+
 router.get("/notifications", adminController.getNotifications);
 router.post("/send-notification", adminController.uploadNotificationImage, adminController.sendNotification);
 router.delete("/notifications/:id", adminController.deleteNotification);
 
 //-----------------------Question Routes -----------------
+
 router.post("/questions", questionController.createQuestion);
 router.get("/questions", questionController.getQuestions);
 router.get("/questions/:id", questionController.getQuestionById);
@@ -109,6 +119,7 @@ router.put("/questions/:id", questionController.updateQuestion);
 router.delete("/questions/:id", questionController.deleteQuestion);
 
 //-----------------------Quiz Routes -----------------
+
 router.post("/quizzes", quizController.createQuiz);
 router.get("/quizzes", quizController.getQuizzes);
 router.get("/quizzes/:id", quizController.getQuizById);
@@ -116,6 +127,7 @@ router.put("/quizzes/:id", quizController.updateQuiz);
 router.delete("/quizzes/:id", quizController.deleteQuiz);
 router.put("/quizzes/:id/add-questions", quizController.addQuestionsToQuiz);
 router.put("/quizzes/:id/set-questions", quizController.setQuestionsForQuiz);
+
 
 //-----------------------chapter Routes -----------------
 
@@ -147,5 +159,11 @@ router.get('/subsection', subsectionController.getSubsections);
 router.get('/subsection/:id', subsectionController.getSubsectionById);
 router.put('/subsection/:id', subsectionController.updateSubsection);
 router.delete('/subsection/:id', subsectionController.deleteSubsection);
+
+//----------------------Attempt Quiz -------------------
+router.get('/quiz/:quizId/attempts', quizController.getQuizAttempts);
+router.get('/result/:attemptId', quizController.getFullResult);
+
+
 
 module.exports = router;

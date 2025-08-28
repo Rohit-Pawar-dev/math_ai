@@ -1,3 +1,4 @@
+import { element } from 'prop-types'
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -51,6 +52,10 @@ const ClassList = React.lazy(() => import('./views/pages/class/ClassList'))
 const ClassAdd = React.lazy(() => import('./views/pages/class/ClassAdd'))
 const ClassView = React.lazy(() => import('./views/pages/class/ClassView'))
 const ClassEdit = React.lazy(() => import('./views/pages/class/ClassEdit'))
+
+//User Quizz Attempt
+
+const UserQuizzAttempt = React.lazy(()=> import('./views/admin-views/Result/QuizAttemptsList'))
 
 // Feedback pages
 const FeedbackList = React.lazy(() => import('./views/pages/feedback/FeedbackList'))
@@ -317,6 +322,9 @@ const routes = [
   { path: '/class-view/:id', name: 'ClassView', element: ClassView },
   { path: '/class-add', name: 'ClassAdd', element: ClassAdd },
   { path: '/class-edit/:id', name: 'ClassEdit', element: ClassEdit },
+  
+  //User Quizz Attempts
+  {path: '/quiz-attempts/:quizId', name: 'ClassEdit' , element: UserQuizzAttempt},
 
   // feedbacks
   { path: '/feedback-list', name: 'FeedbackList', element: FeedbackList },

@@ -26,58 +26,58 @@ const QuestionEdit = () => {
     tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
   }
 
-   const processDescription = (desc) => {
-  if (!desc) return "";
+  const processDescription = (desc) => {
+    if (!desc) return "";
 
-  // If the whole input already looks like LaTeX, wrap it once.
-  const looksLikeFullLatex = /^[^a-zA-Z0-9]*x\^.*\\left|\\right|\\mathrm|\\quad/.test(desc);
-  if (looksLikeFullLatex) {
-    return `$${desc}$`;
-  }
+    // If the whole input already looks like LaTeX, wrap it once.
+    const looksLikeFullLatex = /^[^a-zA-Z0-9]*x\^.*\\left|\\right|\\mathrm|\\quad/.test(desc);
+    if (looksLikeFullLatex) {
+      return `$${desc}$`;
+    }
 
-  // Otherwise, only wrap inline math pieces with ^ or _
-  let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
-    if (/^\$.*\$$/.test(match)) return match;
-    return `$${match}$`;
-  });
+    // Otherwise, only wrap inline math pieces with ^ or _
+    let processed = desc.replace(/([^\s]*[\^_][^\s]*)/g, (match) => {
+      if (/^\$.*\$$/.test(match)) return match;
+      return `$${match}$`;
+    });
 
-  // Replace newlines with LaTeX line breaks
-  processed = processed.replace(/\n/g, " \\\\ ");
-  return processed;
-};
+    // Replace newlines with LaTeX line breaks
+    processed = processed.replace(/\n/g, " \\\\ ");
+    return processed;
+  };
 
   // --- Fetch Existing Question ---
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const res = await API.get(`/questions/${id}`)
-      const q = res.data?.data || res.data || {}   
-      setQuestion(q.question || "")
-      setOptionType(q.optionType || "text")
+    const fetchData = async () => {
+      try {
+        const res = await API.get(`/questions/${id}`)
+        const q = res.data?.data || res.data || {}
+        setQuestion(q.question || "")
+        setOptionType(q.optionType || "text")
 
-      if (q.optionType === "text") {
-        setOptions(q.options || ["", "", "", ""])
-      } else {
-        setOptionPreviews(q.options || [null, null, null, null])
+        if (q.optionType === "text") {
+          setOptions(q.options || ["", "", "", ""])
+        } else {
+          setOptionPreviews(q.options || [null, null, null, null])
+        }
+
+        setAnswer(Number.isInteger(q.answer) ? q.answer : 0)
+
+        setExplanationType(q.explanationType || "text")
+        if (q.explanationType === "text") {
+          setExplanation(q.explanation || "")
+        } else {
+          setExplanationPreview(q.explanation || null)
+        }
+
+        setStatus(q.status || "active")
+      } catch (err) {
+        console.error("Fetch error:", err)
+        Swal.fire("Error", "Failed to fetch question", "error")
       }
-
-      setAnswer(Number.isInteger(q.answer) ? q.answer : 0)
-
-      setExplanationType(q.explanationType || "text")
-      if (q.explanationType === "text") {
-        setExplanation(q.explanation || "")
-      } else {
-        setExplanationPreview(q.explanation || null)
-      }
-
-      setStatus(q.status || "active")
-    } catch (err) {
-      console.error("Fetch error:", err)
-      Swal.fire("Error", "Failed to fetch question", "error")
     }
-  }
-  fetchData()
-}, [id])
+    fetchData()
+  }, [id])
 
 
   // --- Handlers ---
@@ -323,23 +323,23 @@ const QuestionEdit = () => {
                   <ul className="list-unstyled mt-2">
                     {optionType === "text"
                       ? options.map((opt, idx) => (
-                          <li key={idx}>
-                            • <MathJax dynamic>{processDescription(opt)}</MathJax>
-                          </li>
-                        ))
+                        <li key={idx}>
+                          • <MathJax dynamic>{processDescription(opt)}</MathJax>
+                        </li>
+                      ))
                       : optionPreviews.map(
-                          (src, idx) =>
-                            src && (
-                              <li key={idx}>
-                                <img
-                                  src={src}
-                                  alt={`Option ${idx}`}
-                                  className="img-thumbnail mb-2"
-                                  style={{ width: "100px", objectFit: "cover" }}
-                                />
-                              </li>
-                            )
-                        )}
+                        (src, idx) =>
+                          src && (
+                            <li key={idx}>
+                              <img
+                                src={src}
+                                alt={`Option ${idx}`}
+                                className="img-thumbnail mb-2"
+                                style={{ width: "100px", objectFit: "cover" }}
+                              />
+                            </li>
+                          )
+                      )}
                   </ul>
                 </div>
 
