@@ -97,7 +97,7 @@ h1, h2, h3, h4, h5{
 }
 
 .mainContent h6 {
-  color: #75797F;
+  color: #334257;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 17px;
@@ -385,8 +385,10 @@ button.btn.btn-warning {
 }
 
 button.btn.btn-sm.btn-danger {
-  color: #fff;
-  padding: 7px 9px;
+     color: #1877f2;
+    padding: 7px 9px;
+    border: 1px solid #1877f2;
+    background-color: #fff;
 }
 
 .tableSection .card-body .row label {
@@ -616,7 +618,7 @@ select option{
     border: 1px solid #0081fe36;
 }
 label{
-  color: #000;
+  color: #334257;
   font-size: 16px !important;
   font-weight: 600 !important;
 }
@@ -774,3 +776,8 @@ li.breadcrumb-item {
 li.breadcrumb-item.active{
      color: #334257 !important;
 }
+ /* .card-header{
+  border-bottom: 1px solid #f4f4f4;
+  box-shadow: 0px 3px 3px rgba(51, 66, 87, 0.05);
+} */
+
