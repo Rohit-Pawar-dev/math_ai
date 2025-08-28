@@ -57,8 +57,8 @@ const ClassEdit = React.lazy(() => import('./views/pages/class/ClassEdit'))
 
 //User Quizz Attempt
 
-const UserQuizzAttempt = React.lazy(()=> import('./views/admin-views/Result/QuizAttemptsList'))
-const QuizResultView = React.lazy(()=> import ('./views/admin-views/Result/QuizResultView'))
+const UserQuizzAttempt = React.lazy(() => import('./views/admin-views/Result/QuizAttemptsList'))
+const QuizResultView = React.lazy(() => import('./views/admin-views/Result/QuizResultView'))
 
 // Feedback pages
 const FeedbackList = React.lazy(() => import('./views/pages/feedback/FeedbackList'))
@@ -245,7 +245,7 @@ const routes = [
   { path: '/edit-teacher/:id', name: 'Teachers Edit', element: TeacherEdit },
 
 
-  
+
   // { path: '/teachers/view/:id', name: 'Teachers', element: TeacherEdit },
 
   { path: '/users', name: 'ProfileManagement', element: ProfileManagement },
@@ -331,10 +331,10 @@ const routes = [
   { path: '/class-view/:id', name: 'ClassView', element: ClassView },
   { path: '/class-add', name: 'ClassAdd', element: ClassAdd },
   { path: '/class-edit/:id', name: 'ClassEdit', element: ClassEdit },
-  
+
   //User Quizz Attempts
-  {path: '/quiz-attempts/:quizId', name: 'Quiz Attempt' , element: UserQuizzAttempt},
-  { path:'/quiz-result/:attemptId', name: 'Result View' , element:QuizResultView  },
+  { path: '/quiz-attempts/:quizId', name: 'Quiz Attempt', element: UserQuizzAttempt },
+  { path: '/quiz-result/:attemptId', name: 'Result View', element: QuizResultView },
 
 
   // feedbacks

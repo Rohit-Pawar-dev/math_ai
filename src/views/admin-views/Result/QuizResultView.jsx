@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import API from '../../../api'
 import Swal from 'sweetalert2'
-
+import MEDIA_URL from "../../../media"
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 const processDescription = (desc) => {
@@ -34,9 +34,10 @@ const QuizResultView = () => {
   const { attemptId } = useParams()
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [openIndexes, setOpenIndexes] = useState({}) // to handle collapses
+  const [openIndexes, setOpenIndexes] = useState({})
 
   useEffect(() => {
+      console.log(MEDIA_URL);
     const fetchResult = async () => {
       try {
         const res = await API.get(`/result/${attemptId}`)
@@ -61,6 +62,7 @@ const QuizResultView = () => {
       [index]: !prev[index],
     }))
   }
+
 
   if (loading) return <div className="text-center mt-5">Loading...</div>
   if (!result) return <div className="text-center mt-5">Result not found.</div>
@@ -106,126 +108,112 @@ const QuizResultView = () => {
               const isOpen = openIndexes[index]
 
               return (
-                // <div key={answer._id} className="mb-4 p-3 border rounded">
-                //   <p
-                //     onClick={() => toggleExplanation(index)}
-                //     style={{ cursor: 'pointer', fontWeight: 'bold' }}
-                //   >
-                //     Q{index + 1}: {question?.questionText}
-                //     <span style={{ float: 'right' }}>
-                //       {isOpen ? '▲' : '▼'}
-                //     </span>
-                //   </p>
+                <div key={answer._id} className="mb-4 p-3 border rounded">
+                  {/* QUESTION TEXT with MathJax */}
+                  <p
+                    onClick={() => toggleExplanation(index)}
+                    style={{ cursor: 'pointer', fontWeight: 'bold' }}
+                  >
+                    Q{index + 1}:{' '}
+                    <MathJax dynamic>{processDescription(question?.questionText)}</MathJax>
+                    <span style={{ float: 'right' }}>
+                      <i className={`bi ${isOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+                    </span>
+                  </p>
 
-                //   <ul className="mb-2">
-                //     {question?.options?.map((option, i) => {
-                //       const isSelected = answer.selectedOption === i
-                //       const isAnswer = question.correctOption === i
+                  {/* OPTIONS with MathJax */}
+                  {/* <ul className="mb-2">
+                    {question?.options?.map((option, i) => {
+                      const isSelected = answer.selectedOption === i
+                      const isAnswer = question.correctOption === i
 
-                //       return (
-                //         <li
-                //           key={i}
-                //           style={{
-                //             fontWeight: isAnswer ? 'bold' : 'normal',
-                //             color: isSelected
-                //               ? isCorrect
-                //                 ? 'green'
-                //                 : 'red'
-                //               : isAnswer
-                //                 ? 'green'
-                //                 : '',
-                //           }}
-                //         >
-                //           {option}{' '}
-                //           {isSelected && <strong>(Your Answer)</strong>}{' '}
-                //           {isAnswer && <span>✓</span>}
-                //         </li>
-                //       )
-                //     })}
-                //   </ul>
+                      return (
+                        <li
+                          key={i}
+                          style={{
+                            fontWeight: isAnswer ? 'bold' : 'normal',
+                            color: isSelected
+                              ? isCorrect
+                                ? 'green'
+                                : 'red'
+                              : isAnswer
+                                ? 'green'
+                                : '',
+                          }}
+                        >
+                          <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
+                          {isSelected && <strong>(Your Answer)</strong>}{' '}
+                          {isAnswer && <span>✓</span>}
+                        </li>
+                      )
+                    })}
+                  </ul> */}
+                  <ul className="mb-2">
+  {question?.options?.map((option, i) => {
+    const isSelected = answer.selectedOption === i
+    const isAnswer = question.correctOption === i
 
-                //   {isOpen && question?.explanation && (
-                //     <div className="mt-2">
-                //       <strong>Explanation:</strong>
-                //       {question.explanationType === 'image' ? (
-                //         <div className="mt-2">
-                //           <img
-                //             src={question.explanation}
-                //             alt="Explanation"
-                //             style={{ maxWidth: '100%', border: '1px solid #ddd' }}
-                //           />
-                //         </div>
-                //       ) : (
-                //         // <p className="mt-2">{question.explanation}</p>
-                //         <MathJax dynamic>{processDescription(question.explanation)}</MathJax>
-                //       )}
-                //     </div>
-                //   )}
-                // </div>
-                 <div key={answer._id} className="mb-4 p-3 border rounded">
-      {/* QUESTION TEXT with MathJax */}
-      <p
-        onClick={() => toggleExplanation(index)}
-        style={{ cursor: 'pointer', fontWeight: 'bold' }}
-      >
-        Q{index + 1}:{' '}
-        <MathJax dynamic>{processDescription(question?.questionText)}</MathJax>
-        {/* <span style={{ float: 'right' }}>{isOpen ? '▲' : '▼'}</span> */}
-        <span style={{ float: 'right' }}>
-  <i className={`bi ${isOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
-</span>
-      </p>
+    const optionStyle = {
+      fontWeight: isAnswer ? 'bold' : 'normal',
+      color: isSelected
+        ? isCorrect
+          ? 'green'
+          : 'red'
+        : isAnswer
+          ? 'green'
+          : '',
+      listStyleType: 'none',
+      marginBottom: '10px',
+    }
 
-      {/* OPTIONS with MathJax */}
-      <ul className="mb-2">
-        {question?.options?.map((option, i) => {
-          const isSelected = answer.selectedOption === i
-          const isAnswer = question.correctOption === i
+    return (
+      <li key={i} style={optionStyle}>
+        {question.optionType === 'image' ? (
+          <>
+            <img
+              src={`${MEDIA_URL}/${option}`}
+              alt={`Option ${i + 1}`}
+              style={{ maxWidth: '100%', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '4px' }}
+            />
+            <br />
+            {isSelected && <strong>(Your Answer)</strong>}{' '}
+            {isAnswer && <span>✓</span>}
+          </>
+        ) : (
+          <>
+            <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
+            {isSelected && <strong>(Your Answer)</strong>}{' '}
+            {isAnswer && <span>✓</span>}
+          </>
+        )}
+      </li>
+    )
+  })}
+</ul>
 
-          return (
-            <li
-              key={i}
-              style={{
-                fontWeight: isAnswer ? 'bold' : 'normal',
-                color: isSelected
-                  ? isCorrect
-                    ? 'green'
-                    : 'red'
-                  : isAnswer
-                    ? 'green'
-                    : '',
-              }}
-            >
-              <MathJax dynamic>{processDescription(option)}</MathJax>{' '}
-              {isSelected && <strong>(Your Answer)</strong>}{' '}
-              {isAnswer && <span>✓</span>}
-            </li>
-          )
-        })}
-      </ul>
 
-      {/* EXPLANATION with MathJax */}
-      {isOpen && question?.explanation && (
-        <div className="mt-2">
-          <strong>Explanation:</strong>
-          {question.explanationType === 'image' ? (
-            <div className="mt-2">
-              <img
-                src={question.explanation}
-                alt="Explanation"
-                style={{ maxWidth: '100%', border: '1px solid #ddd' }}
-              />
-            </div>
-          ) : (
-            <div className="mt-2">
-              <MathJax dynamic>
-                {processDescription(question.explanation)}
-              </MathJax>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+                  {/* EXPLANATION with MathJax */}
+                  {isOpen && question?.explanation && (
+                    <div className="mt-2">
+                      <strong>Explanation:</strong>
+                      {question.explanationType === 'image' ? (
+                        <div className="mt-2">
+                          <img
+                            src={MEDIA_URL+"/"+question.explanation}
+                            alt="Explanation"
+                            style={{ maxWidth: '100%', border: '1px solid #ddd' }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="mt-2">
+                          <MathJax dynamic>
+                            {processDescription(question.explanation)}
+                          </MathJax>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               )
             })}
           </div>
