@@ -161,7 +161,7 @@ const QuizList = () => {
       <section className="">
         <div className="card">
           <div className="card-body">
-
+             <h4>All Quizzes</h4>
             {/* Search and Add */}
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="input-group w-50">
@@ -184,7 +184,7 @@ const QuizList = () => {
 
             {/* Table */}
             <div className="table-responsive">
-              <h4>All Quizzes</h4>
+
               <table className="table table-bordered table-hover">
                 <thead className="table-dark">
                   <tr>

@@ -8,7 +8,7 @@ a {
 .tableSection h2 {
   text-transform: uppercase;
   font-size: 25px;
-  color: #525252;
+  color: #334257;
   font-weight: 700;
 }
 
@@ -21,12 +21,12 @@ a {
 }
 
 .mainContent table td {
-  border: 1px solid #616161;
+  border: 1px solid #0081fe36;
   padding: 10px;
-  font-weight: 400;
+  font-weight: 600;
   text-transform: capitalize;
   font-size: 16px;
-  color: #000;
+  color: #334257;
 
 }
 
@@ -39,7 +39,7 @@ a {
   height: 80px;
   object-fit: contain;
   object-position: left;
-      /* filter: invert(1); */
+  /* filter: invert(1); */
 }
 
 .card-header{
@@ -56,7 +56,7 @@ strong{
 
 .mainContent table th {
   padding: 10px;
-  border: 1px solid #575757;
+  border: 1px solid #0081fe36;
   color: #fff;
   background-color: #2b2b2b;
   font-weight: 600;
@@ -64,20 +64,25 @@ strong{
   font-size: 14px;
 }
 h1, h2, h3, h4, h5{
-  color: #525252;
+  color: #334257;
 }
 
 .actionTable a {
   /* font-size: 20px; */
-  color: #fff;
+  color: #1877f2 !important;
   transition: .3s ease all;
   padding: 9px 9px;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #000;
+  border: 1px solid #1877f2;
   align-items: center;
   background: #fff;
   display: flex;
+}
+.actionTable a:hover{
+   background-color: #1877f2 !important;
+   color: #fff !important;
+   border: 1px solid #1877f2;
 }
 
 .actionTable a:hover {
@@ -101,12 +106,12 @@ h1, h2, h3, h4, h5{
 .mainContent .card .card-body .form-group label {
   font-weight: 600;
   font-size: 16px;
-  color: #000;
+  color: #334257;
 }
 button.btn.btn-outline-success.active {
     color: #fff;
-    background-color: #2a303d;
-    border: 1px solid #2a303d;
+    background-color: #3066be;
+    border: 1px solid #3066be;
 }
 
 .formSubmitDiv {
@@ -150,7 +155,7 @@ button.btn.btn-outline-success.active {
 
 .searchBox button {
   height: 100%;
-  background-color: #EEAD20;
+  background-color: #3066be;
 
 }
 
@@ -169,7 +174,7 @@ button.btn.btn-outline-success.active {
 .card {
   --cui-card-bg: #fff !important;
       padding: 15px 20px;
-    border: 1px solid #5e5cd0;
+    border: 1px solid #3066be;
     box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
     border: 1px solid #dfdfdf;
     height: 100%;
@@ -183,7 +188,7 @@ button.btn.btn-outline-success.active {
 .sidebar-nav .nav-link.active {
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff !important;
-  background: linear-gradient(to left, #ca49ca, #7482e6) !important;
+  background: #1877F2 !important;
 }
 
 .wrapper.d-flex.flex-column.min-vh-100 {
@@ -192,22 +197,22 @@ button.btn.btn-outline-success.active {
 
 button.btn.btn-outline-warning.active {
   color: #fff;
-  background: #2b2b2b;
-  border: 1px solid #2b2b2b;
+  background: #1877f2;
+  border: 1px solid #1877f2;
   font-size: 14px;
   font-weight: 500;
-      padding: 8px 13px;
+  padding: 8px 13px;
 }
 
 button.btn.btn-outline-secondary:hover {
-  background: #d740c9;
-  border: 1px solid #d740c9;
+  background: #1877f2;
+  border: 1px solid #1877f2;
 }
 
 button.btn.btn-primary {
   color: #fff;
-  background: #525252;
-  border: 1px solid #525252;
+  background: #123a7b;
+  border: 1px solid #123a7b;
   font-size: 14px;
   font-weight: 500;
   width: fit-content !important;
@@ -232,7 +237,7 @@ button.btn.btn-primary {
 }
 
 .loginSection .card.bg-primary {
-  background-color: #d740c9 !important;
+  background-color: #3066be !important;
 }
 
 .loginSection .card.bg-primary .btn.active {
@@ -241,20 +246,20 @@ button.btn.btn-primary {
 }
 
 .loginSection .card form button.btn.btn-primary.px-4 {
-  background: #d740c9 !important;
-  border-color: #d740c9 !important;
+  background: #3066be !important;
+  border-color: #3066be !important;
 }
 
 .loginSection .card form button.btn.btn-success {
-  background: #d740c9 !important;
-  border-color: #d740c9 !important;
+  background: #3066be!important;
+  border-color: #3066be !important;
   color: #fff;
 }
 
 [data-coreui-theme=dark] .dark\:bg-info,
 [data-coreui-theme=dark] .dark\:bg-info:not([class*="dark:"]),
 .bg-info {
-  background-color: #d740c9 !important;
+  background-color: #3066be !important;
 }
 
 [data-coreui-theme=dark] .footer {
@@ -295,9 +300,11 @@ button.btn.btn-primary {
 }
 
 .form-control {
-  border: var(--cui-border-width) solid #d7d7d7 !important;
+  border: var(--cui-border-width) solid rgb(208, 219, 233) !important;
 }
-
+.form-control:hover {
+    border: 1px solid #123a7b !important;
+}
 .profileImgClass {
   width: 45px;
   height: 45px;
@@ -347,7 +354,7 @@ button.btn.btn-primary {
 
 /* ON state */
 input:checked+.slider {
-  background-color: #d740c9;
+  background-color: #3066be;
 }
 
 input:checked+.slider::before {
@@ -355,13 +362,13 @@ input:checked+.slider::before {
 }
 
 section.tableSection .card-body select option {
-  color: #d740c9;
+  color: #3066be;
   font-size: 14px;
   font-weight: 500;
 }
 
 .formSection select option {
-  color: #d740c9;
+  color: #3066be;
 }
 
 .avatar-img {
@@ -426,6 +433,7 @@ button.btn.btn-sm.btn-danger {
 .eyeIconClass{
   width: 17px;
   height: 17px !important;
+  color: #123a7b !important;
 }
 
 select option{
@@ -560,17 +568,18 @@ select option{
 }
 .sidebar-nav .nav-title{
   margin-top: 0 !important;
-  color: #7480e6;
+  color: #a3b9d2;
 }
 .sidebar-nav .nav-link:hover{
-    background-image: linear-gradient(to left, #ca49ca, #7482e6) !important;
-    color: #fff !important;
+    background-image: #1877F2 !important;
+    color: #e9f3ff !important;
 }
 .sidebar-nav .nav-link{
   font-weight: 600;
+  color: #fff !important;
 }
 .container-fluid.border-bottom.px-4 {
-    background-color: #7480e6;
+    background-color: #123a7b;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 .sidebar.sidebar-dark.sidebar-fixed.border-end {
@@ -583,10 +592,10 @@ select option{
    color: grey !important;
 }
 .card-title{
-  color: #000 !important;
+  color: #334257 !important;
 }
 .text-truncate{
-  color: #000;
+  color: #334257;
 }
 
 /* Responsive: Stack fields on small screens */
@@ -602,11 +611,14 @@ select option{
 
 .table > :not(caption) > * > * {
     padding: 0.5rem 0.5rem;
-    color: var(--cui-table-color-state, var(--cui-table-color-type, #000000));
+    color: var(--cui-table-color-state, var(--cui-table-color-type, #334257));
     background-color: #ffffff;
+    border: 1px solid #0081fe36;
 }
 label{
   color: #000;
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 .form-select{
   background-color: #fff;
@@ -633,6 +645,7 @@ label{
 }
 input.form-control{
   color:  #000 !important;
+  border-radius: 5px !important;
 }
 .form-control{
   color: #000;
@@ -691,14 +704,73 @@ span {
   justify-content: end;
 }
 thead th {
-    background-color: #2b2b2b !important;
-    color: #fff !important;
+    background-color: #f7faff !important;
+    color: #334257 !important;
 }
 td {
     border: 1px solid #575757;
 }
 .editbtn{
-   border: 1px solid #000 !important;
+   border: 1px solid #123a7b !important;
    background-color: #fff !important;
-   color: #000 !important;
+   color: #123a7b !important;
+}
+.editbtn:hover{
+   border: 1px solid #123a7b !important;
+   background-color: #123a7b !important;
+   color: #fff !important;
+}
+.form-check-input{
+  background-color: #fff;
+}
+.btn-outline-primary{
+    background-color: #1877f2;
+    color: #fff;
+    border: 1px solid #1877f2;
+}
+.sidebar-nav .nav-link:hover{
+   background-color: #1877F2;
+    color: #e9f3ff;
+    border: 1px solid #1877F2;
+}
+.bg-primary{
+      background-color: #123a7b !important;
+}
+.btn-outline-primary:hover{
+   background-color: #fff;
+    color:  #1877f2;
+    border: 1px solid #1877f2;
+}
+.deletebtn{
+  background-color: #fff !important;
+  border: 1px solid #123a7b !important;
+  color: #123a7b !important;
+}
+.deletebtn:hover{
+  background-color: #123a7b !important;
+  border: 1px solid #123a7b !important;
+  color: #fff !important;
+}
+.dropdown-menu{
+  background-color: #fff;
+}
+.dropdown-header .bg-body-secondary:hover {
+    background-color: rgb(48 102 190) !important;
+    color: #fff !important;
+}
+.dropdown-item:hover{
+   background-color: rgb(48 102 190) !important;
+    color: #fff !important;
+}
+.simplebar-wrapper{
+    background-color: #123a7b;
+}
+li.breadcrumb-item.active:before {
+    color: #334257 !important;
+}
+li.breadcrumb-item {
+    color: #334257 !important;
+}
+li.breadcrumb-item.active{
+     color: #334257 !important;
 }
