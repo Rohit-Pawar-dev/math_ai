@@ -247,7 +247,7 @@ button.btn.btn-primary {
 }
 
 .loginSection div.overlayBg {
-  background-color: #000000c2;
+  background-color: #e9ecef;
   height: 100%;
 }
 
@@ -885,4 +885,8 @@ td a {
 }
 .mb-4.p-3.border.rounded {
     border: 1px solid #0081fe36 !important;
+}
+.input-group-text{
+    background-color: #123a7b;
+    border: #123a7b;
 }
