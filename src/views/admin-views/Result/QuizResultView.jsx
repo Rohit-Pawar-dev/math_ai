@@ -62,8 +62,6 @@ const QuizResultView = () => {
       [index]: !prev[index],
     }))
   }
-
-
   if (loading) return <div className="text-center mt-5">Loading...</div>
   if (!result) return <div className="text-center mt-5">Result not found.</div>
 
@@ -120,8 +118,6 @@ const QuizResultView = () => {
                       <i className={`bi ${isOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                     </span>
                   </p>
-
-
                   <ul
                     className="mb-2"
                     style={{ listStyleType: 'upper-alpha', paddingLeft: '20px' }} // applies to all
@@ -171,9 +167,6 @@ const QuizResultView = () => {
                       )
                     })}
                   </ul>
-
-
-
                   {/* EXPLANATION with MathJax */}
                   {isOpen && question?.explanation && (
                     <div className="mt-2">
