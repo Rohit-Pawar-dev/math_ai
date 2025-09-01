@@ -230,7 +230,7 @@ button.btn.btn-primary {
   border: 1px solid #1877f2;
   font-size: 14px;
   font-weight: 500;
-  width: fit-content !important;
+  width: fit-content ;
   padding: 5px 20px;
 }
 
@@ -261,10 +261,15 @@ button.btn.btn-primary {
 }
 
 .loginSection .card form button.btn.btn-primary.px-4 {
-  background: #3066be !important;
-  border-color: #3066be !important;
+  background: #123a7b !important;
+  border-color: #123a7b !important;
+  padding: 15px;
 }
-
+.loginCard{
+      border-color: #f4f4f4;
+    box-shadow: 0px 5px 10px rgba(51, 66, 87, 0.05);
+    transition: all 0.3s ease;
+}
 .loginSection .card form button.btn.btn-success {
   background: #3066be!important;
   border-color: #3066be !important;
@@ -889,4 +894,60 @@ td a {
 .input-group-text{
     background-color: #123a7b;
     border: #123a7b;
+}
+.headerdiv{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logintbn{
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: .0625rem solid transparent;
+    padding: .54688rem .875rem;
+    font-size: .875rem;
+    line-height: 1.6;
+    border-radius: .3125rem;
+    transition: all .2s ease-in-out;
+}
+.inputdiv{
+    height: calc(1.5em + 1.875rem);
+    padding: .875rem 1.09375rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .3125rem;
+}
+.logitextdiv{
+  font-weight: 400;
+}
+.btn-link{
+  color: #123a7b;
+}
+.btn-link:hover{
+  color: #123a7b;
+}
+.loginCard:hover {
+    box-shadow: 0px 5px 24px rgba(7, 59, 116, 0.15);
+}
+.loginCard {
+   border: 1px solid #294b7861;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
+}
+.bg-body-tertiary{
+  background-color: #e9ecef !important;
+}
+.forgetbtn{
+      background-color: #123a7b !important;
+    border: 1px solid #123a7b !important;
+    padding: 15px !important;
 }

@@ -72,53 +72,60 @@ const Login = () => {
   return (
     <section className='loginSection'>
       <div className="overlayBg min-vh-100 d-flex flex-row align-items-center">
-        <CContainer className="card">
-          {/* <CRow className="g-0"> */}
+        <CContainer className="py-5 py-sm-7">
+          {/* <a class="d-flex justify-content-center mb-5" href="javascript:">
+              <img class="z-index-2" height="90"
+                src="" alt="Logo">
+          </a> */}
           <CRow className="justify-content-center">
 
-             {/* Left Illustration Section */}
-            <CCol md={6}>
-              <div className="illustrationWrapper">
-                <img src="/illustration.svg" alt="illustration" className="illustrationImg" />
-              </div>
-            </CCol>
-           {/* Left Illustration Section */}
-            <CCol md={6}>
+            <CCol md={7} lg={5}>
               <CCardGroup>
                 <CCard className="p-4 shadow-sm loginCard">
                   <CCardBody>
                     <CForm onSubmit={handleSubmit}>
-                      <h1>Login</h1>
-                      <p className="text-body-secondary">Sign In to your account</p>
-                      <CInputGroup className="mb-3">
-                        <CInputGroupText>
+                      <div className="text-center">
+                        <div className="mb-5">
+                          <h1 className="display-4 logitextdiv">Login</h1>
+                          <p className="text-body-secondary">Sign In to your account</p>
+                        </div>
+                      </div>
+                      {/* <h1>Login</h1>
+                      <p className="text-body-secondary">Sign In to your account</p> */}
+                         <label class="input-label" for="signinSrEmail">Your email</label>
+                      <CInputGroup className="mb-3 mt-2">
+                        {/* <CInputGroupText>
                           <CIcon icon={cilUser} />
-                        </CInputGroupText>
-                        <CFormInput placeholder="Username" autoComplete="username" onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                        </CInputGroupText> */}
+
+                        <CFormInput placeholder="Username" autoComplete="username" onChange={(e) => setForm({ ...form, email: e.target.value })} className="inputdiv" />
                       </CInputGroup>
-                      <CInputGroup className="mb-4">
-                        <CInputGroupText>
+                       <label class="input-label" for="signinSrEmail">Your password</label>
+                      <CInputGroup className="mb-3 mt-2">
+                        {/* <CInputGroupText>
                           <CIcon icon={cilLockLocked} />
-                        </CInputGroupText>
+                        </CInputGroupText> */}
+
                         <CFormInput
                           type="password"
                           placeholder="Password"
                           autoComplete="current-password"
                           onChange={(e) => setForm({ ...form, password: e.target.value })}
+                          className="inputdiv"
                         />
                       </CInputGroup>
-                      <CRow>
-                        <CCol xs={6}>
-                          <CButton type='submit' color="primary" className="px-4">
-                            {loader ? <><CSpinner color="primary" size="sm" /></> : 'Login'}
-                          </CButton>
-                        </CCol>
-                        <CCol xs={6} className="text-right">
-                          <CButton color="link" className="px-0 pull-right" onClick={handleRedirection}>
-                            Forgot password?
-                          </CButton>
-                        </CCol>
-                      </CRow>
+
+                      <CCol className="text-right">
+                        <CButton color="link" className="px-0 pull-right" onClick={handleRedirection}>
+                          Forgot password?
+                        </CButton>
+                      </CCol>
+                      <CCol>
+                        <CButton type='submit' color="primary" className="px-4 w-100 loginbtn">
+                          {loader ? <><CSpinner color="primary" size="sm" /></> : 'Login'}
+                        </CButton>
+                      </CCol>
+
                     </CForm>
                   </CCardBody>
                 </CCard>

@@ -24,23 +24,35 @@ const SubsectionView = () => {
           <h2>Subsection Details</h2>
           <NavLink to="/subsection-list" className="btn btn-secondary ms-2">Back</NavLink>
         </div>
-        {/* <table className="table table-bordered">
-  <thead>
-    <tr>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-    </tr>
-  </tbody> */}
-        <p><strong>Title:</strong> {subsection.title}</p>
-        <p><strong>Chapter:</strong> {subsection.chapterId?.title}</p>
-        <p><strong>Topic:</strong> {subsection.topicId?.title}</p>
-        <p><strong>Section:</strong> {subsection.sectionId?.title}</p>
-        <p><strong>Content:</strong> {subsection.content}</p>
-        <p><strong>Status:</strong> {subsection.status}</p>
+        <table className="table table-bordered mt-4">
+          <thead>
+            <tr>
+              <th><strong>Title:</strong></th>
+              <th><strong>Chapter:</strong></th>
+              <th><strong>Topic:</strong></th>
+              <th><strong>Section:</strong></th>
+              <th><strong>Content:</strong></th>
+              <th><strong>Status:</strong></th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td>{subsection.title}</td>
+              <td>{subsection.chapterId?.title}</td>
+              <td>{subsection.topicId?.title}</td>
+              <td>{subsection.sectionId?.title}</td>
+              <td>{subsection.content}</td>
+              <td>{subsection.status}</td>
+            </tr>
+          </tbody>
+        </table>
+        {/* <p> </p>
+        <p><strong></strong> </p>
+        <p><strong></strong> </p>
+        <p><strong></strong> </p>
+        <p><strong></strong> </p>
+        <p><strong></strong> </p> */}
 
         {/* <NavLink to={`/subsection-edit/${subsection._id}`} className="btn btn-warning">Edit</NavLink> */}
         {/* <NavLink to="/subsection-list" className="btn btn-secondary ms-2">Back</NavLink> */}

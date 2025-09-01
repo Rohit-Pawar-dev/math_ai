@@ -64,11 +64,35 @@ const FeedbackView = () => {
   return (
     <div className="">
       <CCard>
-        <CCardHeader>
+        <CCardHeader className="headerdiv">
           <h4>Feedback Details</h4>
+           <CButton color="secondary" className="" onClick={() => navigate(-1)}>
+            Back
+          </CButton>
         </CCardHeader>
         <CCardBody>
-          <p>
+
+            <table className="table table-bordered mt-4">
+              <thead>
+                <tr>
+                  <th>User Name:</th>
+                  <th>User Email:</th>
+                  <th>Description:</th>
+                  <th>Date:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{feedback.user_id?.name}</td>
+                  <td>{feedback.user_id?.email}</td>
+                  <td>{feedback.description}</td>
+                  <td>{" "}
+            {new Date(feedback.createdAt).toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          {/* <p>
             <strong>User Name:</strong> {feedback.user_id?.name}
           </p>
           <p>
@@ -80,7 +104,7 @@ const FeedbackView = () => {
           <p>
             <strong>Date:</strong>{" "}
             {new Date(feedback.createdAt).toLocaleString()}
-          </p>
+          </p> */}
 
           <div className="mt-3">
             <label>
@@ -97,9 +121,7 @@ const FeedbackView = () => {
             </CButton>
           </div>
 
-          <CButton color="secondary" className="mt-3" onClick={() => navigate(-1)}>
-            Back
-          </CButton>
+
         </CCardBody>
       </CCard>
     </div>
