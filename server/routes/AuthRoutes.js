@@ -172,11 +172,12 @@ router.post('/verify-otp', async (req, res) => {
     const isMatch = otp == user.otp;
     if (!isMatch) return res.status(400).json({ status: false, message: 'Invalid OTP' });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id ,role:user.role }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
 
-    res.json({status:true, message:'OTP verified successfully', token: token, data: user });
+
+    res.json({status:true, message:'OTP verified successfully', token: token, data: user , user: user });
     
   } catch (err) {
     res.status(500).json({ status: false, message: err.message });
