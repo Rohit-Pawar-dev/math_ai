@@ -5,7 +5,7 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import Swal from 'sweetalert2'
 // import eyeIcon from '../../assets/images/eyeIcon.svg'
 import API from '../../../api'
-import defaultImage from '../../../assets/images/default.png' 
+import defaultImage from '../../../assets/images/default.png'
 
 const ProfileManagement = () => {
   const [lists, setList] = useState([])
@@ -120,13 +120,13 @@ const ProfileManagement = () => {
           </div>
           <div className="container-fliud">
             <div className="card-header"><h2>All Teacher list</h2></div>
-            
+
             <div className="mainContent">
               <table>
                 <thead>
                   <tr>
                     <th>SL</th>
-                    <th>Image</th> 
+                    <th>Image</th>
                     <th>User Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
@@ -178,8 +178,8 @@ const ProfileManagement = () => {
                                 <i className="fa fa-pencil"></i>
                               </NavLink>
                               <NavLink to={'/view-teacher/' + user._id}>
-                               {/* <img src={eyeIcon} className='eyeIconClass' alt=""/> */}
-                               <i className="fa fa-eye"></i>
+                                {/* <img src={eyeIcon} className='eyeIconClass' alt=""/> */}
+                                <i className="fa fa-eye"></i>
                               </NavLink>
                               <button
                                 className="btn btn-sm btn-danger"
