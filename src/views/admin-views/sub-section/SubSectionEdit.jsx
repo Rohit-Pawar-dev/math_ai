@@ -79,7 +79,7 @@ const SubsectionEdit = () => {
             const res = await API.put(`/subsection/${id}`, form)
             if (res.data.status) {
                 Swal.fire('Success', 'Subsection updated successfully!', 'success')
-                navigate('/subsection-list')
+                navigate('/admin/subsection-list')
             }
         } catch (err) {
             Swal.fire('Error', err.response?.data?.message || err.message, 'error')

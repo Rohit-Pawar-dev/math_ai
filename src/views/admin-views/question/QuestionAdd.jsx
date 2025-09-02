@@ -102,7 +102,7 @@ const QuestionAdd = () => {
 
       if (res.data.status) {
         Swal.fire('Success', 'Question created successfully', 'success')
-        navigate('/question-list')
+        navigate('/admin/question-list')
       }
     } catch (err) {
       console.error(err)
@@ -117,7 +117,7 @@ const QuestionAdd = () => {
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="text-primary">Add New Question</h2>
-          <button className="btn btn-secondary" onClick={() => navigate('/question-list')}>
+          <button className="btn btn-secondary" onClick={() => navigate('/admin/question-list')}>
             ← Back
           </button>
         </div>

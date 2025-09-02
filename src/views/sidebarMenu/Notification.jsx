@@ -48,7 +48,7 @@ const Notification = () => {
                       <td>01</td>
                       <td>
                         <div className="actionTable">
-                          <NavLink to="/notification-view">
+                          <NavLink to="/admin/notification-view">
                             <CIcon icon={cilPencil} custom className="nav-icon" />
                           </NavLink>
                           <NavLink>
@@ -65,7 +65,7 @@ const Notification = () => {
                       <td>05</td>
                       <td>
                         <div className="actionTable">
-                          <NavLink to="/notification-view">
+                          <NavLink to="/admin/notification-view">
                             <CIcon icon={cilPencil} custom className="nav-icon" />
                           </NavLink>
                           <NavLink>

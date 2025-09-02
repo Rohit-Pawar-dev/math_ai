@@ -68,7 +68,7 @@ const EditChapter = () => {
 
             if (res.data.status) {
                 Swal.fire('Updated!', 'Chapter updated successfully', 'success')
-                navigate('/chapter-list')
+                navigate('/admin/chapter-list')
             }
         } catch (err) {
             Swal.fire('Error', err.response?.data?.message || err.message, 'error')

@@ -35,7 +35,7 @@ const ChapterView = () => {
         <div className="card-body">
           <div className="cardheaddiv">
           <h2>Chapter Details</h2>
-             <Link to="/chapter-list" className="btn btn-secondary">
+             <Link to="/admin/chapter-list" className="btn btn-secondary">
             Back to Chapters
           </Link>
           </div>

@@ -34,7 +34,7 @@ const BannerAdd = () => {
 
       if (res.status === 201) {
         Swal.fire('Success', 'Banner added successfully', 'success').then(() =>
-          navigate('/banner-list'),
+          navigate('/admin/banner-list'),
         )
       }
     } catch (err) {

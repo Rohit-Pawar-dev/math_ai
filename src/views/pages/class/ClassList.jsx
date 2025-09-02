@@ -110,7 +110,7 @@ const ClassList = () => {
               </button>
             </div>
             <div className="searchBtn">
-              <NavLink to={'/class-add'}>
+              <NavLink to={'/admin/class-add'}>
                 <button className="btn btn-outline-warning active" type="button">
                   Add Class
                 </button>
@@ -154,10 +154,10 @@ const ClassList = () => {
                         </td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/class-view/${classItem._id}`}>
+                            <NavLink to={`/admin/class-view/${classItem._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
                             </NavLink>
-                            <NavLink to={`/class-edit/${classItem._id}`}>
+                            <NavLink to={`/admin/class-edit/${classItem._id}`}>
                               <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                             </NavLink>
                             <button

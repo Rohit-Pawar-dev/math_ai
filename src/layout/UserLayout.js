@@ -1,11 +1,20 @@
 import React from 'react'
-import UserNavbar from '../components/User/UserNavbar'
+import { UserAppContent, UserAppHeader, UserAppFooter } from '../components/User/UserIndex'
 
-function UserLayout() {
+const UserLayout = () => {
   return (
-   <>
-   <UserNavbar/>
-   </>
+    <div className="d-flex flex-column min-vh-100">
+      {/* Header */}
+      <UserAppHeader />
+
+      {/* Main Content */}
+      <main className="flex-grow-1 px-0">
+        <UserAppContent />
+      </main>
+
+      {/* Footer */}
+      <UserAppFooter />
+    </div>
   )
 }
 

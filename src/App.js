@@ -5,32 +5,38 @@
 
 // import './scss/style.scss'
 // import './assets/Global.css'
-
-// // We use those styles to show code examples, you should remove them in your application.
 // import './scss/examples.scss'
 
-// // Containers
-// const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
-// const TeacherLayout = React.lazy(() => import('./layout/TeacherLayout'))
+// // Context & Utilities
+// import { AuthProvider } from './context/AuthContext'
+// import PrivateRoute from './components/PrivateRoute'
+// import TeacherPrivateRoute from './components/TeacherPrivateRoute'
+// import UserPrivateRoute from './components/UserPrivateRoutes'
 
-// // Pages
+// // Layouts
+// const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout')) // Admin
+// const TeacherLayout = React.lazy(() => import('./layout/TeacherLayout'))
+// import UserLayout from './layout/UserLayout'
+
+// // --------------------- TEACHER ROUTES ---------------------
 // const TeacherLogin = React.lazy(() => import('./views/teacher/auth/TeacherLogin'))
 // const TeacherRegister = React.lazy(() => import('./views/teacher/auth/TeacherRegister'))
-// const UserLogin = React.lazy(()=> import('./views/user-views/auth/UserLogin'))
+
+// // --------------------- USER ROUTES ---------------------
+// const UserLogin = React.lazy(() => import('./views/user-views/auth/UserLogin'))
+
+// // --------------------- ADMIN ROUTES ---------------------
 // const Login = React.lazy(() => import('./views/pages/login/Login'))
 // const Register = React.lazy(() => import('./views/pages/register/Register'))
 // const ForgotPassword = React.lazy(() => import('./views/pages/forgot-password/ForgotPassword'))
 // const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 // const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
-// import { AuthProvider } from './context/AuthContext';
-// import PrivateRoute from './components/PrivateRoute';
-// import TeacherPrivateRoute from './components/TeacherPrivateRoute'
-// import UserPrivateRoute from './components/UserPrivateRoutes'
-// import UserLayout from './layout/UserLayout'
+
+// // --------------------- APP COMPONENT ---------------------
 // const App = () => {
 //   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
 //   const storedTheme = useSelector((state) => state.theme)
-  
+
 //   useEffect(() => {
 //     const urlParams = new URLSearchParams(window.location.href.split('?')[1])
 //     const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
@@ -46,41 +52,43 @@
 //   }, [])
 
 //   return (
+//     <AuthProvider>
+//       <HashRouter>
+//         <Suspense
+//           fallback={
+//             <div className="pt-3 text-center">
+//               <CSpinner color="primary" variant="grow" />
+//             </div>
+//           }
+//         >
+//           <Routes>
 
-//       <AuthProvider>
-//         <HashRouter>
-//           <Suspense
-//             fallback={
-//               <div className="pt-3 text-center">
-//                 <CSpinner color="primary" variant="grow" />
-//               </div>
-//             }
-//           >
-//             <Routes>
-//               <Route exact path="/teacher/login" name="Teacher Login" element={<TeacherLogin />} />
-//               <Route exact path="/teacher/register" name="Teacher Register" element={<TeacherRegister />} />
-//               <Route path="/teacher/*" element={<TeacherPrivateRoute><TeacherLayout /></TeacherPrivateRoute>} />
-              
-//               <Route exact path="/login" name="Login Page" element={<Login />} />
-//               <Route exact path="/forgot-password" name="Forgot Password" element={<ForgotPassword />} />
-//               <Route exact path="/register" name="Register Page" element={<Register />} />
-//               <Route exact path="/404" name="Page 404" element={<Page404 />} />
-//               <Route exact path="/500" name="Page 500" element={<Page500 />} />
-//               <Route path="*" name="Home" element={<PrivateRoute><DefaultLayout /></PrivateRoute>} />
+//             {/* ---------- TEACHER ROUTES ---------- */}
+//             <Route exact path="/teacher/login" name="Teacher Login" element={<TeacherLogin />} />
+//             <Route exact path="/teacher/register" name="Teacher Register" element={<TeacherRegister />} />
+//             <Route path="/teacher/*" element={<TeacherPrivateRoute><TeacherLayout /></TeacherPrivateRoute>} />
 
+//             {/* ---------- USER ROUTES ---------- */}
+//             <Route path="/def" element={<UserPrivateRoute><UserLayout /></UserPrivateRoute>} />
+//             <Route exact path="/user/login" name="User Login" element={<UserLogin />} />
 
-//               <Route path = '/def' element={<UserPrivateRoute><UserLayout/></UserPrivateRoute>}/>
-//               <Route exact path="/user/login" name="User Login" element={<UserLogin />} />
-               
+//             {/* ---------- ADMIN ROUTES ---------- */}
+//             <Route exact path="/login" name="Login Page" element={<Login />} />
+//             <Route exact path="/register" name="Register Page" element={<Register />} />
+//             <Route exact path="/forgot-password" name="Forgot Password" element={<ForgotPassword />} />
+//             <Route exact path="/404" name="Page 404" element={<Page404 />} />
+//             <Route exact path="/500" name="Page 500" element={<Page500 />} />
+//             <Route path="*" name="Home" element={<PrivateRoute><DefaultLayout /></PrivateRoute>} />
 
-//             </Routes>  
-//           </Suspense>
-//         </HashRouter>
-//       </AuthProvider>
+//           </Routes>
+//         </Suspense>
+//       </HashRouter>
+//     </AuthProvider>
 //   )
 // }
 
-// export default App;
+// export default App
+
 import React, { Suspense, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -97,9 +105,9 @@ import TeacherPrivateRoute from './components/TeacherPrivateRoute'
 import UserPrivateRoute from './components/UserPrivateRoutes'
 
 // Layouts
-const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout')) // Admin
+const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout')) 
 const TeacherLayout = React.lazy(() => import('./layout/TeacherLayout'))
-import UserLayout from './layout/UserLayout'
+const UserLayout = React.lazy(() => import('./layout/UserLayout'))
 
 // --------------------- TEACHER ROUTES ---------------------
 const TeacherLogin = React.lazy(() => import('./views/teacher/auth/TeacherLogin'))
@@ -107,6 +115,7 @@ const TeacherRegister = React.lazy(() => import('./views/teacher/auth/TeacherReg
 
 // --------------------- USER ROUTES ---------------------
 const UserLogin = React.lazy(() => import('./views/user-views/auth/UserLogin'))
+const UserRegister = React.lazy(() => import('./views/user-views/auth/UserRegister'))
 
 // --------------------- ADMIN ROUTES ---------------------
 const Login = React.lazy(() => import('./views/pages/login/Login'))
@@ -124,14 +133,14 @@ const App = () => {
     const urlParams = new URLSearchParams(window.location.href.split('?')[1])
     const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
     if (theme) {
-      setColorMode('dark')
+      setColorMode('light')
     }
 
     if (isColorModeSet()) {
       return
     }
 
-    setColorMode('dark')
+    setColorMode('light')
   }, [])
 
   return (
@@ -147,21 +156,20 @@ const App = () => {
           <Routes>
 
             {/* ---------- TEACHER ROUTES ---------- */}
-            <Route exact path="/teacher/login" name="Teacher Login" element={<TeacherLogin />} />
-            <Route exact path="/teacher/register" name="Teacher Register" element={<TeacherRegister />} />
+            <Route path="/teacher/login" element={<TeacherLogin />} />
+            <Route path="/teacher/register" element={<TeacherRegister />} />
             <Route path="/teacher/*" element={<TeacherPrivateRoute><TeacherLayout /></TeacherPrivateRoute>} />
 
-            {/* ---------- USER ROUTES ---------- */}
-            <Route path="/def" element={<UserPrivateRoute><UserLayout /></UserPrivateRoute>} />
-            <Route exact path="/user/login" name="User Login" element={<UserLogin />} />
+            {/* ---------- USER ROUTES (BASE URL) ---------- */}
+            <Route path="/*" element={<UserPrivateRoute><UserLayout /></UserPrivateRoute>} />
 
             {/* ---------- ADMIN ROUTES ---------- */}
-            <Route exact path="/login" name="Login Page" element={<Login />} />
-            <Route exact path="/register" name="Register Page" element={<Register />} />
-            <Route exact path="/forgot-password" name="Forgot Password" element={<ForgotPassword />} />
-            <Route exact path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="*" name="Home" element={<PrivateRoute><DefaultLayout /></PrivateRoute>} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/register" element={<Register />} />
+            <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+            <Route path="/admin/404" element={<Page404 />} />
+            <Route path="/admin/500" element={<Page500 />} />
+            <Route path="/admin/*"  element={<PrivateRoute><DefaultLayout /></PrivateRoute>} />
 
           </Routes>
         </Suspense>
@@ -171,3 +179,5 @@ const App = () => {
 }
 
 export default App
+
+

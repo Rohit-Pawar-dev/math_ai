@@ -22,7 +22,7 @@ const SubsectionView = () => {
       <div className="card-body">
         <div className="cardheaddiv">
           <h2>Subsection Details</h2>
-          <NavLink to="/subsection-list" className="btn btn-secondary ms-2">Back</NavLink>
+          <NavLink to="/admin/subsection-list" className="btn btn-secondary ms-2">Back</NavLink>
         </div>
         <table className="table table-bordered mt-4">
           <thead>

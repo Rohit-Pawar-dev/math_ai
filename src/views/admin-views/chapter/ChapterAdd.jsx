@@ -50,7 +50,7 @@ const AddChapter = () => {
 
       if (res.data.status) {
         Swal.fire('Success', 'Chapter added successfully!', 'success')
-        navigate('/chapter-list')
+        navigate('/admin/chapter-list')
       }
     } catch (err) {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')

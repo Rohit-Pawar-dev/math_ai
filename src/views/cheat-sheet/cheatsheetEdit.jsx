@@ -25,7 +25,7 @@ const cheatsheetEdit = () => {
         if (res.status === 200) {
 
           Swal.fire('success', 'Data Updated successfully', 'success').then(function () {
-            navigate('/cheat-sheet')
+            navigate('/admin/cheat-sheet')
           })
         }
       })
@@ -51,7 +51,7 @@ const cheatsheetEdit = () => {
       <div className="card">
         <div className="card-header d-flex justify-content-between">
           <h5>Quizes</h5>
-          <button type="button" className="btn btn-primary btn-sm">Add</button>
+          {/* <button type="button" className="btn btn-primary btn-sm">Add</button> */}
         </div>
         <div className="card-body">
           <div className="row">

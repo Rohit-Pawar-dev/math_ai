@@ -83,7 +83,7 @@ const EditTopic = () => {
       const res = await API.put(`/topic/${id}`, formData)
       if (res.data.status) {
         Swal.fire('Updated!', 'Topic updated successfully', 'success')
-        navigate('/topic-list')
+        navigate('/admin/topic-list')
       }
     } catch (err) {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')

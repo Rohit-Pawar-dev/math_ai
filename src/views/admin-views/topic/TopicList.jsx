@@ -99,7 +99,7 @@ const TopicList = () => {
                             />
                         </div>
                         <div className="searchBtn">
-                            <NavLink to={'/topic-add'}>
+                            <NavLink to={'/admin/topic-add'}>
                                 <button className="btn btn-outline-warning active" type="button">
                                     Add Topic
                                 </button>
@@ -145,10 +145,10 @@ const TopicList = () => {
                                                 </td>
                                                 <td>
                                                     <div className="actionTable">
-                                                        <NavLink to={`/topic-view/${topic._id}`}>
+                                                        <NavLink to={`/admin/topic-view/${topic._id}`}>
                                                             <img src={eyeIcon} className="eyeIconClass" alt="view" />
                                                         </NavLink>
-                                                        <NavLink to={`/topic-edit/${topic._id}`}>
+                                                        <NavLink to={`/admin/topic-edit/${topic._id}`}>
                                                             <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                                                         </NavLink>
                                                         <button

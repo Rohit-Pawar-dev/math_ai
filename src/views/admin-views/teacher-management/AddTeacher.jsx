@@ -79,7 +79,7 @@ const AddTeacher = () => {
         setProfilePicture(null)
 
         // Navigate to /users
-        navigate('/teachers')
+        navigate('/admin/teachers')
       }
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message

@@ -54,7 +54,7 @@ const BannerEdit = () => {
       .then((res) => {
         if (res.status === 200) {
           Swal.fire('Success', 'Banner updated successfully', 'success').then(() =>
-            navigate('/banner-list'),
+            navigate('/admin/banner-list'),
           )
         }
       })

@@ -5,7 +5,7 @@ const TeacherAppFooter = () => {
   return (
     <CFooter className="px-4">
       <div>
-        <span className="ms-1">&copy; 2025 Shortcut OTT - Teacher Panel.</span>
+        <span className="ms-1">&copy; 2025 Math_AI - Teacher Panel.</span>
       </div>
       <div className="ms-auto">
         <span className="me-1">Powered by</span>

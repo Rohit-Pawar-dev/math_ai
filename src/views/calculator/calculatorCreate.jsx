@@ -17,7 +17,7 @@ const calculatorCreate = () => {
         if (res.status === 201) {
           // setSeriesList(res.data)
 
-          navigate('/calculator')
+          navigate('/admin/calculator')
 
         }
       })

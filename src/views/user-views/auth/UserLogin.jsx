@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import loginbg from "../../../assets/images/login-vector.jpg"
 import {
   CButton,
   CCard,
@@ -8,18 +9,10 @@ import {
   CContainer,
   CForm,
   CFormInput,
-  CInputGroup,
-  CInputGroupText,
   CRow,
   CSpinner,
   useColorModes,
-  CTabs,
-  CTab,
-  CTabContent,
-  CTabPane,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser, cilPhone } from '@coreui/icons'
 import { useAuth } from '../../../context/AuthContext'
 import Swal from 'sweetalert2'
 
@@ -27,11 +20,11 @@ const UserLogin = () => {
   const { setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
 
   useEffect(() => {
-    setColorMode('dark')
+    setColorMode('light')
   }, [setColorMode])
 
   const [loader, setLoader] = useState(false)
-  const [useOtp, setUseOtp] = useState(false)
+  const [useOtp, setUseOtp] = useState(true) 
   const [otpSent, setOtpSent] = useState(false)
   const [form, setForm] = useState({ email: '', password: '', mobile: '', otp: '' })
 
@@ -41,7 +34,7 @@ const UserLogin = () => {
   useEffect(() => {
     const user = localStorage.getItem('user')
     if (user) {
-      navigate('/user/dashboard')
+      navigate('/home')
     }
   }, [navigate])
 
@@ -77,11 +70,12 @@ const UserLogin = () => {
       const success = await userLogin({ mobile: form.mobile, otp: form.otp })
       setLoader(false)
       if (success) {
-        navigate('/def')
+        navigate('/home')
       }
       return
     }
 
+    // Email/Password login
     if (!form.email || !form.password) {
       Swal.fire('Please enter email and password.', '', 'warning')
       setLoader(false)
@@ -91,7 +85,7 @@ const UserLogin = () => {
     const success = await userLogin({ email: form.email, password: form.password })
     setLoader(false)
     if (success) {
-      navigate('/def')
+      navigate('/home')
     }
   }
 
@@ -100,46 +94,34 @@ const UserLogin = () => {
   }
 
   return (
-    <section className="loginSection" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <section className= "user-login" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
       <CContainer fluid className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-        <CRow className="shadow-lg" style={{ maxWidth: '900px', width: '100%', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
-          {/* Left image panel */}
-          <CCol md={6} className="p-0 d-none d-md-flex align-items-center justify-content-center" style={{ backgroundColor: '#e9ecef' }}>
+        <CRow className="shadow-lg" style={{ maxWidth: '850px', width: '100%', borderRadius: '12px', overflow: 'hidden', backgroundColor: '#fff' }}>
+          
+          {/* Left illustration */}
+          <CCol md={6} className="p-0 d-none d-md-flex align-items-center justify-content-center bg-light">
             <img
-              src="/assets/images/login-vector.png"
+              src={loginbg}
               alt="Login Illustration"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </CCol>
 
-          {/* Right login panel */}
-          <CCol md={6} className="p-4 d-flex flex-column">
+          {/* Right login form */}
+          <CCol md={6} className="p-5 d-flex flex-column">
             <div className="text-center mb-4">
               <img
                 src="/assets/images/login-etrymartlogo.png"
                 alt="Logo"
-                style={{ maxWidth: '150px', marginBottom: '10px' }}
+                style={{ maxWidth: '140px', marginBottom: '12px' }}
               />
-              <h4 className="primaryTitleColor mb-0">User Login</h4>
+              <h4 className="fw-bold mb-1">Welcome Back</h4>
+              <p className="text-muted small">Login to continue</p>
             </div>
 
-            {/* Tabs to toggle login mode */}
-            <div className="mb-3">
-              <ul className="nav nav-tabs" role="tablist" style={{ cursor: 'pointer' }}>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className={`nav-link ${useOtp ? '' : 'active'}`}
-                    onClick={() => {
-                      setUseOtp(false)
-                      setOtpSent(false)
-                      setForm({ email: '', password: '', mobile: '', otp: '' })
-                    }}
-                    type="button"
-                    role="tab"
-                  >
-                    Email/Password Login
-                  </button>
-                </li>
+            {/* Tabs */}
+            <div className="mb-4">
+              <ul className="nav nav-tabs justify-content-center" role="tablist" style={{ cursor: 'pointer' }}>
                 <li className="nav-item" role="presentation">
                   <button
                     className={`nav-link ${useOtp ? 'active' : ''}`}
@@ -154,16 +136,28 @@ const UserLogin = () => {
                     OTP Login
                   </button>
                 </li>
+                <li className="nav-item" role="presentation">
+                  <button
+                    className={`nav-link ${useOtp ? '' : 'active'}`}
+                    onClick={() => {
+                      setUseOtp(false)
+                      setForm({ email: '', password: '', mobile: '', otp: '' })
+                    }}
+                    type="button"
+                    role="tab"
+                  >
+                    Email/Password
+                  </button>
+                </li>
               </ul>
             </div>
 
             <CForm onSubmit={handleSubmit} className="flex-grow-1 d-flex flex-column justify-content-between">
               {useOtp ? (
                 <>
+                  {/* Mobile input */}
                   <div className="mb-3">
-                    <label htmlFor="mobile" className="form-label fw-semibold">
-                      Mobile Number
-                    </label>
+                    <label htmlFor="mobile" className="form-label fw-semibold">Mobile Number</label>
                     <CFormInput
                       id="mobile"
                       type="tel"
@@ -180,11 +174,10 @@ const UserLogin = () => {
                     )}
                   </div>
 
+                  {/* OTP input */}
                   {otpSent && (
                     <div className="mb-3">
-                      <label htmlFor="otp" className="form-label fw-semibold">
-                        Enter OTP
-                      </label>
+                      <label htmlFor="otp" className="form-label fw-semibold">Enter OTP</label>
                       <CFormInput
                         id="otp"
                         type="text"
@@ -203,10 +196,9 @@ const UserLogin = () => {
                 </>
               ) : (
                 <>
+                  {/* Email */}
                   <div className="mb-3">
-                    <label htmlFor="email" className="form-label fw-semibold">
-                      Email
-                    </label>
+                    <label htmlFor="email" className="form-label fw-semibold">Email</label>
                     <CFormInput
                       id="email"
                       type="email"
@@ -221,10 +213,9 @@ const UserLogin = () => {
                     )}
                   </div>
 
+                  {/* Password */}
                   <div className="mb-4">
-                    <label htmlFor="password" className="form-label fw-semibold">
-                      Password
-                    </label>
+                    <label htmlFor="password" className="form-label fw-semibold">Password</label>
                     <CFormInput
                       id="password"
                       type="password"
@@ -241,27 +232,32 @@ const UserLogin = () => {
                 </>
               )}
 
+              {/* Actions */}
               <CRow className="mt-auto">
                 <CCol xs={6}>
-                  <CButton type="submit" color="primary" className="px-4" disabled={loader}>
-                    {loader ? <CSpinner color="primary" size="sm" /> : 'Login'}
+                  <CButton type="submit" color="primary" className="px-4 w-100" disabled={loader}>
+                    {loader ? <CSpinner color="light" size="sm" /> : 'Login'}
                   </CButton>
                 </CCol>
                 <CCol xs={6} className="text-end">
-                  <CButton
-                    color="link"
-                    className="px-0"
-                    onClick={() => navigate('/forgot-password')}
-                    disabled={loader}
-                  >
-                    Forgot password?
-                  </CButton>
+                  {!useOtp && (
+                    <CButton
+                      color="link"
+                      className="px-0"
+                      onClick={() => navigate('/forgot-password')}
+                      disabled={loader}
+                    >
+                      Forgot password?
+                    </CButton>
+                  )}
                 </CCol>
               </CRow>
             </CForm>
-            <div className="text-center mt-3">
-              <small>Don't have an account?</small>{' '}
-              <Link to="/user/register" className="fw-semibold primaryTitleColor text-decoration-none ms-2">
+
+            {/* Register link */}
+            <div className="text-center mt-4">
+              <small className="text-muted">Don't have an account?</small>{' '}
+              <Link to="/register" className="fw-semibold text-decoration-none ms-2 text-primary">
                 Register
               </Link>
             </div>

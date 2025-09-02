@@ -23,10 +23,6 @@ const TeacherEdit = React.lazy(() => import('./views/admin-views/teacher-managem
 const notesList = React.lazy(() => import('./views/notes/notesList'))
 const notesEdit = React.lazy(() => import('./views/notes/notesEdit'))
 
-const quizList = React.lazy(() => import('./views/quiz/quizList'))
-const quizCreate = React.lazy(() => import('./views/quiz/quizCreate'))
-const quizEdit = React.lazy(() => import('./views/quiz/quizEdit'))
-
 const calculatorList = React.lazy(() => import('./views/calculator/calculatorList'))
 const calculatorCreate = React.lazy(() => import('./views/calculator/calculatorCreate'))
 const calculatorEdit = React.lazy(() => import('./views/calculator/calculatorEdit'))
@@ -193,7 +189,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', name: 'Home', element: Dashboard  },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
@@ -248,7 +244,7 @@ const routes = [
 
   // { path: '/teachers/view/:id', name: 'Teachers', element: TeacherEdit },
 
-  { path: '/users', name: 'ProfileManagement', element: ProfileManagement },
+  { path: 'users', name: 'ProfileManagement', element: ProfileManagement },
   { path: '/user-add', name: 'UserAdd', element: UserAdd },
   { path: '/view-user/:id', name: 'ViewUser', element: ViewUser },
   { path: '/edit-user', name: 'Edit User', element: EditUSer },
@@ -262,10 +258,6 @@ const routes = [
 
   { path: '/saved-notes', name: 'Saved Notes', element: notesList },
   { path: '/saved-notes/view/:id', name: 'View', element: notesEdit },
-
-  { path: '/quizzes', name: 'Quiz', element: quizList },
-  { path: '/quizzes/create', name: 'Create', element: quizCreate },
-  { path: '/quizzes/edit', name: 'Edit', element: quizEdit },
 
   { path: '/calculator', name: 'Calculator', element: calculatorList },
   { path: '/calculator/create', name: 'Create', element: calculatorCreate },

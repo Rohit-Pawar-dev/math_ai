@@ -99,7 +99,7 @@ const PlanList = () => {
               </button>
             </div>
             <div className="searchBtn">
-              <NavLink to={'/plan-add'}>
+              <NavLink to={'/admin/plan-add'}>
                 <button className="btn btn-outline-warning active" type="button">
                   Add Plan
                 </button>
@@ -155,10 +155,10 @@ const PlanList = () => {
                         </td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/plan-edit/${item._id}`}>
+                            <NavLink to={`/admin/plan-edit/${item._id}`}>
                               <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                             </NavLink>
-                            <NavLink to={`/plan-view/${item._id}`}>
+                            <NavLink to={`/admin/plan-view/${item._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
                             </NavLink>
                             <button

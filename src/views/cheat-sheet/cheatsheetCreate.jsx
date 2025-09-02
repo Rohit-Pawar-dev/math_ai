@@ -24,7 +24,7 @@ const cheatsheetCreate = () => {
         if (res.status === 201) {
           // setSeriesList(res.data)
 
-          navigate('/cheat-sheet')
+          navigate('/admin/cheat-sheet')
 
         }
       })

@@ -54,7 +54,7 @@ const PlanEdit = () => {
           timer: 3000,
           timerProgressBar: true,
         })
-        navigate('/subscription')
+        navigate('/admin/subscription')
       }
     } catch (err) {
       console.error(err)

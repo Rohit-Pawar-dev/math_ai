@@ -29,7 +29,7 @@ const SectionView = () => {
         <div className="card-body">
           <div className="cardheaddiv">
             <h2>Section Details</h2>
-            <Link to="/section-list" className="btn btn-secondary ">Back to Sections</Link>
+            <Link to="/admin/section-list" className="btn btn-secondary ">Back to Sections</Link>
           </div>
 
           {/* <p><strong>Title:</strong> {section.title}</p>

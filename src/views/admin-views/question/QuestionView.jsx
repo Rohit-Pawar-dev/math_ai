@@ -66,7 +66,7 @@ const QuestionView = () => {
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="text-primary">Question Preview</h2>
-          <button className="btn btn-secondary" onClick={() => navigate('/question-list')}>
+          <button className="btn btn-secondary" onClick={() => navigate('/admin/question-list')}>
             ← Back
           </button>
         </div>

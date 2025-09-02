@@ -57,7 +57,7 @@ const AddSection = ({ topicId }) => {
       })
       if (res.data.status) {
         Swal.fire('Success', 'Section added successfully!', 'success')
-        navigate('/section-list')
+        navigate('/admin/section-list')
       }
     } catch (err) {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')

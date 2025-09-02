@@ -47,7 +47,7 @@ const Login = () => {
     const success = await login(form);
     if (success) {
       setLoader(false)
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
       // alert('Login Success')
     } else {
       setLoader(false)
@@ -56,14 +56,14 @@ const Login = () => {
   };
 
   const handleRedirection = () => {
-    navigate('/forgot-password');
+    navigate('/admin/forgot-password');
 
   }
 
   setTimeout(() => {
     if (localStorage.getItem('admin') != null) {
       var loginDetails = JSON.parse(localStorage.getItem('admin'))
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
     }
   }, 2000);
 

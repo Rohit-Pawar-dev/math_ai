@@ -53,7 +53,7 @@ const QuizEdit = () => {
           setSelectedQuestions(data.questions.map(q => q._id?.toString() || q.toString()))
         } else {
           Swal.fire('Error', 'Quiz not found', 'error')
-          navigate('/quizzes')
+          navigate('/admin/quiz-list')
           return
         }
 
@@ -65,7 +65,7 @@ const QuizEdit = () => {
       } catch (err) {
         console.error(err)
         Swal.fire('Error', err.response?.data?.message || err.message, 'error')
-        navigate('/quizzes')
+        navigate('/admin/quiz-list')
       }
     }
 
@@ -101,7 +101,7 @@ const QuizEdit = () => {
 
       if (res.data.status || res.status === 200) {
         Swal.fire('Success', 'Quiz updated successfully', 'success')
-        navigate('/quiz-list')
+        navigate('/admin/quiz-list')
       }
     } catch (err) {
       console.error(err)

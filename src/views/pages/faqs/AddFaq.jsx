@@ -17,7 +17,7 @@ const AddFaq = () => {
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
           Swal.fire('Success', 'FAQ added successfully.', 'success').then(() => {
-            Navigate('/faq') 
+            Navigate('/admin/faq') 
           })
         }
       })

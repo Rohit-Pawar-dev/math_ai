@@ -117,7 +117,7 @@ const ViewUser = () => {
                           <label className="mb-2">User Image</label>
                           <div>
                             <img
-                              src={user.profilePicture} // update this URL to your actual server URL path
+                              src={user.profilePicture}
                               alt="Profile"
                               width="150px"
                               className="img-thumbnail"

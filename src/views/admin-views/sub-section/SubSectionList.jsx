@@ -89,7 +89,7 @@ const SubsectionList = () => {
                             />
                         </div>
                         <div className="searchBtn">
-                            <NavLink to="/subsection-add">
+                            <NavLink to="/admin/subsection-add">
                                 <button className="btn btn-outline-warning active" type="button">
                                     Add Subsection
                                 </button>
@@ -127,10 +127,10 @@ const SubsectionList = () => {
                                             <td>{sub.sectionId?.title}</td>
                                             <td>
                                                 <div className="actionTable">
-                                                    <NavLink to={`/subsection-view/${sub._id}`}>
+                                                    <NavLink to={`/admin/subsection-view/${sub._id}`}>
                                                         <img src={eyeIcon} className="eyeIconClass" alt="view" />
                                                     </NavLink>
-                                                    <NavLink to={`/subsection-edit/${sub._id}`}>
+                                                    <NavLink to={`/admin/subsection-edit/${sub._id}`}>
                                                         <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                                                     </NavLink>
                                                     <button

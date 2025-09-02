@@ -177,7 +177,7 @@ const QuizList = () => {
                   Search
                 </button>
               </div>
-              <NavLink to="/quiz-add">
+              <NavLink to="/admin/quiz-add">
                 <button className="btn btn-warning">Add Quiz</button>
               </NavLink>
             </div>
@@ -220,10 +220,10 @@ const QuizList = () => {
                         </td>
                         <td>
                           <div className="d-flex flex-wrap gap-2">
-                            <NavLink to={`/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
+                            <NavLink to={`/admin/quiz-view/${quiz._id}`} className="btn btn-sm btn-info text-white">
                               View
                             </NavLink>
-                            <NavLink to={`/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
+                            <NavLink to={`/admin/quiz-edit/${quiz._id}`} className="btn btn-sm btn-primary">
                               <CIcon icon={cilPencil} />
                             </NavLink>
                             <button
@@ -238,7 +238,7 @@ const QuizList = () => {
                             >
                               Add Question
                             </button>
-                            <NavLink to={`/quiz-attempts/${quiz._id}`} className="btn btn-sm btn-success text-white">
+                            <NavLink to={`/admin/quiz-attempts/${quiz._id}`} className="btn btn-sm btn-success text-white">
                               View Attempts
                             </NavLink>
                           </div>

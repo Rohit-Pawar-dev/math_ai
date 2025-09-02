@@ -57,11 +57,11 @@ const TopicView = () => {
 
   return (
     <MathJaxContext config={mathjaxConfig}>
-      {/* <div className="backbtn">
-      <Link to="/topic-list" className="btn btn-secondary">
+      <div className="backbtn">
+      <Link to="/admin/topic-list" className="btn btn-secondary">
               Back to Topics
             </Link>
-            </div> */}
+            </div>
       <section className="formSection">
 
         <div className="card">

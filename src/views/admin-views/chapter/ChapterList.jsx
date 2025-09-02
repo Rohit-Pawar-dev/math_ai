@@ -112,7 +112,7 @@ const ChapterList = () => {
               />
             </div>
             <div className="searchBtn">
-              <NavLink to={'/chapter-add'}>
+              <NavLink to={'/admin/chapter-add'}>
                 <button className="btn btn-outline-warning active" type="button">
                   Add Chapter
                 </button>
@@ -167,10 +167,10 @@ const ChapterList = () => {
                         </td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/chapter-view/${chapter._id}`}>
+                            <NavLink to={`/admin/chapter-view/${chapter._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
                             </NavLink>
-                            <NavLink to={`/chapter-edit/${chapter._id}`}>
+                            <NavLink to={`/admin/chapter-edit/${chapter._id}`}>
                               <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                             </NavLink>
                             <button

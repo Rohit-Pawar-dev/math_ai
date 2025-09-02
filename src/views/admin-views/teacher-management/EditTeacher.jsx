@@ -115,7 +115,7 @@ const EditTeacher = () => {
             })
 
             Swal.fire('Success', 'User updated successfully!', 'success')
-            navigate('/teachers')
+            navigate('/admin/teachers')
         } catch (err) {
             const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message
             Swal.fire('Error', errorMsg, 'error')

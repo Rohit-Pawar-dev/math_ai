@@ -22,7 +22,7 @@ const ClassAdd = () => {
       const res = await API.post('/classes', form)
       if (res.status === 200) {
         Swal.fire('Success', 'Class added successfully', 'success').then(() =>
-          navigate('/class-list'),
+          navigate('/admin/class-list'),
         )
         setForm({ name: '', description: '', status: 'active' })
       }

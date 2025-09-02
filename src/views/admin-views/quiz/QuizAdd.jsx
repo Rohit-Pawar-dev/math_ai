@@ -41,7 +41,7 @@ export default function QuizAdd() {
 
       if (res.data.status) {
         Swal.fire('Success', 'Quiz added successfully!', 'success').then(() => {
-          navigate('/quiz-list'); 
+          navigate('/admin/quiz-list'); 
         });
       }
     } catch (err) {

@@ -39,7 +39,7 @@ const ClassEdit = () => {
       .then((res) => {
         if (res.status === 200) {
           Swal.fire('Success', res.data.message || 'Class Updated successfully', 'success').then(() =>
-            navigate('/class-list'),
+            navigate('/admin/class-list'),
           )
         }
       })

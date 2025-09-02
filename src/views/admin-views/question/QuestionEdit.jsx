@@ -137,7 +137,7 @@ const QuestionEdit = () => {
 
       if (res.data.status) {
         Swal.fire("Success", "Question updated successfully", "success")
-        navigate("/question-list")
+        navigate("/admin/question-list")
       }
     } catch (err) {
       console.error(err)
@@ -154,7 +154,7 @@ const QuestionEdit = () => {
           <h2 className="text-primary">Edit Question</h2>
           <button
             className="btn btn-secondary"
-            onClick={() => navigate("/question-list")}
+            onClick={() => navigate("/admin/question-list")}
           >
             ← Back
           </button>

@@ -58,7 +58,7 @@ const AddTopic = () => {
       const res = await API.post('/topic', formData)
       if (res.data.status) {
         Swal.fire('Success', 'Topic added successfully!', 'success')
-        navigate('/topic-list')
+        navigate('/admin/topic-list')
       }
     } catch (err) {
       Swal.fire('Error', err.response?.data?.message || err.message, 'error')

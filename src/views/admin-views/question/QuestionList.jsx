@@ -121,7 +121,7 @@ const QuestionList = () => {
                 </button>
               </div>
               <div className="searchBtn">
-                <NavLink to="/question-add">
+                <NavLink to="/admin/question-add">
                   <button className="btn btn-outline-warning active">Add Question</button>
                 </NavLink>
               </div>
@@ -167,10 +167,10 @@ const QuestionList = () => {
                           </td>
                           <td>
                             <div className="actionTable">
-                              <NavLink to={`/question-view/${question._id}`}>
+                              <NavLink to={`/admin/question-view/${question._id}`}>
                                 <img src={eyeIcon} className="eyeIconClass" alt="view" />
                               </NavLink>
-                              <NavLink to={`/question-edit/${question._id}`}>
+                              <NavLink to={`/admin/question-edit/${question._id}`}>
                                 <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                               </NavLink>
                               <button
