@@ -85,7 +85,7 @@ const UserAppHeader = () => {
         <CHeaderNav className="nav-items d-none d-lg-flex gap-4">
           {[
             { to: '/home', label: 'Home' },
-            { to: '/about', label: 'About' },
+            { to: '/calculator', label: 'calculator' },
             { to: '/graphing', label: 'Graphing' },
             { to: '/tools', label: 'More Tools' },
           ].map((item) => (

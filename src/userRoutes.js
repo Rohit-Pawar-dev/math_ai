@@ -5,6 +5,7 @@ const UserLogin = React.lazy(() => import('./views/user-views/auth/UserLogin'));
 const UserRegister = React.lazy(() => import('./views/user-views/auth/UserRegister'));
 const UserProfile = React.lazy(()=>import('./views/user-views/UserProfile'));
 const UserHome = React.lazy(()=>import('./views/user-views/Home'))
+const Calculator = React.lazy(()=>import('./views/user-views/Calculator'))
 
 const userRoutes = [
   {
@@ -23,7 +24,11 @@ const userRoutes = [
   {
     path:'/home',
     element: <UserHome/>
-  }
+  },
+   {
+    path:'/calculator',
+    element: <Calculator/>
+  },
 ]
 
 export default userRoutes

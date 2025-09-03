@@ -45,8 +45,7 @@ const UserBanners = () => {
             style={{ maxHeight: '400px', objectFit: 'cover' }}
           />
           <Carousel.Caption>
-            <h3>{banner.title}</h3>
-            {/* You can add banner.type or other info here */}
+            {/* <h3>{banner.title}</h3d */}
           </Carousel.Caption>
         </Carousel.Item>
       ))}
