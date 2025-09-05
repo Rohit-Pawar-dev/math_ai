@@ -74,7 +74,7 @@ const Faq = () => {
                 {/* <button className="btn btn-outline-secondary" type="button">
                   Export
                 </button> */}
-                <NavLink to="/add-faq">
+                <NavLink to="/admin/add-faq">
                   <button className="btn btn-outline-warning active" type="button">
                     Add FAQ
                   </button>
@@ -106,7 +106,7 @@ const Faq = () => {
                           <td>{faq.content}</td>
                           <td>
                             <div className="actionTable">
-                              <NavLink to={`/edit-faq/${faq._id}`}>
+                              <NavLink to={`/admin/edit-faq/${faq._id}`}>
                                 <CIcon icon={cilPencil} custom className="nav-icon" />
                               </NavLink>
                               <button

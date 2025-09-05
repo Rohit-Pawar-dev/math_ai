@@ -22,9 +22,18 @@ const SubscriptionDetails = () => {
   const user = subscription.user
 
   return (
+    <section className="">
     <section className="tableSection">
-      <div className="container-fluid mt-2">
-        <h2 className="mb-4">Subscription Details</h2>
+      <div className="card mt-2">
+        <div className="headdiv">
+          <h2 className="">Subscription Details</h2>
+
+          <div className="">
+            <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+            Back to List
+            </button>
+          </div>
+        </div>
         <div className="row g-3 customTableView">
           <div className="col-md-6 col-lg-4">
             <strong>Plan Title:</strong> <div>{plan?.title}</div>
@@ -68,12 +77,9 @@ const SubscriptionDetails = () => {
           </div> */}
         </div>
 
-        <div className="mt-4">
-          <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-            Back to List
-          </button>
-        </div>
+
       </div>
+    </section>
     </section>
   )
 }

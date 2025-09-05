@@ -37,7 +37,7 @@ const EditFaq = () => {
       .then((res) => {
         if (res.status === 200) {
           Swal.fire('Success', 'FAQ updated successfully.', 'success').then(() => {
-            navigate('/faq') // Redirect to FAQ list or wherever you want
+            navigate('/admin/faq') // Redirect to FAQ list or wherever you want
           })
         }
       })

@@ -17,20 +17,3 @@ const TeacherLayout = () => {
 }
 
 export default TeacherLayout
-
-
-// export default TeacherLayout;
-
-// import React from 'react'
-// import TeacherAppContent from '../components/TeacherAppContent'
-
-// const TeacherLayout = () => {
-//   return (
-//     <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-//       {/* Later you can add TeacherHeader/Sidebar */}
-//       <TeacherAppContent />
-//     </div>
-//   )
-// }
-
-// export default TeacherLayout

@@ -1,18 +1,22 @@
-// src/features/auth/authSlice.js
 import { createSlice } from '@reduxjs/toolkit'
 
 const admin = JSON.parse(localStorage.getItem('admin'))
 const teacher = JSON.parse(localStorage.getItem('teacher'))
+const user = JSON.parse(localStorage.getItem('user'))
 const adminToken = JSON.parse(localStorage.getItem('admin_token'))
 const teacherToken = JSON.parse(localStorage.getItem('teacher_token'))
+const userToken = JSON.parse(localStorage.getItem('user_token'));
 
 const initialState = {
   admin: admin || null,
   teacher: teacher || null,
+  user: user || null,
   adminToken: adminToken || null,
   teacherToken: teacherToken || null,
+  userToken: userToken || null,
   isAdminAuthenticated: !!adminToken,
   isTeacherAuthenticated: !!teacherToken,
+  isUserAuthenticated: !!userToken,
 }
 
 const authSlice = createSlice({
@@ -26,7 +30,7 @@ const authSlice = createSlice({
 
       localStorage.setItem('admin', JSON.stringify(action.payload.user))
       localStorage.setItem('admin_token', JSON.stringify(action.payload.token))
-      localStorage.setItem('admin_profile', JSON.stringify(action.payload.user)) // optional
+      localStorage.setItem('admin_profile', JSON.stringify(action.payload.user))
     },
 
     teacherLoginSuccess: (state, action) => {
@@ -36,8 +40,18 @@ const authSlice = createSlice({
 
       localStorage.setItem('teacher', JSON.stringify(action.payload.user))
       localStorage.setItem('teacher_token', JSON.stringify(action.payload.token))
-      localStorage.setItem('teacher_profile', JSON.stringify(action.payload.user)) // optional
+      localStorage.setItem('teacher_profile', JSON.stringify(action.payload.user))
     },
+    userLoginSuccess: (state, action) => {
+      state.user = action.payload.user
+      state.userToken = action.payload.token
+      state.isUserAuthenticated = true
+      localStorage.setItem('user', JSON.stringify(action.payload.user))
+      localStorage.setItem('user_token', JSON.stringify(action.payload.token))
+      localStorage.setItem('user_profile', JSON.stringify(action.payload.user))
+    },
+
+
 
     updateProfile: (state, action) => {
       state.admin = action.payload
@@ -47,6 +61,10 @@ const authSlice = createSlice({
     updateTeacherProfile: (state, action) => {
       state.teacher = action.payload
       localStorage.setItem('teacher', JSON.stringify(action.payload))
+    },
+    updateUserProfile: (state, action) => {
+      state.user = action.payload
+      localStorage.setItem('user', JSON.stringify(action.payload))
     },
 
     adminLogout: (state) => {
@@ -68,16 +86,28 @@ const authSlice = createSlice({
       localStorage.removeItem('teacher_token')
       localStorage.removeItem('teacher_profile')
     },
+    userLogout: (state) => {
+      state.user = null
+      state.userToken = null
+      state.isUserAuthenticated = false
+
+      localStorage.removeItem('user')
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('user_profile')
+    },
   },
 })
 
 export const {
   loginSuccess,
   teacherLoginSuccess,
+  userLoginSuccess,
   updateProfile,
   updateTeacherProfile,
+  updateUserProfile,
   adminLogout,
   teacherLogout,
+  userLogout,
 } = authSlice.actions
 
 export default authSlice.reducer

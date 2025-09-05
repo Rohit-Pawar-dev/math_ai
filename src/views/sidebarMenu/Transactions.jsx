@@ -61,7 +61,7 @@ const Transactions = () => {
           {/* Table */}
           <div className="container-fliud">
             <h2>All Transactions</h2>
-            <div className="mainContent">
+            <div className="mainContent table-responsive">
               <table>
                 <thead>
                   <tr>

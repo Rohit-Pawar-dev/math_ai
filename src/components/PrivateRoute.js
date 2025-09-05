@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
   const { admin } = useAuth()
   const { isAdminAuthenticated } = useSelector((state) => state.auth)
 
-  return isAdminAuthenticated ? children : <Navigate to="/login" />
+  return isAdminAuthenticated ? children : <Navigate to="/admin/login" />
 }
 
 export default PrivateRoute

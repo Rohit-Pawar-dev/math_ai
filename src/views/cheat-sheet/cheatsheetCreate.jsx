@@ -24,7 +24,7 @@ const cheatsheetCreate = () => {
         if (res.status === 201) {
           // setSeriesList(res.data)
 
-          navigate('/cheat-sheet')
+          navigate('/admin/cheat-sheet')
 
         }
       })
@@ -37,20 +37,20 @@ const cheatsheetCreate = () => {
     <section className="formSection">
       <div className="card">
         <div className="card-header d-flex justify-content-between">
-          <h5>Cheat Sheet</h5>
+          <h4>Cheat Sheet</h4>
         </div>
         <div className="card-body">
           <div className="row">
-            <div className="col-lg-4">
-              <div className="form-group">
-                <label htmlFor="">Title</label>
+            <div className="col-lg-6">
+              <div className="form-group ">
+                <label htmlFor="" className='mb-2'>Title</label>
                 <input type="text" name="title" className="form-control" onChange={(e) => setForm({...form, title:e.target.value})} />
               </div>
             </div>
-           
-            <div className="col-lg-4">
-              <div className="form-group">
-                <label htmlFor="">Type</label>
+
+            <div className="col-lg-6 ">
+              <div className="form-group mb-2">
+                <label htmlFor="" className='mb-2'>Type</label>
                 <select name="type" className="form-control" onChange={(e) => setForm({...form, type:e.target.value})} >
                   <option value="">--</option>
                   <option value="Algebra">Algebra</option>
@@ -61,9 +61,9 @@ const cheatsheetCreate = () => {
                 </select>
               </div>
             </div>
-            <div className="col-lg-4">
-              <div className="form-group">
-                <label htmlFor="">Status</label>
+            <div className="col-lg-6 mt-4">
+              <div className="form-group mb-2">
+                <label htmlFor="" className='mb-2'>Status</label>
                 <select name="status" className="form-control" onChange={(e) => setForm({...form, status:e.target.value})} >
                   <option value="">--</option>
                   <option value="active">Active</option>
@@ -71,13 +71,13 @@ const cheatsheetCreate = () => {
                 </select>
               </div>
             </div>
-             <div className="col-lg-4">
-              <div className="form-group">
-                <label htmlFor="">Description</label>
+             <div className="col-lg-6 mt-4">
+              <div className="form-group mb-2">
+                <label htmlFor="" className='mb-2'>Description</label>
                 <textarea type="text" name="description" className="form-control" onChange={(e) => setForm({...form, description:e.target.value})} />
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-6">
               <label htmlFor="">Preview</label>
               <BlockMath math={formatMath(form?.description)} />
             </div>

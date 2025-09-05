@@ -1,3 +1,4 @@
+import { element } from 'prop-types'
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -14,15 +15,13 @@ const SubscriptionList = React.lazy(() => import('./views/sidebarMenu/Subscripti
 const viewSubscriber = React.lazy(() => import('./views/pages/subscription/ViewSubscriber'))
 const TransactionsList = React.lazy(() => import('./views/sidebarMenu/Transactions'))
 
-const TeacherList = React.lazy(() => import('./views/teacher/TeacherList'))
-const TeacherEdit = React.lazy(() => import('./views/teacher/TeacherEdit'))
+const TeacherList = React.lazy(() => import('./views/admin-views/teacher-management/TeacherList'))
+const TeacherView = React.lazy(() => import('./views/admin-views/teacher-management/ViewTeacher'))
+const TeacherAdd = React.lazy(() => import('./views/admin-views/teacher-management/AddTeacher'))
+const TeacherEdit = React.lazy(() => import('./views/admin-views/teacher-management/EditTeacher'))
 
 const notesList = React.lazy(() => import('./views/notes/notesList'))
 const notesEdit = React.lazy(() => import('./views/notes/notesEdit'))
-
-const quizList = React.lazy(() => import('./views/quiz/quizList'))
-const quizCreate = React.lazy(() => import('./views/quiz/quizCreate'))
-const quizEdit = React.lazy(() => import('./views/quiz/quizEdit'))
 
 const calculatorList = React.lazy(() => import('./views/calculator/calculatorList'))
 const calculatorCreate = React.lazy(() => import('./views/calculator/calculatorCreate'))
@@ -51,6 +50,11 @@ const ClassList = React.lazy(() => import('./views/pages/class/ClassList'))
 const ClassAdd = React.lazy(() => import('./views/pages/class/ClassAdd'))
 const ClassView = React.lazy(() => import('./views/pages/class/ClassView'))
 const ClassEdit = React.lazy(() => import('./views/pages/class/ClassEdit'))
+
+//User Quizz Attempt
+
+const UserQuizzAttempt = React.lazy(() => import('./views/admin-views/Result/QuizAttemptsList'))
+const QuizResultView = React.lazy(() => import('./views/admin-views/Result/QuizResultView'))
 
 // Feedback pages
 const FeedbackList = React.lazy(() => import('./views/pages/feedback/FeedbackList'))
@@ -118,6 +122,42 @@ const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'))
 const Tables = React.lazy(() => import('./views/base/tables/Tables'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
+//Questions
+const QuestionList = React.lazy(() => import('./views/admin-views/question/QuestionList'))
+const QuestionView = React.lazy(() => import('./views/admin-views/question/QuestionView'))
+const QuestionAdd = React.lazy(() => import('./views/admin-views/question/QuestionAdd'))
+const QuestionEdit = React.lazy(() => import('./views/admin-views/question/QuestionEdit'))
+
+//Quiz
+const QuizList = React.lazy(() => import('./views/admin-views/quiz/QuizList'))
+const QuizView = React.lazy(() => import('./views/admin-views/quiz/QuizView'))
+const QuizAdd = React.lazy(() => import('./views/admin-views/quiz/QuizAdd'))
+const QuizEdit = React.lazy(() => import('./views/admin-views/quiz/QuizEdit'))
+
+//Chapter
+const ChapterList = React.lazy(() => import('./views/admin-views/chapter/ChapterList'))
+const ChapterView = React.lazy(() => import('./views/admin-views/chapter/ChapterView'))
+const ChapterAdd = React.lazy(() => import('./views/admin-views/chapter/ChapterAdd'))
+const ChapterEdit = React.lazy(() => import('./views/admin-views/chapter/ChapterEdit'))
+
+//Topic
+const TopicList = React.lazy(() => import('./views/admin-views/topic/TopicList'))
+const TopicView = React.lazy(() => import('./views/admin-views/topic/TopicView'))
+const TopicAdd = React.lazy(() => import('./views/admin-views/topic/TopicAdd'))
+const TopicEdit = React.lazy(() => import('./views/admin-views/topic/TopicEdit'))
+
+//Section
+const SectionList = React.lazy(() => import('./views/admin-views/section/SectionList'))
+const SectionView = React.lazy(() => import('./views/admin-views/section/SectionView'))
+const SectionAdd = React.lazy(() => import('./views/admin-views/section/SectionAdd'))
+const SectionEdit = React.lazy(() => import('./views/admin-views/section/SectionEdit'))
+
+//SubSection
+const SubSectionList = React.lazy(() => import('./views/admin-views/sub-section/SubSectionList'))
+const SubSectionView = React.lazy(() => import('./views/admin-views/sub-section/SubSectionView'))
+const SubSectionAdd = React.lazy(() => import('./views/admin-views/sub-section/SubSectionAdd'))
+const SubSectionEdit = React.lazy(() => import('./views/admin-views/sub-section/SubSectionEdit'))
+
 // Buttons
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
@@ -149,7 +189,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', name: 'Home', element: Dashboard  },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
@@ -195,10 +235,16 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
 
-  { path: '/teachers', name: 'Teachers', element: TeacherList },
-  { path: '/teachers/view/:id', name: 'Teachers', element: TeacherEdit },
+  { path: '/teachers', name: 'Teachers List', element: TeacherList },
+  { path: '/view-teacher/:id', name: 'Teachers View', element: TeacherView },
+  { path: '/add-teacher', name: 'Teachers Add', element: TeacherAdd },
+  { path: '/edit-teacher/:id', name: 'Teachers Edit', element: TeacherEdit },
 
-  { path: '/users', name: 'ProfileManagement', element: ProfileManagement },
+
+
+  // { path: '/teachers/view/:id', name: 'Teachers', element: TeacherEdit },
+
+  { path: 'users', name: 'ProfileManagement', element: ProfileManagement },
   { path: '/user-add', name: 'UserAdd', element: UserAdd },
   { path: '/view-user/:id', name: 'ViewUser', element: ViewUser },
   { path: '/edit-user', name: 'Edit User', element: EditUSer },
@@ -213,14 +259,10 @@ const routes = [
   { path: '/saved-notes', name: 'Saved Notes', element: notesList },
   { path: '/saved-notes/view/:id', name: 'View', element: notesEdit },
 
-  { path: '/quizes', name: 'Quiz', element: quizList },
-  { path: '/quizes/create', name: 'Create', element: quizCreate },
-  { path: '/quizes/edit', name: 'Edit', element: quizEdit },
-  
   { path: '/calculator', name: 'Calculator', element: calculatorList },
   { path: '/calculator/create', name: 'Create', element: calculatorCreate },
   { path: '/calculator/edit/:id', name: 'Edit', element: calculatorEdit },
-  
+
   { path: '/cheat-sheet', name: 'Cheat Sheet', element: cheatsheetList },
   { path: '/cheat-sheet/create', name: 'Create', element: cheatsheetCreate },
   { path: '/cheat-sheet/edit/:id', name: 'Edit', element: cheatsheetEdit },
@@ -240,11 +282,52 @@ const routes = [
   { path: '/banner-add', name: 'BannerAdd', element: BannerAdd },
   { path: '/banner-edit/:id', name: 'BannerEdit', element: BannerEdit },
 
+  // Questions Routes
+  { path: '/question-list', name: 'QuestionList', element: QuestionList },
+  { path: '/question-view/:id', name: 'QuestionView', element: QuestionView },
+  { path: '/question-add', name: 'QuestionAdd', element: QuestionAdd },
+  { path: '/question-edit/:id', name: 'QuestionEdit', element: QuestionEdit },
+
+  // Quiz Routes
+  { path: '/quiz-list', name: 'QuizList', element: QuizList },
+  { path: '/quiz-view/:id', name: 'QuizView', element: QuizView },
+  { path: '/quiz-add', name: 'QuizAdd', element: QuizAdd },
+  { path: '/quiz-edit/:id', name: 'QuizEdit', element: QuizEdit },
+
+  //Chapter Routes
+  { path: '/chapter-list', name: 'ChapterList', element: ChapterList },
+  { path: '/chapter-view/:id', name: 'ChapterView', element: ChapterView },
+  { path: '/chapter-add', name: 'ChapterAdd', element: ChapterAdd },
+  { path: '/chapter-edit/:id', name: 'ChapterEdit', element: ChapterEdit },
+
+  //Topic Routes
+  { path: '/topic-list', name: 'TopicList', element: TopicList },
+  { path: '/topic-view/:id', name: 'TopicView', element: TopicView },
+  { path: '/topic-add', name: 'TopicAdd', element: TopicAdd },
+  { path: '/topic-edit/:id', name: 'TopicEdit', element: TopicEdit },
+
+  //Section Routes
+  { path: '/section-list', name: 'SectionList', element: SectionList },
+  { path: '/section-view/:id', name: 'SectionView', element: SectionView },
+  { path: '/section-add', name: 'SectionAdd', element: SectionAdd },
+  { path: '/section-edit/:id', name: 'SectionEdit', element: SectionEdit },
+
+  //Sub Section Routes
+  { path: '/subsection-list', name: 'SubSectionList', element: SubSectionList },
+  { path: '/subsection-view/:id', name: 'SubSectionView', element: SubSectionView },
+  { path: '/subsection-add', name: 'SubSectionAdd', element: SubSectionAdd },
+  { path: '/subsection-edit/:id', name: 'SubSectionEdit', element: SubSectionEdit },
+
   // Classes Routes
   { path: '/class-list', name: 'ClassList', element: ClassList },
   { path: '/class-view/:id', name: 'ClassView', element: ClassView },
   { path: '/class-add', name: 'ClassAdd', element: ClassAdd },
   { path: '/class-edit/:id', name: 'ClassEdit', element: ClassEdit },
+
+  //User Quizz Attempts
+  { path: '/quiz-attempts/:quizId', name: 'Quiz Attempt', element: UserQuizzAttempt },
+  { path: '/quiz-result/:attemptId', name: 'Result View', element: QuizResultView },
+
 
   // feedbacks
   { path: '/feedback-list', name: 'FeedbackList', element: FeedbackList },
@@ -254,7 +337,6 @@ const routes = [
   { path: '/reels-add', name: 'ReelsAdd', element: ReelsAdd },
   { path: '/reels-edit/:id', name: 'ReelsEdit', element: ReelsEdit },
   { path: '/reels-view/:id', name: 'ReelsView', element: ReelsView },
-
   { path: '/community', name: 'Community', element: Community },
 
   { path: '/notification-view', name: 'Notification View', element: NotificationView },

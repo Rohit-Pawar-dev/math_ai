@@ -107,7 +107,7 @@ const ProfileManagement = () => {
               </button>
             </div>
             <div className="searchBtn">
-              <NavLink to={'/user-add'}>
+              <NavLink to={'/admin/user-add'}>
                 <button
                   className="btn btn-outline-warning active"
                   aria-current="page"
@@ -170,13 +170,13 @@ const ProfileManagement = () => {
                               <NavLink
                                 onClick={(e) => {
                                   e.preventDefault()
-                                  navigate('/users/' + user._id)
+                                  navigate('/admin/users/' + user._id)
                                 }}
                               >
                                 {/* <CIcon icon={cilPencil} custom="true" className="nav-icon" /> */}
                                 <i className="fa fa-pencil"></i>
                               </NavLink>
-                              <NavLink to={'/view-user/' + user._id}>
+                              <NavLink to={'/admin/view-user/' + user._id}>
                                {/* <img src={eyeIcon} className='eyeIconClass' alt=""/> */}
                                <i className="fa fa-eye"></i>
                               </NavLink>

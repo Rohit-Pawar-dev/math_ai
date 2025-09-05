@@ -36,20 +36,27 @@ const ForgotPassword = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onSubmit={handleSubmit}>
-                    <h1>Forgot Password</h1>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
+                    <div class="text-center">
+                      <div class="mb-5">
+                        <h1 class="display-4 logitextdiv">
+                          Forgot Password</h1>
+                        <p class="text-body-secondary">Sign In to your account</p></div>
+                    </div>
+                    {/* <h1>Forgot Password</h1> */}
+                    <label class="input-label" for="signinSrEmail">Your email</label>
+                    <CInputGroup className="mb-3 mt-2">
+                      {/* <CInputGroupText>
                         <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Email" autoComplete="email" onChange={(e) => setForm({ ...form, email: e.target.value })}/>
+                      </CInputGroupText> */}
+                      <CFormInput placeholder="Email" autoComplete="email" onChange={(e) => setForm({ ...form, email: e.target.value })} />
                     </CInputGroup>
                     <CRow>
-                        <CCol xs={6}>
-                          <CButton type='submit' color="primary" className="px-4">
-                            Send OTP
-                          </CButton>
-                        </CCol>
-                      </CRow>
+                      <CCol xs={12}>
+                        <CButton type='submit' color="primary" className="px-4 forgetbtn w-100">
+                          Send OTP
+                        </CButton>
+                      </CCol>
+                    </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>

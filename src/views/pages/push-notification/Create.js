@@ -50,7 +50,7 @@ const Notification = () => {
           timer: 3000,
           timerProgressBar: true,
         }).then(() => {
-          navigate('/notification-list')
+          navigate('/admin/notification-list')
           window.location.reload()
         })
       }

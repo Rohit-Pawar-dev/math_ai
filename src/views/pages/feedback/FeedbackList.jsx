@@ -115,7 +115,7 @@ const FeedbackList = () => {
                         <td>{fb.response ? fb.response : <span style={{ color: 'red' }}>Pending</span>}</td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/feedback-view/${fb._id}`}>
+                            <NavLink to={`/admin/feedback-view/${fb._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
                             </NavLink>
                             <button

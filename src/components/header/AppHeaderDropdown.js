@@ -31,11 +31,16 @@ import MEDIA_URL from '../../media'
 
 const AppHeaderDropdown = () => {
   const { admin } = useSelector(state => state.auth)
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   var dispatch = useDispatch()
+  // const handleLogout = () => {
+  //   dispatch(adminLogout())
+  //   navigate("/admin/login");
+  // }
   const handleLogout = () => {
-    dispatch(adminLogout())
-  }
+    dispatch(adminLogout()); // perform logout
+    navigate("/admin/login"); // then redirect
+  };
 
   return (
     <CDropdown variant="nav-item">
@@ -45,12 +50,12 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">{admin.name}</CDropdownHeader>
-        
-        <CDropdownItem onClick={(e) => { e.preventDefault(); navigate('/profile') }} href="#">
+
+        <CDropdownItem onClick={(e) => { e.preventDefault(); navigate('/admin/profile') }} href="#">
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem onClick={(e) => { e.preventDefault(); navigate('/Settings') }} href="#">
+        <CDropdownItem onClick={(e) => { e.preventDefault(); navigate('/admin/Settings') }} href="#">
           <CIcon icon={cilUser} className="me-2" />
           Settings
         </CDropdownItem>
@@ -60,10 +65,11 @@ const AppHeaderDropdown = () => {
         </CDropdownItem> */}
 
         <CDropdownDivider />
-        <CDropdownItem href="#" onClick={handleLogout}>
+        <CDropdownItem component="button" onClick={handleLogout}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Logout
         </CDropdownItem>
+
       </CDropdownMenu>
     </CDropdown>
   )

@@ -27,6 +27,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 8,
     },
+    dob: {
+      type: Date,
+      // required: true
+    },
     role: {
       type: String,
       required: true,
@@ -35,7 +39,7 @@ const userSchema = new Schema(
     },
     teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', 
+      ref: 'User',
       default: null,
     },
     otp: {

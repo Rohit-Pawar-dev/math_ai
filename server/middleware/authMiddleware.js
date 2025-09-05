@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
   const token = req.header('Authorization')?.split(" ")[1];
+  // console.log("Raw token:", req.header("Authorization"));
 
   if (!token) return res.status(401).json({status:false, message: 'No token, access denied' });
 
@@ -10,7 +11,7 @@ const auth = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(401).json({ status:false, message: 'Invalid token' });
+    res.status(401).json({ status:false, message: 'Invalid token ??' });
   }
 };
 

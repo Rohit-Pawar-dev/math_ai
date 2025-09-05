@@ -40,7 +40,7 @@ const AppHeader = () => {
       headerRef.current &&
         headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0)
     })
-    setColorMode('dark')
+    setColorMode('light')
   }, [])
 
   return (
@@ -54,12 +54,12 @@ const AppHeader = () => {
         </CHeaderToggler> */}
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
-            <CNavLink to="/dashboard" as={NavLink}>
+            <CNavLink to="/admin/dashboard" as={NavLink}>
               Dashboard
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink to="/settings" as={NavLink}>Settings</CNavLink>
+            <CNavLink to="/admin/settings" as={NavLink}>Settings</CNavLink>
           </CNavItem>
         </CHeaderNav>
         {/* <CHeaderNav className="ms-auto">

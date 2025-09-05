@@ -90,7 +90,7 @@ const EditUser = () => {
       })
 
       Swal.fire('Success', 'User updated successfully!', 'success')
-      navigate('/users')
+      navigate('/admin/users')
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message
       Swal.fire('Error', errorMsg, 'error')
@@ -102,9 +102,12 @@ const EditUser = () => {
       <div className="container-fliud">
         <h2>Edit User</h2>
         <div className="mainContent">
-          <div className="card">
-            <div className="card-body">
-              <h6 className="mb-4">User Information</h6>
+          <div className="card formcard">
+
+              <div className="card-header">
+              <h4 className="mt-2">User Information</h4>
+              </div>
+               <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6">

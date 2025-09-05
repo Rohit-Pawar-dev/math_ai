@@ -14,7 +14,7 @@ const calculatorEdit = () => {
       .then((res) => {
         if (res.status === 200) {
           Swal.fire('success', 'Data Updated successfully', 'success').then(function() {
-            navigate('/calculator')
+            navigate('/admin/calculator')
           })
         }
       })
@@ -42,7 +42,7 @@ const calculatorEdit = () => {
       <div className="card">
         <div className="card-header d-flex justify-content-between">
           <h5>Quizes</h5>
-          <button type="button" className="btn btn-primary btn-sm">Add</button>
+          {/* <button type="button" className="btn btn-primary btn-sm">Add</button> */}
         </div>
         <div className="card-body">
           <div className="row">
@@ -52,7 +52,7 @@ const calculatorEdit = () => {
                 <input type="text" name="title" className="form-control" value={form?.title} onChange={(e) => setForm({...form, title:e.target.value})} />
               </div>
             </div>
-           
+
             <div className="col-lg-4">
               <div className="form-group">
                 <label htmlFor="">Type</label>

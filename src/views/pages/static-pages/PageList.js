@@ -45,7 +45,7 @@ const PageList = () => {
                         <td>{item.title}</td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={"/page-edit/" + item._id}>
+                            <NavLink to={"/admin/page-edit/" + item._id}>
                               <CIcon icon={cilPencil} custom='true' className="nav-icon" />
                             </NavLink>
                           </div>

@@ -18,6 +18,38 @@ const messaging = admin.messaging();
  * @param {string[]} tokens - Array of FCM tokens.
  * @param {string} image - (Optional) Image URL.
  */
+// const sendNotification = async (title, description, tokens = [], image = '') => {
+//     if (!Array.isArray(tokens) || tokens.length === 0) {
+//         console.error('No valid tokens provided for notification.');
+//         return;
+//     }
+
+//     const message = {
+//         notification: {
+//             title: title,
+//             body: description,
+//             image: image || undefined,
+//         },
+//         tokens: tokens,
+//     };
+
+//     try {
+//         const response = await messaging.sendMulticast(message);
+
+//         if (response.failureCount > 0) {
+//             response.responses.forEach((resp, idx) => {
+//                 if (!resp.success) {
+//                     nlogger.info(`Token ${tokens[idx]}: ${resp.error}`);
+//                 }
+//             });
+//         }
+
+//     } catch (error) {
+//         console.info('❌ Error sending notification:', error);
+//         // nlogger.info(`Notification failed: ${error}`);
+//     }
+// }
+
 const sendNotification = async (title, description, tokens = [], image = '') => {
     if (!Array.isArray(tokens) || tokens.length === 0) {
         console.error('No valid tokens provided for notification.');
@@ -26,28 +58,28 @@ const sendNotification = async (title, description, tokens = [], image = '') => 
 
     const message = {
         notification: {
-            title: title,
+            title,
             body: description,
             image: image || undefined,
         },
-        tokens: tokens,
+        tokens, // list of FCM tokens
     };
 
     try {
-        const response = await messaging.sendMulticast(message);
+        const response = await messaging.sendEachForMulticast(message);
 
         if (response.failureCount > 0) {
             response.responses.forEach((resp, idx) => {
                 if (!resp.success) {
-                    // nlogger.info(`Token ${tokens[idx]}: ${resp.error}`);
+                    console.error(`Token ${tokens[idx]}: ${resp.error}`);
                 }
             });
         }
 
     } catch (error) {
-        console.info('❌ Error sending notification:', error);
-        // nlogger.info(`Notification failed: ${error}`);
+        console.error('Error sending notification:', error);
     }
-}
+};
+
 
 module.exports = sendNotification

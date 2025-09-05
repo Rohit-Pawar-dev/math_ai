@@ -39,7 +39,7 @@ const ClassEdit = () => {
       .then((res) => {
         if (res.status === 200) {
           Swal.fire('Success', res.data.message || 'Class Updated successfully', 'success').then(() =>
-            navigate('/class-list'),
+            navigate('/admin/class-list'),
           )
         }
       })
@@ -94,10 +94,11 @@ const ClassEdit = () => {
                 <option value="inactive">Inactive</option>
               </select>
             </div>
-
-            <button type="submit" className="btn btn-success">
+             <div className="savediv">
+            <button type="submit" className="btn btn-success savebtndiv">
               Save Class
             </button>
+            </div>
           </form>
         </div>
       </div>

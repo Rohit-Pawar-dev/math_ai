@@ -133,7 +133,7 @@ const Subscription = () => {
                                 src={eyeIcon}
                                 style={{ cursor: 'pointer' }}
                                 onClick={() =>
-                                  navigate('/view-subscriber', {
+                                  navigate('/admin/view-subscriber', {
                                     state: { subscription: item },
                                   })
                                 }

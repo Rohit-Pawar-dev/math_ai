@@ -101,7 +101,7 @@ const BannerList = () => {
               </button>
             </div>
             <div className="searchBtn">
-              <NavLink to={'/banner-add'}>
+              <NavLink to={'/admin/banner-add'}>
                 <button className="btn btn-outline-warning active" type="button">
                   Add Banner
                 </button>
@@ -157,10 +157,10 @@ const BannerList = () => {
                         </td>
                         <td>
                           <div className="actionTable">
-                            <NavLink to={`/banner-view/${banner._id}`}>
+                            <NavLink to={`/admin/banner-view/${banner._id}`}>
                               <img src={eyeIcon} className="eyeIconClass" alt="view" />
                             </NavLink>
-                            <NavLink to={`/banner-edit/${banner._id}`}>
+                            <NavLink to={`/admin/banner-edit/${banner._id}`}>
                               <CIcon icon={cilPencil} custom="true" className="nav-icon" />
                             </NavLink>
                             <button
@@ -218,4 +218,4 @@ const BannerList = () => {
   )
 }
 
-export default BannerList
+export default BannerList;

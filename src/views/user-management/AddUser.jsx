@@ -77,9 +77,7 @@ const AddUser = () => {
         })
 
         setProfilePicture(null)
-
-        // Navigate to /users
-        navigate('/users')
+        navigate('/admin/users')
       }
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message

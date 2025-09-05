@@ -33,7 +33,24 @@ const ClassView = () => {
           </button>
         </div>
         <div className="card-body">
-          <div className="row">
+
+           <table className="table table-bordered mt-4">
+            <thead>
+              <tr>
+                <th>Name:</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{classData.name}</td>
+                <td>{classData.description || 'N/A'}</td>
+                <td>{classData.status}</td>
+              </tr>
+            </tbody>
+           </table>
+          <div className="row d-none">
             <Detail label="Name" value={classData.name} />
             <Detail label="Description" value={classData.description || 'N/A'} />
             <Detail label="Status" value={classData.status} />
